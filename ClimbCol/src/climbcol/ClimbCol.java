@@ -16,7 +16,7 @@ public class ClimbCol {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("fdsf");
+        System.out.println("hola jaja por fin lo logre ");
     }
     
 }
