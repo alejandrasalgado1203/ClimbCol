@@ -5,10 +5,17 @@
  */
 package data;
 
-/**
- *
- * @author diegoaadf
- */
+import java.util.TreeSet;
+
 public class Zona {
+    
+    private String nombre;
+    private double dificultadMax;
+    private double dificultadMin;
+    private double dificultadPromedio;
+    private String direccionImagen;
+    private TreeSet <Ruta> rutas;
+    
+    
     
 }

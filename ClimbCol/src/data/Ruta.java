@@ -11,4 +11,12 @@ package data;
  */
 public class Ruta {
     
+    private String nombre;
+    private double dificultad;
+    private int numeroDeChapas;
+    private String tipoDeRuta;
+    private String altura;
+    
+    
+    
 }

@@ -5,10 +5,22 @@
  */
 package data;
 
+
+import java.time.LocalDate;
+import java.util.TreeSet;
 /**
  *
  * @author diegoaadf
  */
 public class Escalador {
+    
+    private String usuario;
+    private LocalDate fechaDeNacimiento;
+    private TreeSet<Ruta> logradas;
+    private TreeSet<Ruta> retos;
+    private TreeSet<Ruta> favoritos;
+    private String escaladaFavorita;
+    private String direccionImagen;
+            
     
 }
