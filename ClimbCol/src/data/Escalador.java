@@ -13,6 +13,7 @@ public class Escalador {
     private TreeSet<Ruta> favoritos;
     private String escaladaFavorita;
     private String direccionImagen;
+    private int maximaDificultadLograda;
             
     public Escalador(String usuario, LocalDate fechaDeNacimiento, String escaladaFavorita, String direccionImagen) {
         super();
