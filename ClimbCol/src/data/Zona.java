@@ -1,10 +1,11 @@
 
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Zona {
+public class Zona implements Serializable{
     
     private String nombre;
     private double dificultadMax;

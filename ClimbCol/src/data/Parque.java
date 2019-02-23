@@ -3,6 +3,7 @@ package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.TreeMap;
 
 public class Parque implements Serializable{
@@ -19,6 +20,16 @@ public class Parque implements Serializable{
     
     
     
+	public Parque() {
+		super();
+		Random rand = new Random();
+		zonas = new TreeMap<String,Zona>();
+		zonas.put("prueba zonas"+rand.nextInt(30) , new Zona());
+		zonas.put("prueba zonas"+rand.nextInt(30), new Zona());
+		zonas.put("prueba zonas"+rand.nextInt(30), new Zona());
+		
+		
+	}
 	public String getNombre() {
 		return nombre;
 	}

@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 public class Welcome extends JFrame{
+	
     private JPanel panelWelcome = new JPanel();
     
     public void setupPanelWelcome(){// mirar otro tipo de panel

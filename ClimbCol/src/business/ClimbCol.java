@@ -4,7 +4,7 @@ package business;
 import java.util.TreeMap;
 
 import data.*;
-import ui.UI;
+import ui.*;
 
 public class ClimbCol {
 	private static UI ui;
@@ -13,8 +13,9 @@ public class ClimbCol {
 
 	public static void main(String[] args) {
 		UI ui = new UI();
-		ui.showMenu();
+		ui.showComponents();
 
+		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
 	}
 
 
