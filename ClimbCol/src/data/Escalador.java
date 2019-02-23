@@ -1,30 +1,27 @@
 
 package data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
-public class Escalador {
+public class Escalador implements Serializable{
     
     private String usuario;
     private LocalDate fechaDeNacimiento;
-    private TreeSet<Ruta> logradas;
-    private TreeSet<Ruta> retos;
-    private TreeSet<Ruta> favoritos;
+    private TreeMap<String,Ruta> logradas;
+    private TreeMap<String,Ruta> retos;
+    private TreeMap<String,Ruta> favoritos;
     private String escaladaFavorita;
     private String direccionImagen;
-    private int maximaDificultadLograda;
+    private double maximaDificultadLograda;
             
-    public Escalador(String usuario, LocalDate fechaDeNacimiento, String escaladaFavorita, String direccionImagen) {
-        super();
-        this.usuario = usuario;
-        this.fechaDeNacimiento = fechaDeNacimiento;
-        this.escaladaFavorita = escaladaFavorita;
-        this.direccionImagen = direccionImagen;
-        logradas = new TreeSet<Ruta>();
-        retos = new TreeSet<Ruta>();
-        favoritos = new TreeSet<Ruta>();
-    }
+  
+	
+
+	public void setMaximaDificultadLograda(int maximaDificultadLograda) {
+		this.maximaDificultadLograda = maximaDificultadLograda;
+	}
     
     public String getUsuario() {
             return usuario;

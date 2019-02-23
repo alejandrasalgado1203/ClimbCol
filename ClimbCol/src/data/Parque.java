@@ -1,9 +1,11 @@
 
 package data;
 
-import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
-public class Parque {
+public class Parque implements Serializable{
                     
     private String nombre;        
     private String ubicacion;
@@ -11,22 +13,10 @@ public class Parque {
     private String temperaturaPromedio;
     private String campeonato;
     private String linkParque;
-    private String direccionImagen;
-    private TreeSet<Zona> zonas;
+    private ArrayList<String> direccionImagenes;
+    private TreeMap<String,Zona> zonas;
     
-    public Parque(String nombre, String ubicacion, String linkUbicacion, String temperaturaPromedio,
-			String campeonato, String linkParque, String direccionImagen) {
-        super();
-        this.nombre = nombre;
-        this.ubicacion = ubicacion;
-        this.linkUbicacion = linkUbicacion;
-        this.temperaturaPromedio = temperaturaPromedio;
-        this.campeonato = campeonato;
-        this.linkParque = linkParque;
-        this.direccionImagen = direccionImagen;
-        zonas = new TreeSet<Zona>();
-    }
-
+    
     public String getNombre() {
             return nombre;
     }
@@ -63,11 +53,7 @@ public class Parque {
     public void setLinkParque(String linkParque) {
             this.linkParque = linkParque;
     }
-    public String getDireccionImagen() {
-            return direccionImagen;
-    }
-    public void setDireccionImagen(String direccionImagen) {
-            this.direccionImagen = direccionImagen;
-    }
+   
+
     
 }

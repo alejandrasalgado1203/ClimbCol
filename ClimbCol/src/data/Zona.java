@@ -1,7 +1,8 @@
 
 package data;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Zona {
     
@@ -9,18 +10,11 @@ public class Zona {
     private double dificultadMax;
     private double dificultadMin;
     private double dificultadPromedio;
-    private String direccionImagen;
-    private TreeSet <Ruta> rutas;
+    private ArrayList<String> direccionImagen;
+    private TreeMap <String,Ruta> rutas;
+    private Parque parque;
     
-    public Zona(String nombre, double dificultadMax, double dificultadMin,
-			String direccionImagen) {
-        super();
-        this.nombre = nombre;
-        this.dificultadMax = dificultadMax;
-        this.dificultadMin = dificultadMin;
-        this.direccionImagen = direccionImagen;
-        rutas = new TreeSet<Ruta>();
-    }
+  
 
     public String getNombre() {
             return nombre;
@@ -47,12 +41,5 @@ public class Zona {
     public void setDificultadPromedio(double dificultadPromedio) {
             this.dificultadPromedio = dificultadPromedio;
     }
-    public String getDireccionImagen() {
-            return direccionImagen;
-    }
-    public void setDireccionImagen(String direccionImagen) {
-            this.direccionImagen = direccionImagen;
-    }
-    
-    
+   
 }

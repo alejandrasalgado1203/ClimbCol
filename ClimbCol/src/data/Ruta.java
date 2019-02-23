@@ -1,13 +1,16 @@
 
 package data;
 
-public class Ruta {
+import java.io.Serializable;
+
+public class Ruta implements Serializable{
     
     private String nombre;
     private double dificultad;
     private int numeroDeChapas;
     private String tipoDeRuta;
     private String altura;
+    private Zona zona;
     
     public Ruta(String nombre, double dificultad, int numeroDeChapas, String tipoDeRuta, String altura) {
         super();
