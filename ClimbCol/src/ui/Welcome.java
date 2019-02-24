@@ -47,13 +47,13 @@ public class Welcome{
     	tipsVideo.setLayout(new GridLayout(2,1));
     	centerPanel.add(tipsVideo,new FlowLayout());
     	
-    	ImageIcon Tips= new ImageIcon("images\\2.jpg");
+    	ImageIcon Tips= new ImageIcon("images/2.jpg");
         JLabel labelTips = new JLabel(Tips);
 		labelTips.setVisible(true);
 		labelTips.setSize(new Dimension(2,2));
 		tipsVideo.add(labelTips);
 		
-		ImageIcon Video= new ImageIcon("images\\3.jpg");
+		ImageIcon Video= new ImageIcon("images/3.jpg");
         JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
 		tipsVideo.add(labelVideo);
