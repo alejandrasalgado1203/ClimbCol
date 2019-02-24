@@ -48,7 +48,7 @@ public class Park {
     	description.setLayout(new GridLayout(2,1));
     	centerPanel.add(description,new FlowLayout());
     	
-    	ImageIcon Park= new ImageIcon("images\\4.jpg");
+    	ImageIcon Park= new ImageIcon("images/4.jpg");
         JLabel labelImage = new JLabel(Park);
 		labelImage.setVisible(true);
 		description.add(labelImage);
