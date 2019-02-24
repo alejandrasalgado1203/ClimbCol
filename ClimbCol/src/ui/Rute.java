@@ -1,8 +1,12 @@
 
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -12,30 +16,44 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class Rute extends JFrame {
+public class Rute{
 	private static JPanel panelRute= new JPanel();
-	private static JFrame frame = new JFrame ("Example");
+	private static JPanel centerPanel = new JPanel();
+	private static JFrame frame = new JFrame ("CLIMBCOL");
 	
-    public void setupPanelRute(String nameRute) {
-        panelRute.setLayout(new GridLayout(8,1));
-		
-        JLabel lblWelcomeRute = new JLabel("RUTA "+ nameRute);
+    public static void setupMainPanel(String nameRute) {
+    	createTittle(nameRute);
+    	createImage();
+    	createTextField();
+    	createMenuBar();
+    }
+    public static void createTittle(String nameRute) {
+    	
+		JLabel lblWelcomeRute = new JLabel("RUTA "+ nameRute);
         lblWelcomeRute.setFont(new Font("Tahoma",Font.PLAIN,35));
-        panelRute.add(lblWelcomeRute);
-        
-        ImageIcon Rute= new ImageIcon("/Images/Diagrama.png");
+        frame.add(lblWelcomeRute,BorderLayout.NORTH);
+    }
+    public static void createImage() {
+        ImageIcon Rute= new ImageIcon("images\\2.jpg");
         JLabel labelImage = new JLabel(Rute);
 		labelImage.setVisible(true);
-		panelRute.add(labelImage);
-		
+		centerPanel.add(labelImage,new FlowLayout());
+    }
+    public static void createTextField() {
+    	JTextField textDescription = new JTextField(30);
+		centerPanel.add(textDescription,new FlowLayout());
+		frame.add(centerPanel,BorderLayout.CENTER);
+    }
+    public static void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		panelRute.add(menuBar);
 		
 		JMenu menuAdd = new JMenu("Agregar");
 		menuAdd.setMnemonic(KeyEvent.VK_A);
 		menuBar.add(menuAdd);
-		setJMenuBar(menuBar);
+		frame.setJMenuBar(menuBar);
 
 		JMenuItem menuItemGoals = new JMenuItem("A la lista Retos",KeyEvent.VK_T);
 		menuItemGoals.setMnemonic(KeyEvent.VK_B);
@@ -46,10 +64,26 @@ public class Rute extends JFrame {
 		menuItemFavorites.setMnemonic(KeyEvent.VK_B);
 		menuAdd.add(menuItemFavorites);
 		menuAdd.addSeparator();
+		
+		menuItemGoals.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	User.showPanelGoals();
+            }
+        });
+        
+        menuItemFavorites.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	User.showPanelFavorites();
+            }
+        });
     }
-    
     public static void showPanelRute() {
-        frame.add(panelRute);
+    	frame.setTitle("CLIMBCOL");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(900,900);
+        frame.setResizable(true);
+        frame.setVisible(true);
+        setupMainPanel(" ");
         frame.pack();
     }
 }

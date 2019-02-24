@@ -8,6 +8,7 @@ import java.util.TreeMap;
 public class Escalador implements Serializable{
     
     private String usuario;
+    private String password;
     private LocalDate fechaDeNacimiento;
     private TreeMap<String,Ruta> logradas;
     private TreeMap<String,Ruta> retos;
@@ -17,12 +18,10 @@ public class Escalador implements Serializable{
     private double maximaDificultadLograda;
     
     
-    
-    
-    
-    
-    
-    
+    public Escalador(String usuario, String password){
+    	this.usuario = usuario;
+    	this.password = password;
+    }
 	public String getUsuario() {
 		return usuario;
 	}

@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,14 +20,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+import data.Escalador;
 
 public class Welcome{
 	private static JPanel panelWelcome = new JPanel ();
 	private static JPanel panelParks = new JPanel ();
     private static JPanel centerPanel = new JPanel();
-    private static Park park;
+    private static JPanel panelAdd = new JPanel();
     private static User user = new User();
     private static JFrame frame = new JFrame ("CLIMBCOL");
     
@@ -88,27 +93,27 @@ public class Welcome{
 	    ImageIcon park4 = new ImageIcon("/Images/Diagrama.png");
         panelParks.add(buttonPark4,park4);
         
-        buttonPark2.addActionListener(new ActionListener(){
+        buttonPark1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            		frame.add(new Park("1"), BorderLayout.CENTER);
+            		Park.showPanelPark();
             }
         });
         
         buttonPark2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            		frame.add(new Park("2"), BorderLayout.CENTER);
+            		Park.showPanelPark();
             }
         });
         
         buttonPark3.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            		frame.add(new Park("3"), BorderLayout.CENTER);
+            		Park.showPanelPark();
             }
         });
         
         buttonPark4.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            		frame.add(new Park("4"), BorderLayout.CENTER);
+            		Park.showPanelPark();
             }
         });
     }
@@ -151,8 +156,13 @@ public class Welcome{
         
         menuItemInfo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                    frame.add(user, BorderLayout.CENTER);
                     User.showPanelUser();
+            }
+        });
+        
+        menuItemSignIn.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                    setupPanelAdd();
             }
         });
         
@@ -165,6 +175,48 @@ public class Welcome{
         frame.setJMenuBar(menuBar);
     }
     
+    private void setupPanelAdd() {// no funciona por el momento
+
+		JLabel lblAdd = new JLabel ("Sign in");
+		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
+		panelAdd.add(lblAdd);
+
+		panelAdd.add(new JLabel ("User"));
+		final JTextField txtName = new JTextField();
+		txtName.setColumns(25);
+		panelAdd.add(txtName);
+
+		panelAdd.add(new JLabel ("Password"));
+		final JTextField txtPassword = new JTextField();
+		txtPassword.setColumns(25);
+		panelAdd.add(txtPassword);
+
+		JButton btnSend = new JButton ("Send");
+		panelAdd.add(btnSend);
+
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Escalador p = new Escalador (txtPassword.getText(),txtName.getText());
+
+				if(txtName.getText().equals("")|| txtPassword.getText().equals("") ) {
+					indicateSpaceEmpty();	
+				}
+
+				txtPassword.setText("");
+				txtName.setText("");
+				showMenu();
+			}
+		});
+
+	}
+	public void indicateSpaceEmpty() {
+		JOptionPane.showMessageDialog(frame,"A space is Empty");
+	}
+    public void showPanelAdd() {
+    	frame.add(panelAdd);
+    	frame.pack();
+    }
     public void showMenu() {
     	
     	frame.setTitle("CLIMBCOL");
