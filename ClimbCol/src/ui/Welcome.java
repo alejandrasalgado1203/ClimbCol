@@ -208,7 +208,6 @@ public class Welcome{
 				showMenu();
 			}
 		});
-
 	}
 	public void indicateSpaceEmpty() {
 		JOptionPane.showMessageDialog(frame,"A space is Empty");

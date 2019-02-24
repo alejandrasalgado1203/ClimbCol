@@ -61,22 +61,22 @@ public static void createScrollPane() {
     	centerPanel.add(scrollPane,new FlowLayout());
     	frame.add(centerPanel,BorderLayout.CENTER);
     	
-    	JButton buttonRute1 = new JButton("Zona 1");
+    	JButton buttonRute1 = new JButton("Ruta 1");
         buttonRute1.setForeground(Color.BLACK);
         buttonRute1.setBackground(Color.WHITE);
         panelRutes.add(buttonRute1);
         
-        JButton buttonRute2 = new JButton("Zona 2");
+        JButton buttonRute2 = new JButton("Ruta 2");
         buttonRute2.setForeground(Color.BLACK);
         buttonRute2.setBackground(Color.WHITE);
         panelRutes.add(buttonRute2);
         
-        JButton buttonRute3 = new JButton("Zona 3");
+        JButton buttonRute3 = new JButton("Ruta 3");
         buttonRute3.setForeground(Color.BLACK);
         buttonRute3.setBackground(Color.WHITE);
         panelRutes.add(buttonRute3);
         
-        JButton buttonRute4 = new JButton("Zona 4");
+        JButton buttonRute4 = new JButton("Ruta 4");
         buttonRute4.setForeground(Color.BLACK);
         buttonRute4.setBackground(Color.WHITE);
         panelRutes.add(buttonRute4);
