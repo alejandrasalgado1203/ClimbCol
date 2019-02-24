@@ -133,6 +133,12 @@ public class Welcome{
             }
         });
         
+        menuItemExit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	System.exit(0);
+            }
+        });
+        
         frame.setJMenuBar(menuBar);
     }
     

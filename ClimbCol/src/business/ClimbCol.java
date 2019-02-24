@@ -7,7 +7,7 @@ import data.*;
 import ui.*;
 
 public class ClimbCol {
-	private static UI ui;
+	private static Welcome ui;
 	private static TreeMap <String,Parque> parques = new TreeMap <String,Parque>();
 	private static TreeMap <String,Escalador> escaladores = new TreeMap <String,Escalador>();
 
