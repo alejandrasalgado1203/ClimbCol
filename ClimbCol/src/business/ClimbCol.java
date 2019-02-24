@@ -12,8 +12,8 @@ public class ClimbCol {
 	private static TreeMap <String,Escalador> escaladores = new TreeMap <String,Escalador>();
 
 	public static void main(String[] args) {
-		UI ui = new UI();
-		ui.showComponents();
+		Welcome ui = new Welcome();
+		ui.showMenu();
 
 		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
 	}

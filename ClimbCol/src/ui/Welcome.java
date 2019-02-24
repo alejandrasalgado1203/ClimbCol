@@ -1,7 +1,11 @@
 
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,72 +20,99 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.border.EmptyBorder;
 
-public class Welcome extends JFrame{
-	
-    private JPanel panelWelcome = new JPanel();
+public class Welcome{
+	private static JPanel panelWelcome = new JPanel ();
+	private static JPanel panelParks = new JPanel ();
+    private JPanel mainPanel = new JPanel();
+    private static Park park = new Park();
+    private static Zone zone = new Zone();
+    private static Rute rute = new Rute();
+    private static User user = new User();
+    private static JFrame frame = new JFrame ("CLIMBCOL");
     
-    public void setupPanelWelcome(){// mirar otro tipo de panel
+    public void setupMainPanel(){// mirar otro tipo de panel
 		
-        JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
-        lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
-        this.panelWelcome.add(lblWelcome);
-        
-        JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
-        lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
-        this.panelWelcome.add(lblDescription);
-        
         createMenuBarWelcome();
+        createPanelWelcome();
+        createScrollPane();
         
         final JComboBox<String> cbox = new JComboBox<String>();// corregir tipos segun logica
         ArrayList<String> rutes = new ArrayList<String>();
 		for(String s : rutes)
 			cbox.addItem(s);
-		this.panelWelcome.add(cbox);
+		mainPanel.add(cbox);
 		
 		ImageIcon Tips= new ImageIcon("/Images/Diagrama.png");
         JLabel labelTips = new JLabel(Tips);
 		labelTips.setVisible(true);
-		this.panelWelcome.add(labelTips);
+		mainPanel.add(labelTips);
 		
 		ImageIcon Video= new ImageIcon("/Images/Diagrama.png");
         JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
-		this.panelWelcome.add(labelVideo);
+		mainPanel.add(labelVideo);
 
-        JButton buttonPark1 = new JButton("Parque 1");
+        
+        
+    }
+    
+    public void createScrollPane() {
+    	
+    	JScrollPane scrollPaneParks = new JScrollPane (panelParks);
+    	scrollPaneParks.setPreferredSize(new Dimension(200, 110));
+    	frame.getContentPane().add(scrollPaneParks,BorderLayout.SOUTH);
+    	
+    	JButton buttonPark1 = new JButton("Parque 1");
         buttonPark1.setForeground(Color.BLACK);
 	    buttonPark1.setBackground(Color.WHITE);
-        this.panelWelcome.add(buttonPark1);
+	    ImageIcon park1 = new ImageIcon("/Images/Diagrama.png");
+        panelParks.add(buttonPark1,park1);
         
         JButton buttonPark2 = new JButton("Parque 2");
         buttonPark2.setForeground(Color.BLACK);
 	    buttonPark2.setBackground(Color.WHITE);
-        this.panelWelcome.add(buttonPark2);
+	    ImageIcon park2 = new ImageIcon("/Images/Diagrama.png");
+        panelParks.add(buttonPark2,park2);
         
         JButton buttonPark3 = new JButton("Parque 3");
         buttonPark3.setForeground(Color.BLACK);
 	    buttonPark3.setBackground(Color.WHITE);
-        this.panelWelcome.add(buttonPark3);
+	    ImageIcon park3 = new ImageIcon("/Images/Diagrama.png");
+        panelParks.add(buttonPark3, park3);
         
         JButton buttonPark4 = new JButton("Parque 4");
         buttonPark4.setForeground(Color.BLACK);
 	    buttonPark4.setBackground(Color.WHITE);
-        this.panelWelcome.add(buttonPark4);
+	    ImageIcon park4 = new ImageIcon("/Images/Diagrama.png");
+        panelParks.add(buttonPark4,park4);
         
         buttonPark1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                    remove(panelWelcome);
-                    Park.showPanelPark();
+            		frame.add(park, BorderLayout.CENTER);
             }
         });
-        
     }
     
+    public void createPanelWelcome () {
+    	
+    	frame.add(panelWelcome,BorderLayout.CENTER);
+    	
+    	JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
+        lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
+        panelWelcome.add(lblWelcome);
+        
+        JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
+        lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
+        panelWelcome.add(lblDescription);
+        
+    }
     public void createMenuBarWelcome(){
         JMenuBar menuBar = new JMenuBar();
-        this.panelWelcome.add(menuBar);
+        frame.add(menuBar);
         
         JMenuItem menuItemInfo = new JMenuItem("Information User",KeyEvent.VK_T);
         menuItemInfo.setMnemonic(KeyEvent.VK_A);
@@ -97,16 +128,24 @@ public class Welcome extends JFrame{
         
         menuItemInfo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                    remove(panelWelcome);
+                    frame.add(user, BorderLayout.CENTER);
                     User.showPanelUser();
             }
         });
         
-        this.setJMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
     }
     
     public void showMenu() {
-    	this.setSize(450,200);
-        this.add(this.panelWelcome);
+    	
+    	frame.setTitle("CLIMBCOL");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocation(550,70);
+        frame.setResizable(true);
+        frame.add(mainPanel,BorderLayout.NORTH);
+        mainPanel.setBorder(new EmptyBorder(10,10,10,10));
+        mainPanel.setLayout(new CardLayout(0,0));// aprender esto;
+        frame.setVisible(true);
+        setupMainPanel();
     }
 }

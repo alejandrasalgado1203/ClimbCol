@@ -139,11 +139,11 @@ public class Park extends JFrame{
 		
 		
 		toolBar = new JToolBar( "ToolBar", SwingConstants.HORIZONTAL); 
-		toolBar.setFloatable(false);
+		toolBar.setFloatable(true);
 		toolBar.add(b1);
 		toolBar.addSeparator();
 		toolBar.add(b2);
-		this.add(toolBar, BorderLayout.NORTH);
+		this.add(toolBar, BorderLayout.SOUTH);
 	}
     
     public static void showPanelPark() {
