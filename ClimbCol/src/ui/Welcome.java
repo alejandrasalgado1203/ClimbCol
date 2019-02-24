@@ -2,7 +2,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,30 +21,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
 
 public class Welcome{
 	private static JPanel panelWelcome = new JPanel ();
 	private static JPanel panelParks = new JPanel ();
-    private static JPanel mainPanel = new JPanel();
     private static JPanel centerPanel = new JPanel();
     private static Park park;
     private static User user = new User();
     private static JFrame frame = new JFrame ("CLIMBCOL");
     
-    public void setupMainPanel(){// mirar otro tipo de panel
-		
+    public void setupMainPanel(){
         createMenuBarWelcome();
         createPanelWelcome();
         createScrollPane();
         createTipsVideoPane();
-        
-        final JComboBox<String> cbox = new JComboBox<String>();// corregir tipos segun logica
-        ArrayList<String> rutes = new ArrayList<String>();
-		for(String s : rutes)
-			cbox.addItem(s);
-		mainPanel.add(cbox);
-        
     }
     
     public void createTipsVideoPane() {
@@ -59,7 +48,7 @@ public class Welcome{
 		labelTips.setSize(new Dimension(2,2));
 		tipsVideo.add(labelTips);
 		
-		ImageIcon Video= new ImageIcon("/Images/Diagrama.png");
+		ImageIcon Video= new ImageIcon("images\\3.jpg");
         JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
 		tipsVideo.add(labelVideo);
@@ -69,7 +58,7 @@ public class Welcome{
     public void createScrollPane() {
     	JPanel scrollPane = new JPanel();
     	JScrollPane scrollPaneParks = new JScrollPane (panelParks,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	scrollPaneParks.setPreferredSize(new Dimension(200, 110));
+    	scrollPaneParks.setPreferredSize(new Dimension(350, 250));
     	panelParks.setLayout(new GridLayout(4,1));
     	scrollPane.add(scrollPaneParks);
     	centerPanel.add(scrollPane,new FlowLayout());
@@ -125,16 +114,23 @@ public class Welcome{
     }
     
     public void createPanelWelcome () {
-    	panelWelcome.setLayout(new GridLayout(2,1));
+    	panelWelcome.setLayout(new GridLayout(3,1));
     	frame.add(panelWelcome,BorderLayout.NORTH);
     	
-    	JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
+    	JLabel lblWelcome = new JLabel("              Welcome to CLIMBCOL");
         lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
         panelWelcome.add(lblWelcome);
         
-        JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
+        JLabel lblDescription = new JLabel("      The best aplication to Colombian and international Climbers");
         lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
         panelWelcome.add(lblDescription);
+        
+        final JComboBox<String> cbox = new JComboBox<String>();// corregir tipos segun logica
+        ArrayList<String> rutes = new ArrayList<String>();
+		for(String s : rutes)
+			cbox.addItem(s);
+		cbox.setEditable(true);
+		panelWelcome.add(cbox);
         
     }
     public void createMenuBarWelcome(){
@@ -173,12 +169,10 @@ public class Welcome{
     	
     	frame.setTitle("CLIMBCOL");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000,800);
-        frame.setResizable(true);
-        frame.add(mainPanel,BorderLayout.SOUTH);
-        //.setBorder(new EmptyBorder(10,10,10,10));
-        frame.pack();
+        frame.setSize(900,900);
+        frame.setResizable(false);
         frame.setVisible(true);
         setupMainPanel();
+        frame.pack();
     }
 }
