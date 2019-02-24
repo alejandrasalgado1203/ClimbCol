@@ -18,12 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-public class Park extends JFrame{
+public class Park extends JPanel{
 	private static JPanel fotos = new JPanel();
 	private int imageIndex = 0;
 	private JToolBar toolBar;
 	private static JPanel panelPark = new JPanel();
-	private static JFrame frame = new JFrame ("Example");
+	
+	public Park(String namePark) {
+		
+	}
 	
 	public void setupPanelPark(String namePark){
         panelPark.setLayout(new GridLayout(8,1));
