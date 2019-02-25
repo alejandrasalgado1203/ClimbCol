@@ -5,28 +5,29 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.TreeMap;
 
-public class Escalador implements Serializable{
-    
-    private String usuario;
-    private String password;
-    private LocalDate fechaDeNacimiento;
-    private TreeMap<String,Ruta> logradas;
-    private TreeMap<String,Ruta> retos;
-    private TreeMap<String,Ruta> favoritos;
-    private String escaladaFavorita;
-    private String direccionImagen;
-    private double maximaDificultadLograda;
-    
-    
-    public Escalador(String usuario, String password){
-    	this.usuario = usuario;
-    	this.password = password;
-    }
-	public String getUsuario() {
-		return usuario;
+public class Escalador implements Serializable,ChoosableByName{
+
+	private static final long serialVersionUID = -819014890345586134L;
+	private String name;
+	private String password;
+	private LocalDate fechaDeNacimiento;
+	private TreeMap<String,Ruta> logradas;
+	private TreeMap<String,Ruta> retos;
+	private TreeMap<String,Ruta> favoritos;
+	private String escaladaFavorita;
+	private String direccionImagen;
+	private double maximaDificultadLograda;
+
+
+	public Escalador(String name, String password){
+		this.name = name;
+		this.setPassword(password);
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public LocalDate getFechaDeNacimiento() {
 		return fechaDeNacimiento;
@@ -70,6 +71,12 @@ public class Escalador implements Serializable{
 	public void setMaximaDificultadLograda(double maximaDificultadLograda) {
 		this.maximaDificultadLograda = maximaDificultadLograda;
 	}
-            
-  
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 }

@@ -3,22 +3,29 @@ package data;
 
 import java.io.Serializable;
 
-public class Ruta implements Serializable{
-    
-    private String nombre;
-    private double dificultad;
-    private int numeroDeChapas;
-    private String tipoDeRuta;
-    private String altura;
-    private Zona zona;
-    
-    
-    
-	public String getNombre() {
-		return nombre;
+public class Ruta implements Serializable,ChoosableByName{
+
+	private static final long serialVersionUID = 8944754339534154430L;
+	private String name;
+	private double dificultad;
+	private int numeroDeChapas;
+	private String tipoDeRuta;
+	private String altura;
+	private Zona zona;
+
+
+
+	public Ruta(String name) {
+		super();
+		this.name = name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public double getDificultad() {
 		return dificultad;
@@ -50,6 +57,6 @@ public class Ruta implements Serializable{
 	public void setZona(Zona zona) {
 		this.zona = zona;
 	}
-    
-   
+
+
 }

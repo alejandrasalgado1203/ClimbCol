@@ -5,22 +5,58 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Zona implements Serializable{
-    
-    private String nombre;
-    private double dificultadMax;
-    private double dificultadMin;
-    private double dificultadPromedio;
-    private ArrayList<String> direccionImagen;
-    private TreeMap <String,Ruta> rutas;
-    private Parque parque;
-    
-    
-	public String getNombre() {
-		return nombre;
+public class Zona implements Serializable,ChoosableByName{
+
+	private static final long serialVersionUID = 8176465641263408346L;
+	private String name;
+	private double dificultadMax;
+	private double dificultadMin;
+	private double dificultadPromedio;
+	private ArrayList<String> direccionImagenes;
+	private TreeMap <String,Ruta> rutas;
+	private Parque parque;   
+
+
+	public Zona(String name, String direccionImagen) {
+		super();
+		this.name = name;
+		this.direccionImagenes = new ArrayList<String>();
+		this.direccionImagenes.add(direccionImagen);
+		this.dificultadMax = Integer.MIN_VALUE;
+		this.dificultadMin = Integer.MAX_VALUE;
+		this.dificultadPromedio = 0;
+		this.rutas = new TreeMap <String,Ruta>();
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public void putRuta(Ruta r) {
+		this.rutas.put(r.getName(), r);
+		r.setZona(this);
+		this.actualizeDificult(r.getDificultad());
+	}
+
+	public void addImage(String string) {
+		this.direccionImagenes.add(string);
+	}
+
+	public Ruta getRuta(String s) {
+		return this.rutas.get(s);
+	}
+
+	private void actualizeDificult(double dificultad) {
+		if(this.dificultadMax<dificultad)this.dificultadMax = dificultad;
+		if(this.dificultadMin>dificultad)this.dificultadMin = dificultad;
+		double sum = 0;
+		for (Ruta r : this.rutas.values()) {
+			sum+=r.getDificultad();
+		}
+		this.dificultadPromedio = sum/this.rutas.size();
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public double getDificultadMax() {
 		return dificultadMax;
@@ -41,10 +77,10 @@ public class Zona implements Serializable{
 		this.dificultadPromedio = dificultadPromedio;
 	}
 	public ArrayList<String> getDireccionImagen() {
-		return direccionImagen;
+		return direccionImagenes;
 	}
 	public void setDireccionImagen(ArrayList<String> direccionImagen) {
-		this.direccionImagen = direccionImagen;
+		this.direccionImagenes = direccionImagen;
 	}
 	public TreeMap<String, Ruta> getRutas() {
 		return rutas;
@@ -58,6 +94,4 @@ public class Zona implements Serializable{
 	public void setParque(Parque parque) {
 		this.parque = parque;
 	}
-    
-  
 }

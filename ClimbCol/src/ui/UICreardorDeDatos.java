@@ -31,16 +31,11 @@ import data.Parque;
 public class UICreardorDeDatos extends JFrame{
 
 	private CreadorDeDatos cdd;
-	private JPanel newPark;
-	private JPanel newZone;
-	private JPanel newRute;
-	private JPanel editPark;
-	private JPanel editZone;
-	private String parque;
-	private String Zona;
-
-	//unificar buscador de zona y buscador de parque
-	//unificar pedidor de datos
+	private JPanel newPark = new JPanel();
+	private JPanel newZone = new JPanel();
+	private JPanel newRute = new JPanel();
+	private JPanel editPark = new JPanel();
+	private JPanel editZone = new JPanel();
 
 
 	public UICreardorDeDatos(CreadorDeDatos cdd) {
@@ -54,17 +49,8 @@ public class UICreardorDeDatos extends JFrame{
 		mainPanel.setBorder(new EmptyBorder(10,10,10,10));
 		mainPanel.setLayout(new BorderLayout());
 		this.setContentPane(mainPanel);
-		initiComponents();
-		this.setVisible(true);
-	}
-
-	private void initiComponents() {
 		setupMenu();
-		setupNewParkPanel();
-		setupNewZonePanel();
-		setupNewRutePanel();
-		setupEditParkPanel();
-		setupEditZonePanel();
+		this.setVisible(true);
 	}
 
 	private void setupEditZonePanel() {
@@ -80,8 +66,8 @@ public class UICreardorDeDatos extends JFrame{
 		ZoneChooser zoneChooser = new ZoneChooser(cdd.getParques());
 		box.add(zoneChooser);
 		box.add(Box.createVerticalStrut(10));
-		
-		
+
+
 		String[] fields = {"Direccion imagen"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
@@ -234,14 +220,16 @@ public class UICreardorDeDatos extends JFrame{
 		JMenuItem newPark = new JMenuItem("parque nuevo");
 		newPark.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				setupNewParkPanel();
 				showNewPark();
 			}
 		});
 		menuPark.add(newPark);
-		
+
 		JMenuItem editPark = new JMenuItem("editar Parque");
 		editPark.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setupEditParkPanel();
 				showEditPark();
 			}
 		});
@@ -251,6 +239,7 @@ public class UICreardorDeDatos extends JFrame{
 		JMenuItem newZone = new JMenuItem("zona nueva");
 		newZone.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				setupNewZonePanel();
 				showNewZone();
 			}
 		});
@@ -258,6 +247,7 @@ public class UICreardorDeDatos extends JFrame{
 		JMenuItem editZone = new JMenuItem("editar zona");
 		editZone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setupEditZonePanel();
 				showEditZone();
 			}
 		});
@@ -267,6 +257,7 @@ public class UICreardorDeDatos extends JFrame{
 		JMenuItem newRute = new JMenuItem("ruta nueva");
 		newRute.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				setupNewRutePanel();
 				showNewRute();
 			}
 		});
@@ -278,7 +269,7 @@ public class UICreardorDeDatos extends JFrame{
 				cdd.save();
 			}
 		});
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menuPark);
 		menuBar.add(menuZone);
@@ -287,7 +278,7 @@ public class UICreardorDeDatos extends JFrame{
 		this.setJMenuBar(menuBar);
 	}
 
-	
+
 	protected void showHome() {
 		this.remove(editPark);
 		this.remove(editZone);

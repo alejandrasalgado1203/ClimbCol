@@ -3,38 +3,55 @@ package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.TreeMap;
 
-public class Parque implements Serializable{
-                    
-    private String nombre;        
-    private String ubicacion;
-    private String linkUbicacion;
-    private String temperaturaPromedio;
-    private String campeonato;
-    private String linkParque;
-    private ArrayList<String> direccionImagenes;
-    private TreeMap<String,Zona> zonas;
-    
-    
-    
-    
-	public Parque() {
+public class Parque implements Serializable,ChoosableByName{
+
+	private static final long serialVersionUID = -1715829727108363741L;
+	private String name;        
+	private String ubicacion;
+	private String linkUbicacion;
+	private String temperaturaPromedio;
+	private String campeonato;
+	private String linkParque;
+	private ArrayList<String> direccionImagenes;
+	private TreeMap<String,Zona> zonas;
+
+
+	public Parque(String name, String ubicacion, String linkUbicacion, String temperaturaPromedio, String campeonato,
+			String linkParque, String direccionImagen) {
 		super();
-		Random rand = new Random();
-		zonas = new TreeMap<String,Zona>();
-		zonas.put("prueba zonas"+rand.nextInt(30) , new Zona());
-		zonas.put("prueba zonas"+rand.nextInt(30), new Zona());
-		zonas.put("prueba zonas"+rand.nextInt(30), new Zona());
-		
-		
+		this.name = name;
+		this.ubicacion = ubicacion;
+		this.linkUbicacion = linkUbicacion;
+		this.temperaturaPromedio = temperaturaPromedio;
+		this.campeonato = campeonato;
+		this.linkParque = linkParque;
+		this.direccionImagenes = new ArrayList<String> ();
+		this.direccionImagenes.add(direccionImagen);
+		this.zonas = new TreeMap<String,Zona> ();
 	}
-	public String getNombre() {
-		return nombre;
+
+	public void putZone(Zona z) {
+		this.zonas.put(z.getName(), z);
+		z.setParque(this);
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public Zona getZona(String string) {
+		return this.zonas.get(string);
+	}
+
+	public void addImage(String string) {
+		this.direccionImagenes.add(string);
+	}
+
+
+	//getters y setters 
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getUbicacion() {
 		return ubicacion;
@@ -78,7 +95,4 @@ public class Parque implements Serializable{
 	public void setZonas(TreeMap<String, Zona> zonas) {
 		this.zonas = zonas;
 	}
-    
-    
-   
 }
