@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,17 +16,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
+import javax.swing.SwingConstants;
 
 public class User extends JFrame {
 	private static JPanel Welcome = new JPanel(new GridLayout(2,1));
 	private static JPanel panelGoals = new JPanel();
 	private static JPanel panelFavorites = new JPanel();
 	private static JFrame frame = new JFrame ("CLIMBCOL");
+	private static JToolBar toolBar;
 	
 	public static void setupMainPanel(String nombreEscalador) {
 		createTittle(nombreEscalador);
-		createSpinner();
+		createTextField();
 		createButtons();
 	}
 	public static void createTittle(String name) {
@@ -33,25 +37,28 @@ public class User extends JFrame {
         lblWelcomeUser.setFont(new Font("Tahoma",Font.PLAIN,35));
         Welcome.add(lblWelcomeUser);
 	}
-	public static void createSpinner() { 
+	public static void createTextField() { 
 		JTextField textfield = new JTextField(30);
 		Welcome.add(textfield);
 		frame.add(Welcome,BorderLayout.NORTH);
 	}
-	 public static void createButtons() {// no esta sirviendo
-		JPanel buttons = new JPanel();
+	
+	public static void createSpinner() {// no entendi spinner jajaja
 		
-        JButton buttonGoals= new JButton("Retos");
+	}
+	 public static void createButtons() {
+		
+        JButton buttonGoals= new JButton("Grupo de Retos");
         buttonGoals.setForeground(Color.BLACK);
         buttonGoals.setBackground(Color.WHITE);
-        buttons.add(buttonGoals,FlowLayout.CENTER);
+        //buttons.add(buttonGoals,FlowLayout.CENTER);
         
         JButton buttonFavorites = new JButton("Favoritos");
         buttonFavorites.setForeground(Color.BLACK);
         buttonFavorites.setBackground(Color.WHITE);
-        buttons.add(buttonFavorites,FlowLayout.CENTER);
+        //buttons.add(buttonFavorites,FlowLayout.CENTER);
         
-        frame.add(buttons,BorderLayout.SOUTH);
+        //frame.add(buttons,BorderLayout.SOUTH);
         
         buttonGoals.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +73,12 @@ public class User extends JFrame {
             }
         });
 	        
+        toolBar = new JToolBar( "ToolBar", SwingConstants.HORIZONTAL); 
+		toolBar.setFloatable(true);
+		toolBar.add(buttonGoals);
+		toolBar.addSeparator();
+		toolBar.add(buttonFavorites);
+		frame.add(toolBar,BorderLayout.SOUTH);
 	    }
 	    
 	    public static void showPanelUser() {

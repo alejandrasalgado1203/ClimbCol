@@ -157,6 +157,7 @@ public class Welcome extends JFrame{
         
         menuItemInfo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
+            		remove(menuBar);
                     User.showPanelUser();
             }
         });

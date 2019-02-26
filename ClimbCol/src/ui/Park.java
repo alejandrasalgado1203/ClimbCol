@@ -121,7 +121,9 @@ public class Park {
         
         fotos.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                    setupPanelFotos();
+            		frame.remove(centerPanel);
+            		frame.remove(fotos);
+                    showPanelFotos();
             }
         });
 	}
@@ -168,7 +170,8 @@ public class Park {
 		fotos.add(toolBar, BorderLayout.SOUTH);
 		frame.add(fotos);
 	}
-    public void showPanelFotos() {
+
+    public static void showPanelFotos() {
     	frame.setTitle("CLIMBCOL");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,500);
