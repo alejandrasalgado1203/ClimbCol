@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Parque implements Serializable, ChoosableByName, MainImageOwner{
+public class Parque implements Serializable{
 
 	private static final long serialVersionUID = -1715829727108363741L;
 	private String name;        

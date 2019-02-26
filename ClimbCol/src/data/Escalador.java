@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.TreeMap;
 
-public class Escalador implements Serializable,ChoosableByName{
+public class Escalador implements Serializable{
 
 	private static final long serialVersionUID = -819014890345586134L;
 	private String name;

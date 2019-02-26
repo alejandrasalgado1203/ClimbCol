@@ -13,8 +13,6 @@ public class CreadorDeDatos {
 	public CreadorDeDatos(TreeMap<String, Parque> parques) {
 		super();
 		this.parques = parques;
-		this.parques.put("prueba parque 1", new Parque());
-		this.parques.put("prueba parque 2", new Parque());
 		
 	}
 
