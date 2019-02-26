@@ -126,7 +126,7 @@ public class Park {
         });
 	}
 	    
-    public static void setupPanelFotos() {
+    public static void setupPanelFotos() {// no funciona
     	
     	fotos.setLayout(new BorderLayout());
 		
@@ -165,8 +165,18 @@ public class Park {
 		toolBar.add(b1);
 		toolBar.addSeparator();
 		toolBar.add(b2);
-		frame.add(toolBar, BorderLayout.SOUTH);
+		fotos.add(toolBar, BorderLayout.SOUTH);
+		frame.add(fotos);
 	}
+    public void showPanelFotos() {
+    	frame.setTitle("CLIMBCOL");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500,500);
+        frame.setResizable(true);
+        frame.setVisible(true);
+        setupPanelFotos();
+        frame.pack();
+    }
 
 	public static void showPanelPark() {
 		frame.setTitle("CLIMBCOL");

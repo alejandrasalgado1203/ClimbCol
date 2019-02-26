@@ -71,7 +71,7 @@ public class User extends JFrame {
 	    public static void showPanelUser() {
 	    	frame.setTitle("CLIMBCOL");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        frame.setSize(900,900);
+	        frame.setSize(500,500);
 	        frame.setResizable(true);
 	        frame.setVisible(true);
 	        setupMainPanel("buuuu ");

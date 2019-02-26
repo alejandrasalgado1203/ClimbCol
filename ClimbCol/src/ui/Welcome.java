@@ -2,6 +2,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,13 +28,13 @@ import javax.swing.JTextField;
 
 import data.Escalador;
 
-public class Welcome{
+public class Welcome extends JFrame{
 	private static JPanel panelWelcome = new JPanel ();
 	private static JPanel panelParks = new JPanel ();
     private static JPanel centerPanel = new JPanel();
-    private static JPanel panelAdd = new JPanel();
+    private static JPanel panelSignIn = new JPanel();
     private static User user = new User();
-    private static JFrame frame = new JFrame ("CLIMBCOL");
+    //private static JFrame frame = new JFrame ("CLIMBCOL");
     
     public void setupMainPanel(){
         createMenuBarWelcome();
@@ -67,7 +68,7 @@ public class Welcome{
     	panelParks.setLayout(new GridLayout(4,1));
     	scrollPane.add(scrollPaneParks);
     	centerPanel.add(scrollPane,new FlowLayout());
-    	frame.add(centerPanel,BorderLayout.CENTER);
+    	this.add(centerPanel,BorderLayout.CENTER);
     	
     	JButton buttonPark1 = new JButton("Parque 1");
         buttonPark1.setForeground(Color.BLACK);
@@ -120,7 +121,7 @@ public class Welcome{
     
     public void createPanelWelcome () {
     	panelWelcome.setLayout(new GridLayout(3,1));
-    	frame.add(panelWelcome,BorderLayout.NORTH);
+    	this.add(panelWelcome,BorderLayout.NORTH);
     	
     	JLabel lblWelcome = new JLabel("              Welcome to CLIMBCOL");
         lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
@@ -140,7 +141,7 @@ public class Welcome{
     }
     public void createMenuBarWelcome(){
         JMenuBar menuBar = new JMenuBar();
-        frame.add(menuBar);
+        this.add(menuBar);
         
         JMenuItem menuItemInfo = new JMenuItem("Information User",KeyEvent.VK_T);
         menuItemInfo.setMnemonic(KeyEvent.VK_A);
@@ -162,7 +163,11 @@ public class Welcome{
         
         menuItemSignIn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                    setupPanelAdd();
+            		remove(panelWelcome);
+            		remove(centerPanel);
+            		remove(panelParks);
+            		remove(menuBar);
+                    showPanelAdd();
             }
         });
         
@@ -172,24 +177,40 @@ public class Welcome{
             }
         });
         
-        frame.setJMenuBar(menuBar);
+        this.setJMenuBar(menuBar);
     }
     
-    private void setupPanelAdd() {// no funciona por el momento
-
+    private void setupPanelAdd() {
+    	JLabel nameLabel;
+    	JLabel passwordLabel;
+    	String userString ="User: ";
+    	String passwordString = "Password: ";
+    	JTextField nameField;
+    	JTextField passwordField;
+    	JPanel txtPane = new JPanel(new GridLayout(0,1));
+    	JPanel fieldPane = new JPanel(new GridLayout(0,1));
+    	JPanel panelAdd = new JPanel();
+    	panelSignIn.add(panelAdd);
+    	this.add(panelSignIn);
+    	
 		JLabel lblAdd = new JLabel ("Sign in");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		panelAdd.add(lblAdd);
 
-		panelAdd.add(new JLabel ("User"));
-		final JTextField txtName = new JTextField();
-		txtName.setColumns(25);
-		panelAdd.add(txtName);
-
-		panelAdd.add(new JLabel ("Password"));
-		final JTextField txtPassword = new JTextField();
-		txtPassword.setColumns(25);
-		panelAdd.add(txtPassword);
+		nameLabel = new JLabel(userString);
+		txtPane.add(nameLabel);
+		passwordLabel = new JLabel (passwordString);
+		txtPane.add(passwordLabel);
+		
+		nameField = new JTextField();
+		nameField.setColumns(25);
+		fieldPane.add(nameField);
+		
+		passwordField = new JTextField();
+		passwordField.setColumns(25);
+		fieldPane.add(passwordField);
+		panelAdd.add(txtPane,BorderLayout.CENTER);
+		panelAdd.add(fieldPane,BorderLayout.LINE_END);
 
 		JButton btnSend = new JButton ("Send");
 		panelAdd.add(btnSend);
@@ -197,33 +218,39 @@ public class Welcome{
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Escalador p = new Escalador (txtPassword.getText(),txtName.getText());
+				Escalador p = new Escalador (nameField.getText(),passwordField.getText());
 
-				if(txtName.getText().equals("")|| txtPassword.getText().equals("") ) {
+				if(nameField.getText().equals("")|| passwordField.getText().equals("") ) {
 					indicateSpaceEmpty();	
 				}
 
-				txtPassword.setText("");
-				txtName.setText("");
+				passwordField.setText("");
+				nameField.setText("");
+				remove(panelAdd);
 				showMenu();
 			}
 		});
 	}
-	public void indicateSpaceEmpty() {
-		JOptionPane.showMessageDialog(frame,"A space is Empty");
-	}
     public void showPanelAdd() {
-    	frame.add(panelAdd);
-    	frame.pack();
+    	this.setTitle("CLIMBCOL");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500,500);
+        this.setResizable(true);
+        this.setVisible(true);
+        setupPanelAdd();
+        this.pack();
     }
+	public void indicateSpaceEmpty() {
+		JOptionPane.showMessageDialog(this,"A space is Empty");
+	}
     public void showMenu() {
     	
-    	frame.setTitle("CLIMBCOL");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900,900);
-        frame.setResizable(false);
-        frame.setVisible(true);
+    	this.setTitle("CLIMBCOL");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(900,900);
+        this.setResizable(true);
+        this.setVisible(true);
         setupMainPanel();
-        frame.pack();
+        this.pack();
     }
 }
