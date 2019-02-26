@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Parque implements Serializable,ChoosableByName{
+public class Parque implements Serializable, ChoosableByName, MainImageOwner{
 
 	private static final long serialVersionUID = -1715829727108363741L;
 	private String name;        
@@ -45,6 +45,12 @@ public class Parque implements Serializable,ChoosableByName{
 		this.direccionImagenes.add(string);
 	}
 
+	public String getMainImage() {
+		for (String string : direccionImagenes) {
+			if (string.contains("main"))return string;
+		}
+		return "";
+	}
 
 	//getters y setters 
 	public String getName() {
