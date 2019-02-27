@@ -26,20 +26,21 @@ import javax.swing.event.ListSelectionListener;
 
 import business.ClimbColManager;
 import business.ClimbersManager;
+import data.Parque;
 
 public class UIPark extends JPanel{
 	private static JPanel panelFotos = new JPanel(); 
 	private static JPanel panelTittle = new JPanel();
 	private static UIZone panelZones;
-    private static JPanel centerPanel = new JPanel();
-    private ClimbColManager climbcolManager;
-    private UIWelcome welcome;
+	private static JPanel centerPanel = new JPanel();
+	private UIWelcome welcome;
 	private static int imageIndex = 0;
 	private static JToolBar toolBar;
-	
-	public UIPark(LayoutManager park) {
+	private Parque park;
+
+	public UIPark(Parque parque) {
+		this.park = parque;
 		showPanelPark();
-		this.climbcolManager = climbcolManager;
 	}
 	public void setupMainPanel(String namePark) {
 		createTittle(namePark);
@@ -49,67 +50,67 @@ public class UIPark extends JPanel{
 	}
 	public void createTittle(String namePark) {
 		JLabel lblWelcomePark = new JLabel("PARQUE "+ namePark);
-        lblWelcomePark.setFont(new Font("Tahoma",Font.PLAIN,35));
-        panelTittle.add(lblWelcomePark);
-        this.add(panelTittle,BorderLayout.NORTH);
+		lblWelcomePark.setFont(new Font("Tahoma",Font.PLAIN,35));
+		panelTittle.add(lblWelcomePark);
+		this.add(panelTittle,BorderLayout.NORTH);
 	}
-        
-    public void createDescription() {
-    	JPanel description = new JPanel();
-    	description.setLayout(new GridLayout(2,1));
-    	centerPanel.add(description,new FlowLayout());
-    	
-    	ImageIcon Park= new ImageIcon("images/4.jpg");
-        JLabel labelImage = new JLabel(Park);
+
+	public void createDescription() {
+		JPanel description = new JPanel();
+		description.setLayout(new GridLayout(2,1));
+		centerPanel.add(description,new FlowLayout());
+
+		ImageIcon Park= new ImageIcon("images/4.jpg");
+		JLabel labelImage = new JLabel(Park);
 		labelImage.setVisible(true);
 		description.add(labelImage);
-        
+
 		JTextField textDescription = new JTextField(30);
 		description.add(textDescription);
-    }
-    
-    public void createScrollPane() {
-    	
-    	JList listZones = new JList(climbcolManager.getZonesNames());
-    	JScrollPane scrollPaneZones = new JScrollPane(listZones);
-    	
-    	centerPanel.add(scrollPaneZones,new FlowLayout());
-    	this.add(centerPanel,BorderLayout.CENTER);
-        
-        listZones.addListSelectionListener(new ListSelectionListener() {
+	}
+
+	public void createScrollPane() {
+
+		JList listZones = new JList(ClimbColManager.getZonesNames(park));
+		JScrollPane scrollPaneZones = new JScrollPane(listZones);
+
+		centerPanel.add(scrollPaneZones,new FlowLayout());
+		this.add(centerPanel,BorderLayout.CENTER);
+
+		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				panelZones = new UIZone(climbcolManager.getZone(arg0.getSource()));
+				panelZones = new UIZone(ClimbColManager.getZone(park,(String) listZones.getSelectedValue()));
 				showPanelZone();
 			}
-        });
-       
-    }
-    public void showPanelZone() {
-    	remove(panelTittle);
+		});
+
+	}
+	public void showPanelZone() {
+		remove(panelTittle);
 		remove(centerPanel);
 		remove(panelFotos);
 		welcome.showPanel(panelZones);
-    }
+	}
 	public void createButtonFotos(){
 		JButton fotos = new JButton("Fotos");
 		fotos.setForeground(Color.BLACK);
-	    fotos.setBackground(Color.WHITE);
-	    this.add(fotos,BorderLayout.SOUTH);
-        
-        
-        fotos.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-            		remove(centerPanel);
-            		remove(fotos);
-                    showPanelFotos();
-            }
-        });
+		fotos.setBackground(Color.WHITE);
+		this.add(fotos,BorderLayout.SOUTH);
+
+
+		fotos.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				remove(centerPanel);
+				remove(fotos);
+				showPanelFotos();
+			}
+		});
 	}
-	    
-    public void setupPanelFotos() {// no funciona
-    	
-    	panelFotos.setLayout(new BorderLayout());
-		
+
+	public void setupPanelFotos() {// no funciona
+
+		panelFotos.setLayout(new BorderLayout());
+
 		ArrayList <ImageIcon> images = new ArrayList <ImageIcon>();
 		images.add(new ImageIcon("images/sandPile3.png"));
 		images.add(new ImageIcon("images/sandPile4.png"));
@@ -117,7 +118,7 @@ public class UIPark extends JPanel{
 		JLabel label = new JLabel (images.get(0));
 		panelFotos.add(label,BorderLayout.CENTER);  
 
-		
+
 		JButton b1 = new JButton(new ImageIcon("images/previous.png"));
 		b1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
@@ -127,8 +128,8 @@ public class UIPark extends JPanel{
 				}
 			}  
 		});  
-		
-		
+
+
 		JButton b2 = new JButton(new ImageIcon("images/next.png"));
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
@@ -138,8 +139,8 @@ public class UIPark extends JPanel{
 				}
 			}  
 		});  
-		
-		
+
+
 		toolBar = new JToolBar( "ToolBar", SwingConstants.HORIZONTAL); 
 		toolBar.setFloatable(true);
 		toolBar.add(b1);
@@ -149,16 +150,16 @@ public class UIPark extends JPanel{
 		this.add(panelFotos);
 	}
 
-    public void showPanelFotos() {
-        this.setSize(500,500);
-        setupPanelFotos();
-        this.setVisible(true);
-    }
+	public void showPanelFotos() {
+		this.setSize(500,500);
+		setupPanelFotos();
+		this.setVisible(true);
+	}
 
 	public void showPanelPark() {
-        this.setSize(900,900);
-        setupMainPanel(" ");
-        this.setVisible(true);
-		
+		this.setSize(900,900);
+		setupMainPanel(" ");
+		this.setVisible(true);
+
 	}
 }
