@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Rute{
+public class UIRute{
 	private static JPanel panelRute= new JPanel();
 	private static JPanel centerPanel = new JPanel();
 	private static JFrame frame = new JFrame ("CLIMBCOL");
@@ -67,13 +67,13 @@ public class Rute{
 		
 		menuItemGoals.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            	User.showPanelGoals();
+            	UIUser.showPanelGoals();
             }
         });
         
         menuItemFavorites.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            	User.showPanelFavorites();
+            	UIUser.showPanelFavorites();
             }
         });
     }
@@ -82,8 +82,8 @@ public class Rute{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900,900);
         frame.setResizable(true);
-        frame.setVisible(true);
         setupMainPanel(" ");
         frame.pack();
+        frame.setVisible(true);
     }
 }

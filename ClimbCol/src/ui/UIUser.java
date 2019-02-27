@@ -20,11 +20,11 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingConstants;
 
-public class User extends JFrame {
+public class UIUser extends JFrame {
 	private static JPanel Welcome = new JPanel(new GridLayout(2,1));
 	private static JPanel panelGoals = new JPanel();
 	private static JPanel panelFavorites = new JPanel();
-	private static JFrame frame = new JFrame ("CLIMBCOL");
+	private static JFrame frameUser = new JFrame ("CLIMBCOL");
 	private static JToolBar toolBar;
 	
 	public static void setupMainPanel(String nombreEscalador) {
@@ -40,7 +40,7 @@ public class User extends JFrame {
 	public static void createTextField() { 
 		JTextField textfield = new JTextField(30);
 		Welcome.add(textfield);
-		frame.add(Welcome,BorderLayout.NORTH);
+		frameUser.add(Welcome,BorderLayout.NORTH);
 	}
 	
 	public static void createSpinner() {// no entendi spinner jajaja
@@ -78,27 +78,27 @@ public class User extends JFrame {
 		toolBar.add(buttonGoals);
 		toolBar.addSeparator();
 		toolBar.add(buttonFavorites);
-		frame.add(toolBar,BorderLayout.SOUTH);
+		frameUser.add(toolBar,BorderLayout.SOUTH);
 	    }
 	    
 	    public static void showPanelUser() {
-	    	frame.setTitle("CLIMBCOL");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        frame.setSize(500,500);
-	        frame.setResizable(true);
-	        frame.setVisible(true);
+	    	frameUser.setTitle("CLIMBCOL");
+	        frameUser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frameUser.setSize(500,500);
+	        frameUser.setResizable(true);
 	        setupMainPanel("buuuu ");
-	        frame.pack();
+	        frameUser.pack();
+	        frameUser.setVisible(true);
 	    }
 	    
 	    public static void showPanelFavorites() {//modificar
-	        frame.add(panelFavorites);
-	        frame.pack();
+	        frameUser.add(panelFavorites);
+	        frameUser.pack();
 	    }
 		
 	    public static void showPanelGoals() {//modificar
-	        frame.add(panelGoals);
-	        frame.pack();
+	        frameUser.add(panelGoals);
+	        frameUser.pack();
 	    }
 	    
 }
