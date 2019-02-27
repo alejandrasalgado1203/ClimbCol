@@ -75,7 +75,7 @@ public class UIWelcome extends JFrame{
 
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				panelParks = new UIPark(ClimbColManager.getPark(arg0.getSource()));
+				panelParks = new UIPark(ClimbColManager.getPark((String) listParks.getSelectedValue()));
 				showPanelPark();
 			}
 		});
