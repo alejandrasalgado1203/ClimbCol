@@ -13,12 +13,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingConstants;
+
+import business.ClimbersManager;
+import data.Escalador;
 
 public class UIUser extends JFrame {
 	private static JPanel Welcome = new JPanel(new GridLayout(2,1));
@@ -100,5 +104,56 @@ public class UIUser extends JFrame {
 	        frameUser.add(panelGoals);
 	        frameUser.pack();
 	    }
-	    
+		private void setupPanelAdd(UIMain main) {
+			JLabel nameLabel= new JLabel("User: ");
+			JLabel passwordLabel = new JLabel ("Password: ");;
+			JTextField nameField =  new JTextField();
+			nameField.setColumns(25);
+			JTextField passwordField = new JTextField();
+			passwordField.setColumns(25);
+			JPanel userPane = new JPanel();
+			JPanel passwordPane = new JPanel();
+			JPanel panelAddUser = new JPanel(new GridLayout(0,1));
+
+			JLabel lblAdd = new JLabel ("Sign in");
+			lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
+			panelAddUser.add(lblAdd);
+
+			userPane.add(nameLabel);
+			userPane.add(nameField);
+			passwordPane.add(passwordLabel);
+			passwordPane.add(passwordField);
+
+			panelAddUser.add(userPane);
+			panelAddUser.add(passwordPane);
+
+			JButton btnSend = new JButton ("Send");
+			panelAddUser.add(btnSend);
+
+			btnSend.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					if(nameField.getText().equals("")|| passwordField.getText().equals("") ) {
+						indicateSpaceEmpty();	
+						Escalador es = new Escalador (nameField.getText(),passwordField.getText());
+						ClimbersManager.put(es);
+					}
+					passwordField.setText("");
+					nameField.setText("");
+					remove(panelAddUser);
+					
+				}
+			});
+
+			//panelSignIn.add(panelAddUser);
+			//this.add(panelSignIn);
+		}
+		public void showPanelAdd(UIMain main) {
+			setupPanelAdd(main);
+			this.setVisible(true);
+		}
+		public void indicateSpaceEmpty() {
+			JOptionPane.showMessageDialog(this,"A space is Empty");
+		}
+
 }
