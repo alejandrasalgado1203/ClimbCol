@@ -38,21 +38,79 @@ import data.Escalador;
 import data.Parque;
 
 public class UIWelcome extends JPanel{
-	private JPanel panelWelcome;
-	private UIPark panelParks;
 	private Box mainBox;
-	private Box centerPanel;
-	private JPanel panelSignIn;
+	private Box centerBox;
+	private UIMain uiMain;
 
-        public static UIWelcome creatRBE(UIMain main){
-            return new UIWelcome(main);
-        }
+	public static UIWelcome createUIWelcome(UIMain main){
+		return new UIWelcome(main);
+	}
+
 	public UIWelcome(UIMain main){
 		super();
-                showAll(main);
+		this.uiMain = main;
 		this.mainBox = Box.createVerticalBox();
 		this.mainBox.add(Box.createVerticalStrut(20));
+		this.centerBox = Box.createHorizontalBox();
+		this.centerBox.add(Box.createHorizontalStrut(40));
+		setupMainBox();
+		this.mainBox.add(centerBox);
+		this.mainBox.add(Box.createVerticalStrut(40));
+		
+		this.add(mainBox);
 	}
+
+	public void setupMainBox(){
+		createPanelWelcome();
+		createScrollPane();
+		createTipsVideoPane();
+	}
+
+	public void createPanelWelcome () {
+		JPanel panelWelcome = new JPanel(new GridLayout(3,1));
+		JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
+		lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
+		JPanel jp1 = new JPanel();
+		jp1.add(lblWelcome);
+		panelWelcome.add(jp1);
+
+		JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
+		lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
+		jp1 = new JPanel();
+		jp1.add(lblDescription);
+		panelWelcome.add(jp1);
+
+		/*final JComboBox<String> cbox = new JComboBox<String>();// agregar listener
+		ArrayList<String> rutes = ClimbColManager.getAllRutes();
+		for(String s : rutes)
+			cbox.addItem(s);
+		cbox.setEditable(true);
+		panelWelcome.add(cbox);*/
+
+		this.mainBox.add(panelWelcome);
+		this.mainBox.add(Box.createVerticalStrut(20));
+	}
+
+	public void createScrollPane() {
+		DefaultListModel<Parque> model = new DefaultListModel<>();
+		for (Parque park : ClimbColManager.getParks().values()) {
+			model.addElement(park);
+		}
+		JList <Parque> listParks = new JList <Parque> (model);
+		listParks.setCellRenderer(new ParkRenderer());
+		JScrollPane scrollPaneParks = new JScrollPane(listParks);
+
+		centerBox.add(scrollPaneParks);
+		centerBox.add(Box.createHorizontalStrut(30));
+		
+		listParks.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				Parque park = ClimbColManager.getPark((listParks.getSelectedValue().getName()));
+				uiMain.showPanel(UIPark.createUIPark(park, uiMain));	
+			}
+		});
+	}
+
 
 	public void createTipsVideoPane() {
 		JPanel tipsVideo = new JPanel();
@@ -68,170 +126,7 @@ public class UIWelcome extends JPanel{
 		JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
 		tipsVideo.add(labelVideo);
-		centerPanel.add(tipsVideo);
-		centerPanel.add(Box.createHorizontalStrut(40));
-
-
+		centerBox.add(tipsVideo);
+		centerBox.add(Box.createHorizontalStrut(40));
 	}
-
-	public void createScrollPane(UIMain main) {
-
-		DefaultListModel<Parque> model = new DefaultListModel<>();
-		for (Parque park : ClimbColManager.getParks().values()) {
-			model.addElement(park);
-		}
-
-		JList <Parque> listParks = new JList <Parque> (model);
-		listParks.setCellRenderer(new ParkRenderer());
-		JScrollPane scrollPaneParks = new JScrollPane(listParks);
-
-		centerPanel = Box.createHorizontalBox();
-		centerPanel.add(Box.createHorizontalStrut(40));
-		centerPanel.add(scrollPaneParks);
-		centerPanel.add(Box.createHorizontalStrut(30));
-		this.mainBox.add(centerPanel,BorderLayout.CENTER);// mirar
-		this.mainBox.add(Box.createVerticalStrut(40));
-
-		listParks.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-				panelParks = new UIPark(ClimbColManager.getPark((listParks.getSelectedValue().getName())));
-				showPanelPark(main);
-			}
-		});
-	}
-	public void showPanelPark(UIMain main) {
-		remove(panelWelcome);
-		remove(centerPanel);
-		remove(panelParks);
-		main.add(panelParks);
-	}
-
-
-	public void createPanelWelcome () {
-		panelWelcome = new JPanel(new GridLayout(3,1));
-		this.mainBox.add(panelWelcome);
-		this.mainBox.add(Box.createVerticalStrut(20));
-
-		JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
-		lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
-		JPanel jp1 = new JPanel();
-		jp1.add(lblWelcome);
-		panelWelcome.add(jp1);
-
-		JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
-		lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
-		jp1 = new JPanel();
-		jp1.add(lblDescription);
-		panelWelcome.add(jp1);
-
-
-		/*final JComboBox<String> cbox = new JComboBox<String>();// agregar listener
-		ArrayList<String> rutes = ClimbColManager.getAllRutes();
-		for(String s : rutes)
-			cbox.addItem(s);
-		cbox.setEditable(true);
-		panelWelcome.add(cbox);*/
-
-	}
-	public void createMenuBarWelcome(UIMain main){
-		JMenuBar menuBar = new JMenuBar();
-
-		JMenuItem menuItemInfo = new JMenuItem("Information User");
-		menuBar.add(menuItemInfo);
-
-		JMenuItem menuItemSignIn = new JMenuItem("Sign in");
-		menuBar.add(menuItemSignIn);
-
-		JMenuItem menuItemExit = new JMenuItem("Exit");
-		menuBar.add(menuItemExit);
-
-		menuItemInfo.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				UIUser.showPanelUser();
-			}
-		});
-
-		menuItemSignIn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				remove(panelWelcome);
-				remove(centerPanel);
-				remove(panelParks);
-				remove(menuBar);// arreglar
-				showPanelAdd(main);
-			}
-		});
-
-		menuItemExit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-
-	}
-
-	private void setupPanelAdd(UIMain main) {
-		JLabel nameLabel= new JLabel("User: ");
-		JLabel passwordLabel = new JLabel ("Password: ");;
-		JTextField nameField =  new JTextField();
-		nameField.setColumns(25);
-		JTextField passwordField = new JTextField();
-		passwordField.setColumns(25);
-		JPanel userPane = new JPanel();
-		JPanel passwordPane = new JPanel();
-		JPanel panelAddUser = new JPanel(new GridLayout(0,1));
-
-		JLabel lblAdd = new JLabel ("Sign in");
-		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
-		panelAddUser.add(lblAdd);
-
-		userPane.add(nameLabel);
-		userPane.add(nameField);
-		passwordPane.add(passwordLabel);
-		passwordPane.add(passwordField);
-
-		panelAddUser.add(userPane);
-		panelAddUser.add(passwordPane);
-
-		JButton btnSend = new JButton ("Send");
-		panelAddUser.add(btnSend);
-
-		btnSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				if(nameField.getText().equals("")|| passwordField.getText().equals("") ) {
-					indicateSpaceEmpty();	
-					Escalador es = new Escalador (nameField.getText(),passwordField.getText());
-					ClimbersManager.put(es);
-				}
-				passwordField.setText("");
-				nameField.setText("");
-				remove(panelAddUser);
-				showAll(main);
-			}
-		});
-
-		panelSignIn.add(panelAddUser);
-		this.add(panelSignIn);
-	}
-	public void showPanelAdd(UIMain main) {
-		setupPanelAdd(main);
-		this.setVisible(true);
-	}
-	public void indicateSpaceEmpty() {
-		JOptionPane.showMessageDialog(this,"A space is Empty");
-	}
-
-	public void setupMainPanel(UIMain main){
-		createMenuBarWelcome(main);
-		createPanelWelcome();
-		createScrollPane(main);
-		createTipsVideoPane();
-	}
-	public void showAll(UIMain main) {
-		setupMainPanel(main);
-		this.add(mainBox);
-		this.setSize(730, 670);
-		this.setVisible(true);
-	}
-
 }
