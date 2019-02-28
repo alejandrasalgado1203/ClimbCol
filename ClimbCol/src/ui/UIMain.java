@@ -1,29 +1,62 @@
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-public class UIMain {
+public class UIMain extends JFrame{
 
-	private JFrame frame;
-	private JPanel panel = new JPanel();
+	private JPanel panel;
 	
-	public static void main(String[] args) {
-		new UIMain();	
-	}
-
 	public UIMain() {
-		frame = new JFrame("CLIMBCOL");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.showPanel(UIWelcome.creatRBE(this));
+		super("CLIMBCOL");
+		this.panel = new JPanel();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.createMenuBarWelcome();
+		this.showPanel(UIWelcome.createUIWelcome(this));
 	}
 	
 	public void showPanel (JPanel jp) {
-		frame.remove(panel);
+		this.remove(panel);
 		panel = jp;
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+		this.add(panel);
+		this.setSize(730, 670);
+		this.setVisible(true);
 	}
 
+	public void createMenuBarWelcome(){
+		JMenuBar menuBar = new JMenuBar();
+
+		JMenuItem menuItemInfo = new JMenuItem("Information User");
+		menuBar.add(menuItemInfo);
+
+		JMenuItem menuItemSignIn = new JMenuItem("Sign in");
+		menuBar.add(menuItemSignIn);
+
+		JMenuItem menuItemExit = new JMenuItem("Exit");
+		menuBar.add(menuItemExit);
+
+		menuItemInfo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
+		menuItemSignIn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
+		menuItemExit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		this.setJMenuBar(menuBar);
+	}
 }
