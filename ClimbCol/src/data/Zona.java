@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Zona implements Serializable{
+public class Zona implements Serializable,NameImageGiver{
 
 	private static final long serialVersionUID = 8176465641263408346L;
 	private String name;

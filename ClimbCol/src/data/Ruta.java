@@ -3,7 +3,7 @@ package data;
 
 import java.io.Serializable;
 
-public class Ruta implements Serializable{
+public class Ruta implements Serializable,NameImageGiver{
 
 	private static final long serialVersionUID = 8944754339534154430L;
 	private String name;
