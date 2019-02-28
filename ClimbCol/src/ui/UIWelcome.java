@@ -97,7 +97,7 @@ public class UIWelcome extends JPanel{
 			model.addElement(park);
 		}
 		JList <Parque> listParks = new JList <Parque> (model);
-		listParks.setCellRenderer(new ParkRenderer());
+		listParks.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneParks = new JScrollPane(listParks);
 
 		centerBox.add(scrollPaneParks);
@@ -119,14 +119,14 @@ public class UIWelcome extends JPanel{
 		ImageIcon Tips= new ImageIcon("images/2.jpg");
 		JLabel labelTips = new JLabel(Tips);
 		labelTips.setVisible(true);
-		labelTips.setSize(new Dimension(2,2));
 		tipsVideo.add(labelTips);
 
 		ImageIcon Video= new ImageIcon("images/3.jpg");
 		JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
 		tipsVideo.add(labelVideo);
+                
 		centerBox.add(tipsVideo);
-		centerBox.add(Box.createHorizontalStrut(40));
+		centerBox.add(Box.createVerticalStrut(30));
 	}
 }

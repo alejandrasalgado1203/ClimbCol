@@ -12,18 +12,18 @@ import javax.swing.ListCellRenderer;
 
 import data.Parque;
 
-public class ParkRenderer extends JPanel implements ListCellRenderer<Parque> {
+public class Renderer extends JPanel implements ListCellRenderer<Parque> {
 
 	private JLabel image;
 	private JLabel name;
 
-	public ParkRenderer() {
+	public Renderer() {
 		super();
 		this.image = new JLabel();
 		this.name = new JLabel();
 		this.setLayout(new BorderLayout());
 		this.add(image, BorderLayout.CENTER);
-		this.add(name, BorderLayout.NORTH);
+		this.add(name, BorderLayout.EAST);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ public class UIMain extends JFrame{
 		panel = jp;
 		this.add(panel);
 		this.setSize(730, 670);
+                this.pack();
 		this.setVisible(true);
 	}
 

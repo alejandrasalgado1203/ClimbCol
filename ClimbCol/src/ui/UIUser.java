@@ -32,19 +32,19 @@ public class UIUser extends JFrame {
 	private static JToolBar toolBar;
 	
 	public static void setupMainPanel(String nombreEscalador) {
-		createTittle(nombreEscalador);
-		createTextField();
-		createButtons();
+            createTittle(nombreEscalador);
+            createTextField();
+            createButtons();
 	}
 	public static void createTittle(String name) {
-		JLabel lblWelcomeUser = new JLabel(name);
-        lblWelcomeUser.setFont(new Font("Tahoma",Font.PLAIN,35));
-        Welcome.add(lblWelcomeUser);
+            JLabel lblWelcomeUser = new JLabel(name);
+            lblWelcomeUser.setFont(new Font("Tahoma",Font.PLAIN,35));
+            Welcome.add(lblWelcomeUser);
 	}
 	public static void createTextField() { 
-		JTextField textfield = new JTextField(30);
-		Welcome.add(textfield);
-		frameUser.add(Welcome,BorderLayout.NORTH);
+            JTextField textfield = new JTextField(30);
+            Welcome.add(textfield);
+            frameUser.add(Welcome,BorderLayout.NORTH);
 	}
 	
 	public static void createSpinner() {// no entendi spinner jajaja

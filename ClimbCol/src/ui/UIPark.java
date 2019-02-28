@@ -159,7 +159,7 @@ public class UIPark extends JPanel{
 
 	public void showPanelPark(UIMain main) {
 		this.setSize(900,900);
-		setupMainPanel(" ",main);
+		setupMainPanel("",main);
 		this.setVisible(true);
 
 	}
