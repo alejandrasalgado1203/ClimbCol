@@ -32,6 +32,12 @@ public class Parque implements Serializable{
 		this.zonas = new TreeMap<String,Zona> ();
 	}
 
+	public Parque(String string, String string2) {
+		this.name = string;
+		this.direccionImagenes = new ArrayList<String> ();
+		this.direccionImagenes.add(string2);
+	}
+
 	public void putZone(Zona z) {
 		this.zonas.put(z.getName(), z);
 		z.setParque(this);
@@ -49,7 +55,7 @@ public class Parque implements Serializable{
 		for (String string : direccionImagenes) {
 			if (string.contains("main"))return string;
 		}
-		return "";
+		return this.direccionImagenes.get(0);
 	}
 
 	//getters y setters 
