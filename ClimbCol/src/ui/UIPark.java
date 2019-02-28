@@ -1,4 +1,3 @@
-
 package ui;
 
 import java.awt.BorderLayout;
@@ -38,10 +37,10 @@ public class UIPark extends JPanel{
 	private static JToolBar toolBar;
 	private Parque park;
 
-        public static UIPark createBE(UIMain main){
-            return new UIPark(main);
+        public static UIPark createUIPark(Parque park,UIMain main){
+            return new UIPark(park,main);
         }
-	public UIPark(UIMain main) {
+	public UIPark(Parque parque, UIMain main) {
 		showPanelPark(main);
 	}
 	public void setupMainPanel(String namePark,UIMain main) {
@@ -91,7 +90,7 @@ public class UIPark extends JPanel{
 		remove(panelTittle);
 		remove(centerPanel);
 		remove(panelFotos);
-		welcome.showPanel(panelZones);// mirar
+		//welcome.showPanel(panelZones);// mirar
 	}
 	public void createButtonFotos(){
 		JButton fotos = new JButton("Fotos");
