@@ -38,11 +38,13 @@ public class UIPark extends JPanel{
 	private static JToolBar toolBar;
 	private Parque park;
 
-	public UIPark(Parque parque) {
-		this.park = parque;
-		showPanelPark();
+        public static UIPark createBE(UIMain main){
+            return new UIPark(main);
+        }
+	public UIPark(UIMain main) {
+		showPanelPark(main);
 	}
-	public void setupMainPanel(String namePark) {
+	public void setupMainPanel(String namePark,UIMain main) {
 		createTittle(namePark);
 		createDescription();
 		createScrollPane();
@@ -89,7 +91,7 @@ public class UIPark extends JPanel{
 		remove(panelTittle);
 		remove(centerPanel);
 		remove(panelFotos);
-		welcome.showPanel(panelZones);
+		welcome.showPanel(panelZones);// mirar
 	}
 	public void createButtonFotos(){
 		JButton fotos = new JButton("Fotos");
@@ -156,9 +158,9 @@ public class UIPark extends JPanel{
 		this.setVisible(true);
 	}
 
-	public void showPanelPark() {
+	public void showPanelPark(UIMain main) {
 		this.setSize(900,900);
-		setupMainPanel(" ");
+		setupMainPanel(" ",main);
 		this.setVisible(true);
 
 	}

@@ -37,16 +37,19 @@ import business.ClimbersManager;
 import data.Escalador;
 import data.Parque;
 
-public class UIWelcome extends JFrame{
+public class UIWelcome extends JPanel{
 	private JPanel panelWelcome;
 	private UIPark panelParks;
 	private Box mainBox;
 	private Box centerPanel;
 	private JPanel panelSignIn;
 
-
-	public UIWelcome(){
+        public static UIWelcome creatRBE(UIMain main){
+            return new UIWelcome(main);
+        }
+	public UIWelcome(UIMain main){
 		super();
+                showAll(main);
 		this.mainBox = Box.createVerticalBox();
 		this.mainBox.add(Box.createVerticalStrut(20));
 	}
@@ -71,7 +74,7 @@ public class UIWelcome extends JFrame{
 
 	}
 
-	public void createScrollPane() {
+	public void createScrollPane(UIMain main) {
 
 		DefaultListModel<Parque> model = new DefaultListModel<>();
 		for (Parque park : ClimbColManager.getParks().values()) {
@@ -86,32 +89,23 @@ public class UIWelcome extends JFrame{
 		centerPanel.add(Box.createHorizontalStrut(40));
 		centerPanel.add(scrollPaneParks);
 		centerPanel.add(Box.createHorizontalStrut(30));
-		this.mainBox.add(centerPanel,BorderLayout.CENTER);
+		this.mainBox.add(centerPanel,BorderLayout.CENTER);// mirar
 		this.mainBox.add(Box.createVerticalStrut(40));
 
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				panelParks = new UIPark(ClimbColManager.getPark((listParks.getSelectedValue().getName())));
-				showPanelPark();
+				showPanelPark(main);
 			}
 		});
 	}
-	public void showPanelPark() {
+	public void showPanelPark(UIMain main) {
 		remove(panelWelcome);
 		remove(centerPanel);
 		remove(panelParks);
-		this.add(panelParks);
-		this.pack();
+		main.add(panelParks);
 	}
 
-	public void showPanel(UIZone panelZones) {
-		remove(panelWelcome);
-		remove(centerPanel);
-		remove(panelParks);
-		this.add(panelZones);
-		this.pack();
-
-	}
 
 	public void createPanelWelcome () {
 		panelWelcome = new JPanel(new GridLayout(3,1));
@@ -139,7 +133,7 @@ public class UIWelcome extends JFrame{
 		panelWelcome.add(cbox);*/
 
 	}
-	public void createMenuBarWelcome(){
+	public void createMenuBarWelcome(UIMain main){
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenuItem menuItemInfo = new JMenuItem("Information User");
@@ -163,7 +157,7 @@ public class UIWelcome extends JFrame{
 				remove(centerPanel);
 				remove(panelParks);
 				remove(menuBar);// arreglar
-				showPanelAdd();
+				showPanelAdd(main);
 			}
 		});
 
@@ -173,10 +167,9 @@ public class UIWelcome extends JFrame{
 			}
 		});
 
-		this.setJMenuBar(menuBar);
 	}
 
-	private void setupPanelAdd() {
+	private void setupPanelAdd(UIMain main) {
 		JLabel nameLabel= new JLabel("User: ");
 		JLabel passwordLabel = new JLabel ("Password: ");;
 		JTextField nameField =  new JTextField();
@@ -213,36 +206,29 @@ public class UIWelcome extends JFrame{
 				passwordField.setText("");
 				nameField.setText("");
 				remove(panelAddUser);
-				showAll();
+				showAll(main);
 			}
 		});
 
 		panelSignIn.add(panelAddUser);
 		this.add(panelSignIn);
 	}
-	public void showPanelAdd() {
-		this.setTitle("CLIMBCOL");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		setupPanelAdd();
-		this.pack();
+	public void showPanelAdd(UIMain main) {
+		setupPanelAdd(main);
 		this.setVisible(true);
 	}
 	public void indicateSpaceEmpty() {
 		JOptionPane.showMessageDialog(this,"A space is Empty");
 	}
 
-	public void setupMainPanel(){
-		createMenuBarWelcome();
+	public void setupMainPanel(UIMain main){
+		createMenuBarWelcome(main);
 		createPanelWelcome();
-		createScrollPane();
+		createScrollPane(main);
 		createTipsVideoPane();
 	}
-	public void showAll() {
-		this.setTitle("CLIMBCOL");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(true);
-		setupMainPanel();
+	public void showAll(UIMain main) {
+		setupMainPanel(main);
 		this.add(mainBox);
 		this.setSize(730, 670);
 		this.setVisible(true);
