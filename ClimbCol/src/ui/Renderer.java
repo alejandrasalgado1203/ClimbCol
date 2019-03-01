@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 
@@ -11,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 import data.NameImageGiver;
-import data.Parque;
 
 public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver> {
 
@@ -22,9 +20,8 @@ public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver>
 		super();
 		this.image = new JLabel();
 		this.name = new JLabel();
-		this.setLayout(new BorderLayout());
-		this.add(image, BorderLayout.CENTER);
-		this.add(name, BorderLayout.EAST);
+		this.add(image);
+		this.add(name);
 	}
 
 	@Override
@@ -33,7 +30,7 @@ public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver>
 		this.image.setIcon(new ImageIcon(value.getMainImage()));
 		this.name.setText(value.getName());
 		this.name.setFont(new Font("Tahoma",Font.PLAIN,20));
-		return null;
+		return this;
 	}
 
 
