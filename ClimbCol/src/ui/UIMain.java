@@ -17,14 +17,19 @@ public class UIMain extends JFrame{
 		this.panel = new JPanel();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.createMenuBarWelcome();
-		this.showPanel(UIWelcome.createUIWelcome(this));
+		this.showPanel(UIWelcome.createUIWelcome(this),850,750);
+	}
+
+	public void showPanel(JPanel createUIWelcome, int x, int y) {
+		this.showPanel(createUIWelcome);
+		this.setSize(x, y);
 	}
 
 	public void showPanel (JPanel jp) {
 		this.remove(panel);
 		panel = jp;
 		this.add(panel);
-		this.setSize(730, 670);
+		this.pack();
 		this.setVisible(true);
 	}
 
