@@ -5,10 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,9 +18,7 @@ import business.ClimbColManager;
 import data.Zona;
 
 public class UIZone extends JPanel {
-	private static UIRute panelRutes;
 	private static JPanel centerPanel = new JPanel();
-	private UIWelcome welcome;
 	private Zona zone;
 
 	public UIZone(Zona zone) {
@@ -69,7 +64,7 @@ public class UIZone extends JPanel {
 
 		listRutes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				panelRutes = new UIRute(ClimbColManager.getRute(zone,(String) listRutes.getSelectedValue()));
+				new UIRute(ClimbColManager.getRute(zone,(String) listRutes.getSelectedValue()));
 				showPanelZone();
 			}
 		});
@@ -79,5 +74,10 @@ public class UIZone extends JPanel {
 		this.setSize(900,900);
 		this.setVisible(true);
 		setupMainPanel(" ");
+	}
+
+	public static JPanel createUIZone(Zona zone2, UIMain uiMain) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

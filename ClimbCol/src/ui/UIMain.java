@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class UIMain extends JFrame{
 
 	private JPanel panel;
-	
+
 	public UIMain() {
 		super("CLIMBCOL");
 		this.panel = new JPanel();
@@ -19,13 +19,12 @@ public class UIMain extends JFrame{
 		this.createMenuBarWelcome();
 		this.showPanel(UIWelcome.createUIWelcome(this));
 	}
-	
+
 	public void showPanel (JPanel jp) {
 		this.remove(panel);
 		panel = jp;
 		this.add(panel);
 		this.setSize(730, 670);
-                this.pack();
 		this.setVisible(true);
 	}
 
@@ -43,13 +42,13 @@ public class UIMain extends JFrame{
 
 		menuItemInfo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 
 		menuItemSignIn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 

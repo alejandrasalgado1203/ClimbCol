@@ -11,7 +11,7 @@ public class Escalador implements Serializable{
 	private String name;
 	private String password;
 	private LocalDate fechaDeNacimiento;
-	private TreeMap<String,Ruta> logradas;
+	private int logradas;
 	private TreeMap<String,Ruta> retos;
 	private TreeMap<String,Ruta> favoritos;
 	private String escaladaFavorita;
@@ -35,10 +35,10 @@ public class Escalador implements Serializable{
 	public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
 		this.fechaDeNacimiento = fechaDeNacimiento;
 	}
-	public TreeMap<String, Ruta> getLogradas() {
+	public int getLogradas() {
 		return logradas;
 	}
-	public void setLogradas(TreeMap<String, Ruta> logradas) {
+	public void setLogradas(int logradas) {
 		this.logradas = logradas;
 	}
 	public TreeMap<String, Ruta> getRetos() {
@@ -76,6 +76,11 @@ public class Escalador implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "fecha De Nacimiento: " + fechaDeNacimiento + "\n escalada Favorita: " + escaladaFavorita
+				+ "\n maxima Dificultad Lograda: " + maximaDificultadLograda ;
 	}
 
 

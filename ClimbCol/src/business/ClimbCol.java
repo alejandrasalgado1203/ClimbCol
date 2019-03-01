@@ -23,9 +23,9 @@ public class ClimbCol {
 		parques.put("parque 7", new Parque("parque 7","images/4.jpg"));
 		parques.put("parque 8", new Parque("parque 8","images/sandPile3.png"));
 		parques.put("parque 9", new Parque("parque 9","images/4.jpg"));
-		
+
 		uiMain = new UIMain();
-		
+
 		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
 	}
 

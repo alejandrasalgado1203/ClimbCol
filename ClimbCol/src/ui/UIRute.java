@@ -4,7 +4,6 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -73,13 +72,13 @@ public class UIRute extends JPanel{
 
 		menuItemGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				UIUser.showPanelGoals();
+				//agregar
 			}
 		});
 
 		menuItemFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				UIUser.showPanelFavorites();
+				//agreger
 			}
 		});
 	}
@@ -91,5 +90,9 @@ public class UIRute extends JPanel{
 		setupMainPanel(" ");
 		frame.pack();
 		frame.setVisible(true);
+	}
+	public static JPanel createUIRute(Ruta rute2, UIMain uiMain) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

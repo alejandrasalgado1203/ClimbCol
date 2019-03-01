@@ -59,4 +59,11 @@ public class Ruta implements Serializable,NameImageGiver{
 	}
 
 
+	@Override
+	public String getMainImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

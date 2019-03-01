@@ -1,40 +1,21 @@
 
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import business.ClimbColManager;
-import business.ClimbersManager;
-import data.Escalador;
 import data.Parque;
 
 public class UIWelcome extends JPanel{
@@ -50,13 +31,12 @@ public class UIWelcome extends JPanel{
 		super();
 		this.uiMain = main;
 		this.mainBox = Box.createVerticalBox();
-		this.mainBox.add(Box.createVerticalStrut(20));
+		this.mainBox.add(Box.createVerticalStrut(10));
 		this.centerBox = Box.createHorizontalBox();
 		this.centerBox.add(Box.createHorizontalStrut(40));
 		setupMainBox();
 		this.mainBox.add(centerBox);
 		this.mainBox.add(Box.createVerticalStrut(40));
-		
 		this.add(mainBox);
 	}
 
@@ -67,8 +47,10 @@ public class UIWelcome extends JPanel{
 	}
 
 	public void createPanelWelcome () {
-		JPanel panelWelcome = new JPanel(new GridLayout(3,1));
+		JPanel panelWelcome = new JPanel(new GridLayout(0,1));
 		JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
+		this.mainBox.add(panelWelcome);
+		this.mainBox.add(Box.createVerticalStrut(20));
 		lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
 		JPanel jp1 = new JPanel();
 		jp1.add(lblWelcome);
@@ -87,8 +69,7 @@ public class UIWelcome extends JPanel{
 		cbox.setEditable(true);
 		panelWelcome.add(cbox);*/
 
-		this.mainBox.add(panelWelcome);
-		this.mainBox.add(Box.createVerticalStrut(20));
+
 	}
 
 	public void createScrollPane() {
@@ -97,12 +78,14 @@ public class UIWelcome extends JPanel{
 			model.addElement(park);
 		}
 		JList <Parque> listParks = new JList <Parque> (model);
-		listParks.setCellRenderer(new Renderer());
+		listParks.setCellRenderer(new Renderer());//ojo
 		JScrollPane scrollPaneParks = new JScrollPane(listParks);
 
+
+		centerBox.add(Box.createHorizontalStrut(40));
 		centerBox.add(scrollPaneParks);
 		centerBox.add(Box.createHorizontalStrut(30));
-		
+
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				Parque park = ClimbColManager.getPark((listParks.getSelectedValue().getName()));
@@ -114,19 +97,19 @@ public class UIWelcome extends JPanel{
 
 	public void createTipsVideoPane() {
 		JPanel tipsVideo = new JPanel();
-		tipsVideo.setLayout(new GridLayout(2,1));
+		tipsVideo.setLayout(new GridLayout(0,1));
 
 		ImageIcon Tips= new ImageIcon("images/2.jpg");
 		JLabel labelTips = new JLabel(Tips);
 		labelTips.setVisible(true);
+		labelTips.setSize(new Dimension(2,2));
 		tipsVideo.add(labelTips);
 
 		ImageIcon Video= new ImageIcon("images/3.jpg");
 		JLabel labelVideo = new JLabel(Video);
 		labelVideo.setVisible(true);
 		tipsVideo.add(labelVideo);
-                
 		centerBox.add(tipsVideo);
-		centerBox.add(Box.createVerticalStrut(30));
+		centerBox.add(Box.createHorizontalStrut(40));
 	}
 }

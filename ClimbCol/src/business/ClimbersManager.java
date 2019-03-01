@@ -7,10 +7,9 @@ import data.Escalador;
 public class ClimbersManager {
 
 	private static TreeMap <String,Escalador> escaladores;
-	
+
 	public  static void put(Escalador es) {
-		// TODO Auto-generated method stub
-		
+		escaladores.put(es.getPassword(), es);
 	}
 
 	public static TreeMap <String,Escalador> getEscaladores() {

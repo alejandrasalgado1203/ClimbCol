@@ -94,4 +94,10 @@ public class Zona implements Serializable,NameImageGiver{
 	public void setParque(Parque parque) {
 		this.parque = parque;
 	}
+
+	@Override
+	public String getMainImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

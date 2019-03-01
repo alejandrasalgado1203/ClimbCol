@@ -12,7 +12,7 @@ public class Parque implements Serializable,NameImageGiver{
 	private String ubicacion;
 	private String linkUbicacion;
 	private String temperaturaPromedio;
-	private String campeonato;
+	private String altitud;
 	private String linkParque;
 	private ArrayList<String> direccionImagenes;
 	private TreeMap<String,Zona> zonas;
@@ -25,7 +25,7 @@ public class Parque implements Serializable,NameImageGiver{
 		this.ubicacion = ubicacion;
 		this.linkUbicacion = linkUbicacion;
 		this.temperaturaPromedio = temperaturaPromedio;
-		this.campeonato = campeonato;
+		this.altitud = campeonato;
 		this.linkParque = linkParque;
 		this.direccionImagenes = new ArrayList<String> ();
 		this.direccionImagenes.add(direccionImagen);
@@ -84,10 +84,10 @@ public class Parque implements Serializable,NameImageGiver{
 		this.temperaturaPromedio = temperaturaPromedio;
 	}
 	public String getCampeonato() {
-		return campeonato;
+		return altitud;
 	}
 	public void setCampeonato(String campeonato) {
-		this.campeonato = campeonato;
+		this.altitud = campeonato;
 	}
 	public String getLinkParque() {
 		return linkParque;
@@ -107,4 +107,13 @@ public class Parque implements Serializable,NameImageGiver{
 	public void setZonas(TreeMap<String, Zona> zonas) {
 		this.zonas = zonas;
 	}
+
+
+	@Override
+	public String toString() {
+		return "ubicacion: " + ubicacion + "\n linkUbicacion: " + linkUbicacion + "\n temperaturaPromedio: "
+				+ temperaturaPromedio + "\n altitud: " + altitud + "\n linkParque: " + linkParque 
+				+ "\n numero de zonas: " + zonas.size();
+	}
+
 }

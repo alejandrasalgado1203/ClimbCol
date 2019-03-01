@@ -10,9 +10,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
+import data.NameImageGiver;
 import data.Parque;
 
-public class Renderer extends JPanel implements ListCellRenderer<Parque> {
+public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver> {
 
 	private JLabel image;
 	private JLabel name;
@@ -27,11 +28,14 @@ public class Renderer extends JPanel implements ListCellRenderer<Parque> {
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends Parque> list, Parque value, int index,
+	public Component getListCellRendererComponent(JList<? extends NameImageGiver> list, NameImageGiver value, int index,
 			boolean isSelected, boolean cellHasFocus) {
 		this.image.setIcon(new ImageIcon(value.getMainImage()));
 		this.name.setText(value.getName());
 		this.name.setFont(new Font("Tahoma",Font.PLAIN,20));
-		return this;
+		return null;
 	}
+
+
+
 }
