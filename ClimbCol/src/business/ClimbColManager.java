@@ -11,14 +11,14 @@ public class ClimbColManager {
 	private static TreeMap<String,Parque> parks;
 
 
-	public static ArrayList<String> getAllRutes() {
-		TreeSet<String> rutes = new TreeSet<String>();
+	public static ArrayList<Ruta> getAllRutes() {
+		TreeSet<Ruta> rutes = new TreeSet<Ruta>();
 		for (Parque p : parks.values()) {
 			for (Zona z : p.getZonas().values()) {
-				rutes.addAll(z.getRutas().keySet());
+				rutes.addAll(z.getRutas().values());
 			}
 		}
-		return new ArrayList<String> (rutes);
+		return new ArrayList<Ruta> (rutes);
 	}
 
 	public static Object[] getParksNames() {
