@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.Collection;
 
 import javax.swing.JRadioButton;
@@ -15,11 +15,15 @@ import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -35,8 +39,9 @@ public class UIUser extends JFrame {
 	private JPanel panelInfo = new JPanel(new GridLayout(0,1));
 	private Escalador climber;
 	private UIMain uiMain;
+	//private static JFrame signInFrame;
 
-	public UIUser(Escalador climber) throws HeadlessException {
+	public UIUser(Escalador climber) {
 		super("info User");
 		this.climber = climber;
 		setupMainPanel();
@@ -54,7 +59,7 @@ public class UIUser extends JFrame {
 		createButtons();
 	}
 
-	public   void createTittle() {
+	public void createTittle() {
 		JLabel lblWelcomeUser = new JLabel(this.climber.getName());
 		lblWelcomeUser.setFont(new Font("Tahoma",Font.PLAIN,35));
 		panelTittle.add(lblWelcomeUser);
@@ -84,7 +89,7 @@ public class UIUser extends JFrame {
 		this.panelInfo.add(spinnLogradas);
 	}
 
-	public   void createButtons() {
+	public void createButtons() {
 
 		JPanel btns = new JPanel(); 
 		JRadioButton buttonGoals= new JRadioButton("Grupo de Retos");
@@ -143,57 +148,76 @@ public class UIUser extends JFrame {
 	}
 
 
+	//Sign in
+	public static void showSignInFrame() {
+		JFrame signInFrame = setupSignInFrame();
+		signInFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		signInFrame.pack();
+		signInFrame.setLocation(200, 200);
+		signInFrame.setVisible(true);
+	}
 
-	private void setupPanelAdd(UIMain main) {
-		JLabel nameLabel= new JLabel("User: ");
-		JLabel passwordLabel = new JLabel ("Password: ");;
-		JTextField nameField =  new JTextField();
-		nameField.setColumns(25);
-		JTextField passwordField = new JTextField();
-		passwordField.setColumns(25);
-		JPanel userPane = new JPanel();
-		JPanel passwordPane = new JPanel();
-		JPanel panelAddUser = new JPanel(new GridLayout(0,1));
+	private static JFrame setupSignInFrame() {
+		JFrame signInFrame = new JFrame("CLIMBCOL");
+		signInFrame.setLayout(new GridLayout(0,1));
 
-		JLabel lblAdd = new JLabel ("Sign in");
-		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
-		panelAddUser.add(lblAdd);
+		JLabel lblTittle = new JLabel ("Sign in");
+		lblTittle.setFont(new Font("Tahoma",Font.PLAIN,25));
+		signInFrame.add(lblTittle);
 
-		userPane.add(nameLabel);
-		userPane.add(nameField);
-		passwordPane.add(passwordLabel);
-		passwordPane.add(passwordField);
+		JLabel nameLabel= new JLabel("Name: ");
+		JTextField nameField =  new JTextField(25);
+		signInFrame.add(nameLabel);
+		signInFrame.add(nameField);
 
-		panelAddUser.add(userPane);
-		panelAddUser.add(passwordPane);
-
-		JRadioButton btnSend = new JRadioButton ("Send");
-		panelAddUser.add(btnSend);
-
-		btnSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				if(nameField.getText().equals("")|| passwordField.getText().equals("") ) {
-					indicateSpaceEmpty();	
-					Escalador es = new Escalador (nameField.getText(),passwordField.getText());
-					ClimbersManager.put(es);
+		nameField.setInputVerifier(new InputVerifier() {
+			public boolean verify(JComponent input) {
+				JTextField tf = (JTextField) input;
+				boolean b = ClimbersManager.isValidName(tf.getText());
+				if(!b) {
+					input.getToolkit().beep();
+					JOptionPane.showMessageDialog(null, "already exist an user with this name",
+							null, JOptionPane.WARNING_MESSAGE);
 				}
-				passwordField.setText("");
-				nameField.setText("");
-				remove(panelAddUser);
-
+				return b;
 			}
 		});
 
-		//panelSignIn.add(panelAddUser);
-		//this.add(panelSignIn);
-	}
-	public void showPanelAdd(UIMain main) {
-		setupPanelAdd(main);
-		this.setVisible(true);
-	}
-	public void indicateSpaceEmpty() {
-		JOptionPane.showMessageDialog(this,"A space is Empty");
-	}
+		JLabel passwordLabel = new JLabel ("Password: ");
+		JPasswordField passwordField = new JPasswordField(25);
+		signInFrame.add(passwordLabel);
+		signInFrame.add(passwordField);
 
+		passwordField.setInputVerifier(new InputVerifier() {
+			public boolean verify(JComponent input) {
+				JPasswordField pf = (JPasswordField) input;
+				boolean b = ClimbersManager.isValidPassword(pf.getPassword());
+				if(!b) {
+					input.getToolkit().beep();
+					JOptionPane.showMessageDialog(null, "the password is too short or already exist",
+							null, JOptionPane.WARNING_MESSAGE);
+				}
+				return b;
+			}
+		});
+
+		JButton btnSend = new JButton ("Send");
+		JPanel jp = new JPanel();
+		jp.add(btnSend);
+		signInFrame.add(jp);
+
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(nameField.getText().isEmpty()|| passwordField.getPassword().length==0) {
+					JOptionPane.showMessageDialog(null,"A space is Empty",null,JOptionPane.ERROR_MESSAGE);	
+				}else {
+					ClimbersManager.creatUser(nameField.getText(),passwordField.getPassword());
+					signInFrame.dispatchEvent(new WindowEvent(signInFrame, WindowEvent.WINDOW_CLOSING));
+					JOptionPane.showMessageDialog(null,"The user was create");
+				}
+
+			}
+		});
+		return signInFrame;
+	}
 }
