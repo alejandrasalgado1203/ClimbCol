@@ -19,20 +19,26 @@ public class UIMain extends JFrame{
 		this.panel = new JPanel();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.createMenuBarWelcome();
-		this.showPanel(UIWelcome.createUIWelcome(this),850,750);
+		this.showPanel(UIWelcome.createUIWelcome(this),740,670);
 	}
 
-	public void showPanel(JPanel createUIWelcome, int x, int y) {
-		this.showPanel(createUIWelcome);
+	public void showPanel(JPanel jp, int x, int y) {
+		this.addPanel(jp);
 		this.setSize(x, y);
+		this.setVisible(true);
 	}
 
 	public void showPanel (JPanel jp) {
+		this.addPanel(jp);
+		this.pack();
+		this.setVisible(true);
+	}
+
+	private void addPanel(JPanel jp) {
+		this.setVisible(false);
 		this.remove(panel);
 		panel = jp;
 		this.add(panel);
-		this.pack();
-		this.setVisible(true);
 	}
 
 	public void createMenuBarWelcome(){
@@ -47,6 +53,10 @@ public class UIMain extends JFrame{
 		JMenuItem menuItemLogout = new JMenuItem("Logout");
 		menuBar.add(menuItemLogout);
 		menuItemLogout.setEnabled(false);
+
+		JMenuItem menuItemUser = new JMenuItem("Use's info");
+		menuBar.add(menuItemUser);
+		menuItemUser.setEnabled(false);
 
 		JMenuItem menuItemExit = new JMenuItem("Exit");
 		menuBar.add(menuItemExit);
@@ -63,6 +73,8 @@ public class UIMain extends JFrame{
 				if(ClimbersManager.getCurrentUser()!=null) {
 					menuItemLogin.setEnabled(false);
 					menuItemLogout.setEnabled(true);
+					menuItemUser.setText(ClimbersManager.getCurrentUser().getName()+"'s info");
+					menuItemUser.setEnabled(true);
 				}
 
 			}
@@ -73,6 +85,14 @@ public class UIMain extends JFrame{
 				ClimbersManager.setCurrentUser(null);
 				menuItemLogout.setEnabled(false);
 				menuItemLogin.setEnabled(true);
+				menuItemUser.setText("User's info");
+				menuItemUser.setEnabled(false);
+			}
+		});
+
+		menuItemUser.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				showUser();
 			}
 		});
 
@@ -83,5 +103,9 @@ public class UIMain extends JFrame{
 		});
 
 		this.setJMenuBar(menuBar);
+	}
+
+	protected void showUser() {
+		new UIUser(this);		
 	}
 }
