@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.Collection;
 
 import javax.swing.JRadioButton;
@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -149,26 +150,14 @@ public class UIUser extends JFrame {
 
 
 	//Sign in
+
 	public static void showSignInFrame() {
-		JFrame signInFrame = setupSignInFrame();
-		signInFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		signInFrame.pack();
-		signInFrame.setLocation(200, 200);
-		signInFrame.setVisible(true);
-	}
-
-	private static JFrame setupSignInFrame() {
-		JFrame signInFrame = new JFrame("CLIMBCOL");
-		signInFrame.setLayout(new GridLayout(0,1));
-
+		JFrame frame = new JFrame ();
 		JLabel lblTittle = new JLabel ("Sign in");
 		lblTittle.setFont(new Font("Tahoma",Font.PLAIN,25));
-		signInFrame.add(lblTittle);
 
 		JLabel nameLabel= new JLabel("Name: ");
 		JTextField nameField =  new JTextField(25);
-		signInFrame.add(nameLabel);
-		signInFrame.add(nameField);
 
 		nameField.setInputVerifier(new InputVerifier() {
 			public boolean verify(JComponent input) {
@@ -185,8 +174,6 @@ public class UIUser extends JFrame {
 
 		JLabel passwordLabel = new JLabel ("Password: ");
 		JPasswordField passwordField = new JPasswordField(25);
-		signInFrame.add(passwordLabel);
-		signInFrame.add(passwordField);
 
 		passwordField.setInputVerifier(new InputVerifier() {
 			public boolean verify(JComponent input) {
@@ -201,23 +188,79 @@ public class UIUser extends JFrame {
 			}
 		});
 
-		JButton btnSend = new JButton ("Send");
-		JPanel jp = new JPanel();
-		jp.add(btnSend);
-		signInFrame.add(jp);
-
-		btnSend.addActionListener(new ActionListener() {
+		JButton btnSignIn = new JButton ("Sign in");
+		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(nameField.getText().isEmpty()|| passwordField.getPassword().length==0) {
 					JOptionPane.showMessageDialog(null,"A space is Empty",null,JOptionPane.ERROR_MESSAGE);	
 				}else {
+					Window w = SwingUtilities.getWindowAncestor(btnSignIn);
+					if (w != null) 
+						w.setVisible(false);
 					ClimbersManager.creatUser(nameField.getText(),passwordField.getPassword());
-					signInFrame.dispatchEvent(new WindowEvent(signInFrame, WindowEvent.WINDOW_CLOSING));
 					JOptionPane.showMessageDialog(null,"The user was create");
 				}
-
 			}
 		});
-		return signInFrame;
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window w = SwingUtilities.getWindowAncestor(btnCancel);
+				if(w!=null)
+					w.setVisible(false);
+			}
+		});
+
+
+		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,passwordField};
+		Object[] options = new Object[] {btnSignIn, btnCancel};
+		JOptionPane.showOptionDialog(frame, message, "Sign in", JOptionPane.CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, btnSignIn);
+	}
+
+	//login
+	public static void showLoginFrame() {
+		JFrame frame = new JFrame();
+
+		JLabel lblTittle = new JLabel ("Login");
+		lblTittle.setFont(new Font("Tahoma",Font.PLAIN,25));
+
+		JLabel nameLabel= new JLabel("Name: ");
+		JTextField nameField =  new JTextField(25);
+
+		JLabel passwordLabel = new JLabel ("Password: ");
+		JPasswordField passwordField = new JPasswordField(25);
+
+		JButton btnLogin = new JButton ("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(ClimbersManager.doLogin(nameField.getText(),passwordField.getPassword())) {
+					Window w = SwingUtilities.getWindowAncestor(btnLogin);
+					if (w!=null) 
+						w.setVisible(false);
+					JOptionPane.showMessageDialog(null,"The Login was successful");
+				}else {
+					JOptionPane.showMessageDialog(null,"the password or the names are incorrect",
+							null,JOptionPane.ERROR_MESSAGE);
+					nameField.setText(null);
+					passwordField.setText(null);;
+				}
+			}
+		});
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window w = SwingUtilities.getWindowAncestor(btnCancel);
+				if(w!=null)
+					w.setVisible(false);
+			}
+		});
+
+		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,passwordField};
+		Object[] options = new Object[] {btnLogin, btnCancel};
+		JOptionPane.showOptionDialog(frame, message, "Sign in", JOptionPane.CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, btnLogin);
 	}
 }
