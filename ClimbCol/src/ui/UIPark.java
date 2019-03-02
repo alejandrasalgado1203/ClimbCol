@@ -41,13 +41,13 @@ public class UIPark extends JPanel{
 		this.setupMainPanel();
 	}
 
-	public void setupMainPanel() {
+	private void setupMainPanel() {
 		createTittle();
 		createDescription();
 		createScrollPane();
 		createButtonFotos();
 	}
-	public void createTittle() {
+	private void createTittle() {
 		JLabel lblParkName = new JLabel("PARQUE "+ this.park.getName());
 		lblParkName.setFont(new Font("Tahoma",Font.PLAIN,35));
 		JPanel panelTittle = new JPanel();
@@ -55,7 +55,7 @@ public class UIPark extends JPanel{
 		this.add(panelTittle,BorderLayout.NORTH);
 	}
 
-	public void createDescription() {
+	private void createDescription() {
 		JPanel description = new JPanel(new GridLayout(0,1));
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
@@ -68,7 +68,7 @@ public class UIPark extends JPanel{
 		centerPanel.add(description);
 	}
 
-	public void createScrollPane() {
+	private void createScrollPane() {
 
 		DefaultListModel<Zona> model = new DefaultListModel<>();
 		for (Zona zone : park.getZonas().values()) {
@@ -89,7 +89,7 @@ public class UIPark extends JPanel{
 
 	}
 
-	public void createButtonFotos(){
+	private void createButtonFotos(){
 		JButton fotos = new JButton("Fotos");
 		fotos.setForeground(Color.BLACK);
 		fotos.setBackground(Color.WHITE);
@@ -105,14 +105,14 @@ public class UIPark extends JPanel{
 		});
 	}
 
-	public void showFrameFotos() {
+	private void showFrameFotos() {
 		JFrame frameFotos = new JFrame("FOTOS");
 		frameFotos.add(setupPanelFotos());
 		frameFotos.pack();
 		frameFotos.setVisible(true);
 	}
 
-	public JPanel setupPanelFotos() {
+	private JPanel setupPanelFotos() {
 		JPanel panelFotos = new JPanel(new BorderLayout()); 
 		JToolBar toolBar;
 
