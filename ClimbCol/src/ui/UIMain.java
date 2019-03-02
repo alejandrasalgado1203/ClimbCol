@@ -53,7 +53,7 @@ public class UIMain extends JFrame{
 
 		menuItemSignIn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-
+				UIUser.showSignInFrame();
 			}
 		});
 
