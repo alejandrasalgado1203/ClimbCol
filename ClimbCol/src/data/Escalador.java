@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.TreeMap;
 
+import business.FileNameConstants;
+
 public class Escalador implements Serializable{
 
 	private static final long serialVersionUID = -819014890345586134L;
@@ -22,7 +24,16 @@ public class Escalador implements Serializable{
 	public Escalador(String name, char[] password2){
 		this.name = name;
 		this.setPassword(password2);
+		this.fechaDeNacimiento = LocalDate.of(1900, 1, 1);
+		this.logradas = 0;
+		this.retos = new TreeMap<String,Ruta>();
+		this.favoritos = new TreeMap<String,Ruta>();
+		this.escaladaFavorita = "not specified";
+		this.direccionImagen = FileNameConstants.DEFAULT_USER_IMAGE;
+		this.maximaDificultadLograda = 0;
 	}
+
+
 	public String getName() {
 		return name;
 	}
