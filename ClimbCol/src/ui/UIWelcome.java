@@ -41,13 +41,13 @@ public class UIWelcome extends JPanel{
 		this.setupPanel();
 	}
 
-	public void setupPanel(){
+	private void setupPanel(){
 		createPanelWelcome();
 		createScrollPane();
 		createTipsPanel();
 	}
 
-	public void createPanelWelcome () {
+	private void createPanelWelcome () {
 		JPanel panelWelcome = new JPanel(new GridLayout(0,1));
 		JLabel lblWelcome = new JLabel("Welcome to CLIMBCOL");
 		lblWelcome.setFont(new Font("Tahoma",Font.PLAIN,35));
@@ -81,7 +81,7 @@ public class UIWelcome extends JPanel{
 
 	}
 
-	public void createScrollPane() {
+	private void createScrollPane() {
 		DefaultListModel<Parque> model = new DefaultListModel<>();
 		for (Parque park : ClimbColManager.getParks().values()) {
 			model.addElement(park);
@@ -103,7 +103,7 @@ public class UIWelcome extends JPanel{
 		this.addGB(scrollPaneParks, 0, 1);
 	}
 
-	public void createTipsPanel() {
+	private void createTipsPanel() {
 		JPanel tips = new JPanel(new GridLayout(0,1));
 
 		JLabel labelTipsImage1 = new JLabel(new ImageIcon("images/2.jpg"));
