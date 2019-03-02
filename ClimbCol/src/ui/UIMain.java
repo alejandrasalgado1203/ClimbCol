@@ -8,6 +8,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import business.ClimbersManager;
+
 public class UIMain extends JFrame{
 
 	private JPanel panel;
@@ -36,24 +38,41 @@ public class UIMain extends JFrame{
 	public void createMenuBarWelcome(){
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenuItem menuItemInfo = new JMenuItem("Information User");
-		menuBar.add(menuItemInfo);
-
 		JMenuItem menuItemSignIn = new JMenuItem("Sign in");
 		menuBar.add(menuItemSignIn);
+
+		JMenuItem menuItemLogin = new JMenuItem("Login");
+		menuBar.add(menuItemLogin);
+
+		JMenuItem menuItemLogout = new JMenuItem("Logout");
+		menuBar.add(menuItemLogout);
+		menuItemLogout.setEnabled(false);
 
 		JMenuItem menuItemExit = new JMenuItem("Exit");
 		menuBar.add(menuItemExit);
 
-		menuItemInfo.addActionListener(new ActionListener(){
+		menuItemSignIn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				UIUser.showSignInFrame();
+			}
+		});
+
+		menuItemLogin.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				UIUser.showLoginFrame();
+				if(ClimbersManager.getCurrentUser()!=null) {
+					menuItemLogin.setEnabled(false);
+					menuItemLogout.setEnabled(true);
+				}
 
 			}
 		});
 
-		menuItemSignIn.addActionListener(new ActionListener(){
+		menuItemLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UIUser.showSignInFrame();
+				ClimbersManager.setCurrentUser(null);
+				menuItemLogout.setEnabled(false);
+				menuItemLogin.setEnabled(true);
 			}
 		});
 
@@ -62,6 +81,7 @@ public class UIMain extends JFrame{
 				System.exit(0);
 			}
 		});
+
 		this.setJMenuBar(menuBar);
 	}
 }
