@@ -6,18 +6,30 @@ import data.Escalador;
 
 public class ClimbersManager {
 
-	private static TreeMap <String,Escalador> escaladores;
+	private static TreeMap<String, Escalador> escaladores;
 
-	public  static void put(Escalador es) {
-		escaladores.put(es.getPassword(), es);
-	}
-
-	public static TreeMap <String,Escalador> getEscaladores() {
+	public static TreeMap<String, Escalador> getEscaladores() {
 		return escaladores;
 	}
 
-	public static void setEscaladores(TreeMap <String,Escalador> escaladores) {
+	public static void setEscaladores(TreeMap<String, Escalador> escaladores) {
 		ClimbersManager.escaladores = escaladores;
+	}
+
+	public static void creatUser(String text, char[] password) {
+		Escalador climber = new Escalador(text,password);
+		escaladores.put(climber.getPassword(), climber);
+	}
+
+	public static boolean isValidPassword(char[] password) {	
+		return password.length>5 && (!escaladores.containsKey(new String(password)));
+	}
+
+	public static boolean isValidName(String text) {
+		for (Escalador c : escaladores.values()) {
+			if(c.getName().equals(text))return false;
+		}
+		return true;
 	}
 
 }
