@@ -41,7 +41,7 @@ public class UIMain extends JFrame{
 		this.add(panel);
 	}
 
-	public void createMenuBarWelcome(){
+	private void createMenuBarWelcome(){
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenuItem menuItemSignIn = new JMenuItem("Sign in");
@@ -105,7 +105,7 @@ public class UIMain extends JFrame{
 		this.setJMenuBar(menuBar);
 	}
 
-	protected void showUser() {
+	private void showUser() {
 		new UIUser(this);		
 	}
 }
