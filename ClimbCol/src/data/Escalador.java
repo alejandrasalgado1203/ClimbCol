@@ -9,7 +9,7 @@ public class Escalador implements Serializable{
 
 	private static final long serialVersionUID = -819014890345586134L;
 	private String name;
-	private String password;
+	private char[] password;
 	private LocalDate fechaDeNacimiento;
 	private int logradas;
 	private TreeMap<String,Ruta> retos;
@@ -19,9 +19,9 @@ public class Escalador implements Serializable{
 	private double maximaDificultadLograda;
 
 
-	public Escalador(String name, String password){
+	public Escalador(String name, char[] password2){
 		this.name = name;
-		this.setPassword(password);
+		this.setPassword(password2);
 	}
 	public String getName() {
 		return name;
@@ -72,9 +72,9 @@ public class Escalador implements Serializable{
 		this.maximaDificultadLograda = maximaDificultadLograda;
 	}
 	public String getPassword() {
-		return password;
+		return new String(password);
 	}
-	public void setPassword(String password) {
+	public void setPassword(char[] password) {
 		this.password = password;
 	}
 	@Override
