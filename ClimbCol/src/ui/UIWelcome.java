@@ -89,7 +89,7 @@ public class UIWelcome extends JPanel{
 		JList <Parque> listParks = new JList <Parque> (model);
 		listParks.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneParks = new JScrollPane(listParks);
-		scrollPaneParks.setMinimumSize(new Dimension(400,500));
+		scrollPaneParks.setMinimumSize(new Dimension(300,400));
 
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
