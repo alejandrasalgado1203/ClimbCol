@@ -1,4 +1,3 @@
-
 package ui;
 
 import java.awt.BorderLayout;
@@ -11,7 +10,12 @@ import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -21,6 +25,8 @@ import javax.swing.ImageIcon;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -31,12 +37,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import business.ClimbersManager;
 import data.Escalador;
 import data.Ruta;
+
 
 public class UIUser extends JFrame {
 
@@ -45,6 +55,7 @@ public class UIUser extends JFrame {
 	private JPanel userPanel;
 	private JPanel editPanel;
 	private GridBagConstraints constraints = new GridBagConstraints();
+	private String [] editValues;
 
 	public UIUser(UIMain main) {
 		super("User's info");
@@ -100,7 +111,8 @@ public class UIUser extends JFrame {
 	private   void createInfo() { 
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Birthdate: " + climber.getFechaDeNacimiento());
+		JLabel lbl = new JLabel("Birthdate: " + 
+				climber.getFechaDeNacimiento().format(DateTimeFormatter.ofPattern( "d MMMM uuuu")));
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 		lbl = new JLabel("Achieved routes: " + climber.getLogradas());
@@ -173,6 +185,7 @@ public class UIUser extends JFrame {
 
 	private void showEditPanel() {
 		this.editPanel = new JPanel(new GridBagLayout());
+		this.editValues = new String [] {"","","","",""};
 		createEditImage();
 		creatEditInfo();
 		createEditButtons();
@@ -196,22 +209,64 @@ public class UIUser extends JFrame {
 		JLabel lbl = new JLabel("Birthdate: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
-		JTextField txtBirthdate = new JTextField();
+		JFormattedTextField txtBirthdate = new JFormattedTextField(
+				DateTimeFormatter.ofPattern( "d MMMM uuuu").toFormat());
+		txtBirthdate.setValue(climber.getFechaDeNacimiento());
+		txtBirthdate.addPropertyChangeListener("value", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				editValues [0] = txtBirthdate.getText();
+			}
+
+		});
 		editInfoPanel.add(txtBirthdate);
+
 		lbl = new JLabel("Achieved routes: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
-		JTextField txtAchievedRoutes = new JTextField();
+		JFormattedTextField txtAchievedRoutes = new JFormattedTextField(
+				NumberFormat.getIntegerInstance());
+		txtAchievedRoutes.setValue(climber.getLogradas());
+		txtAchievedRoutes.addPropertyChangeListener("value", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				editValues [1] = txtAchievedRoutes.getText();
+			}
+
+		});
 		editInfoPanel.add(txtAchievedRoutes);
+
 		lbl = new JLabel("Favorite climbing: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
-		JTextField txtFavoriteClimbing = new JTextField();
+		JTextField txtFavoriteClimbing = new JTextField(climber.getEscaladaFavorita());
+		txtFavoriteClimbing.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				edit();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				edit();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				edit();
+			}
+			public void edit() {
+				editValues [2] = txtFavoriteClimbing.getText();
+			}
+		});
+
 		editInfoPanel.add(txtFavoriteClimbing);
+
 		lbl = new JLabel("Maximum difficulty achieved: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
-		JTextField txtMaxDifficulty = new JTextField();
+		JFormattedTextField txtMaxDifficulty = new JFormattedTextField(NumberFormat.getInstance(Locale.ENGLISH));
+		txtMaxDifficulty.setValue(climber.getMaximaDificultadLograda());
+		txtMaxDifficulty.addPropertyChangeListener("value", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				editValues [3] =  txtMaxDifficulty.getText();
+			}
+
+		});
+
 		editInfoPanel.add(txtMaxDifficulty);
 
 		constraints.gridheight = 1;
@@ -224,7 +279,7 @@ public class UIUser extends JFrame {
 		JButton btnEditImage = new JButton("Edit Image");
 		btnEditImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				loadImage();
 			}
 		});
 		constraints.gridheight = 1;
@@ -234,7 +289,9 @@ public class UIUser extends JFrame {
 		JButton btnSave = new JButton("save");
 		btnSave.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-
+				ClimbersManager.editUser(editValues);
+				remove(editPanel);
+				showUserPanel();
 			}
 		});
 		this.addGB(editPanel, btnSave, 0, 3);
@@ -247,6 +304,16 @@ public class UIUser extends JFrame {
 			}
 		});
 		this.addGB(editPanel, btnCancel, 1, 3);
+	}
+
+	protected void loadImage() {
+		JFileChooser imageChooser = new JFileChooser();
+		imageChooser.setDialogTitle("Edit image");
+		imageChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif","jpg"));
+		int returnVal = imageChooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) 
+			editValues [4] = imageChooser.getSelectedFile().getPath();
 	}
 
 	private void addGB(JPanel jp,Component comp, int x, int y) {
@@ -292,6 +359,9 @@ public class UIUser extends JFrame {
 			}
 		});
 
+		JLabel passwordRulesLbl = new JLabel("*the password must have more than 5 characters");
+		passwordRulesLbl.setFont(new Font("Tahoma",Font.PLAIN,12));
+
 		JButton btnSignIn = new JButton ("Sign in");
 		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,7 +387,8 @@ public class UIUser extends JFrame {
 		});
 
 
-		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,passwordField};
+		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,
+				passwordField,passwordRulesLbl };
 		Object[] options = new Object[] {btnSignIn, btnCancel};
 		JOptionPane.showOptionDialog(frame, message, "Sign in", 0,
 				JOptionPane.QUESTION_MESSAGE, null, options, btnSignIn);
@@ -342,7 +413,8 @@ public class UIUser extends JFrame {
 						w.setVisible(false);
 					JOptionPane.showMessageDialog(null,"The Login was successful");
 				}else {
-					JOptionPane.showMessageDialog(null,"the password or the names are incorrect or you are not register yet",
+					JOptionPane.showMessageDialog(null,"the password or the names are incorrect "
+							+ "or you are not register yet",
 							null,JOptionPane.ERROR_MESSAGE);
 					nameField.setText(null);
 					passwordField.setText(null);;
