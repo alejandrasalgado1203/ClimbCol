@@ -106,12 +106,8 @@ public class UIWelcome extends JPanel{
 	private void createTipsPanel() {
 		JPanel tips = new JPanel(new GridLayout(0,1));
 
-		JLabel labelTipsImage1 = new JLabel(new ImageIcon("images/2.jpg"));
+		JLabel labelTipsImage1 = new JLabel(new ImageIcon("images/Tips.jpg"));
 		tips.add(labelTipsImage1);
-
-		JLabel labelTipsImage2 = new JLabel(new ImageIcon("images/3.jpg"));
-		tips.add(labelTipsImage2);
-
 		this.addGB(tips, 1, 1);
 	}
 

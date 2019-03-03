@@ -4,6 +4,7 @@ package business;
 import java.util.TreeMap;
 
 import data.*;
+import javax.swing.ImageIcon;
 import ui.*;
 
 public class ClimbCol {
@@ -25,7 +26,6 @@ public class ClimbCol {
 		parques.put("parque 9", new Parque("parque 9","images/4.jpg"));
 
 		uiMain = new UIMain();
-
 		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
 	}
 
