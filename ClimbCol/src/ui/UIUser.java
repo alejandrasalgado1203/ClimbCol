@@ -342,7 +342,7 @@ public class UIUser extends JFrame {
 						w.setVisible(false);
 					JOptionPane.showMessageDialog(null,"The Login was successful");
 				}else {
-					JOptionPane.showMessageDialog(null,"the password or the names are incorrect",
+					JOptionPane.showMessageDialog(null,"the password or the names are incorrect or you are not register yet",
 							null,JOptionPane.ERROR_MESSAGE);
 					nameField.setText(null);
 					passwordField.setText(null);;
@@ -361,7 +361,7 @@ public class UIUser extends JFrame {
 
 		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,passwordField};
 		Object[] options = new Object[] {btnLogin, btnCancel};
-		JOptionPane.showOptionDialog(frame, message, "Sign in", 0,
+		JOptionPane.showOptionDialog(frame, message, "Login", 0,
 				JOptionPane.QUESTION_MESSAGE, null, options, btnLogin);
 	}
 }

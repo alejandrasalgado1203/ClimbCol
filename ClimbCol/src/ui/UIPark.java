@@ -3,6 +3,7 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,8 @@ import data.Zona;
 
 public class UIPark extends JPanel{
 	private JPanel centerPanel = new JPanel(new GridLayout(1,0));
+	private JPanel southPanel = new JPanel();
+	private JPanel description = new JPanel(new GridLayout(0,1));
 	private Parque park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
@@ -34,8 +37,8 @@ public class UIPark extends JPanel{
 	public static UIPark createUIPark(Parque park,UIMain main){
 		return new UIPark(park,main);
 	}
-	public UIPark(Parque parque, UIMain main) {
-		this.park = parque;
+	public UIPark(Parque park, UIMain main) {
+		this.park = park;
 		this.uiMain = main;
 		this.setLayout(new BorderLayout());
 		this.setupMainPanel();
@@ -43,8 +46,10 @@ public class UIPark extends JPanel{
 
 	private void setupMainPanel() {
 		createTittle();
+		createImage();
 		createDescription();
 		createScrollPane();
+		goToLastPanel();
 		createButtonFotos();
 	}
 	private void createTittle() {
@@ -54,17 +59,35 @@ public class UIPark extends JPanel{
 		panelTittle.add(lblParkName);
 		this.add(panelTittle,BorderLayout.NORTH);
 	}
-
-	private void createDescription() {
-		JPanel description = new JPanel(new GridLayout(0,1));
+	
+	private void createImage() {
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
 		description.add(labelImage);
+	}
+	private void createDescription() {
+		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JTextField textDescription = new JTextField(30);
-		textDescription.setEditable(false);
-		textDescription.setText(park.toString());
-		description.add(textDescription);
+		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+		lbl = new JLabel("Link Ubicacion: " + park.getLinkUbicacion());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+		lbl = new JLabel("Altitud: " + park.getAltitud());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+		lbl = new JLabel("Link Parque: " + park.getLinkParque());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+		//lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+
+		description.add(infoPanel);
 		centerPanel.add(description);
 	}
 
@@ -79,6 +102,7 @@ public class UIPark extends JPanel{
 		JScrollPane scrollPaneParks = new JScrollPane(listZones);
 
 		centerPanel.add(scrollPaneParks);
+		this.add(centerPanel, BorderLayout.CENTER);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -88,6 +112,18 @@ public class UIPark extends JPanel{
 		});
 
 	}
+	
+	private void goToLastPanel() {
+		
+		JButton b1=new JButton("Return to Welcome");  
+		b1.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
+			}  
+		});
+		
+		this.southPanel.add(b1);
+	}
 
 	private void createButtonFotos(){
 		JButton fotos = new JButton("Fotos");
@@ -95,7 +131,8 @@ public class UIPark extends JPanel{
 		fotos.setBackground(Color.WHITE);
 		JPanel jp = new JPanel();
 		jp.add(fotos);
-		this.add(jp,BorderLayout.SOUTH);
+		this.southPanel.add(jp);
+		this.add(southPanel, BorderLayout.SOUTH);
 
 
 		fotos.addActionListener(new ActionListener(){
@@ -152,4 +189,5 @@ public class UIPark extends JPanel{
 		panelFotos.add(toolBar, BorderLayout.SOUTH);
 		return panelFotos;
 	}
+	
 }

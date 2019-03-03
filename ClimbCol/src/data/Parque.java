@@ -83,11 +83,11 @@ public class Parque implements Serializable,NameImageGiver{
 	public void setTemperaturaPromedio(String temperaturaPromedio) {
 		this.temperaturaPromedio = temperaturaPromedio;
 	}
-	public String getCampeonato() {
+	public String getAltitud() {
 		return altitud;
 	}
-	public void setCampeonato(String campeonato) {
-		this.altitud = campeonato;
+	public void setAltitud(String altitud) {
+		this.altitud = altitud;
 	}
 	public String getLinkParque() {
 		return linkParque;

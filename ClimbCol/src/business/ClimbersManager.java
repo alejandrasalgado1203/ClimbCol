@@ -3,6 +3,7 @@ package business;
 import java.util.TreeMap;
 
 import data.Escalador;
+import data.Ruta;
 
 public class ClimbersManager {
 
@@ -52,6 +53,16 @@ public class ClimbersManager {
 
 	public static void setCurrentUser(Escalador currentUser) {
 		ClimbersManager.currentUser = currentUser;
+	}
+
+	public static void addGoalRute(Ruta rute) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void addFavoriteRute(Ruta rute) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

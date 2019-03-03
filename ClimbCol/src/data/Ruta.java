@@ -13,8 +13,6 @@ public class Ruta implements Serializable,NameImageGiver{
 	private String altura;
 	private Zona zona;
 
-
-
 	public Ruta(String name) {
 		super();
 		this.name = name;
