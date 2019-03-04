@@ -30,9 +30,19 @@ public class Escalador implements Serializable{
 		this.favoritos = new TreeMap<String,Ruta>();
 		this.escaladaFavorita = "not specified";
 		this.direccionImagen = FileNameConstants.DEFAULT_USER_IMAGE;
-		this.maximaDificultadLograda = 0;
+		this.maximaDificultadLograda = 0.0;
 	}
 
+
+
+	public void putFavoriteRoute(Ruta route) {
+		favoritos.put(route.getName(), route);
+	}
+
+
+	public void putGoalRoute(Ruta route) {
+		retos.put(route.getName(), route);
+	}
 
 	public String getName() {
 		return name;
@@ -88,11 +98,4 @@ public class Escalador implements Serializable{
 	public void setPassword(char[] password) {
 		this.password = password;
 	}
-	@Override
-	public String toString() {
-		return "fecha De Nacimiento: " + fechaDeNacimiento + "\n escalada Favorita: " + escaladaFavorita
-				+ "\n maxima Dificultad Lograda: " + maximaDificultadLograda ;
-	}
-
-
 }
