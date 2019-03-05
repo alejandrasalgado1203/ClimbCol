@@ -83,7 +83,7 @@ public class UIWelcome extends JPanel{
 
 	private void createScrollPane() {
 		DefaultListModel<Parque> model = new DefaultListModel<>();
-		for (Parque park : ClimbColManager.getParks().values()) {
+		for (Parque park : ClimbColManager.getParks()) {
 			model.addElement(park);
 		}
 		JList <Parque> listParks = new JList <Parque> (model);

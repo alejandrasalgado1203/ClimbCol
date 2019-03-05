@@ -3,7 +3,7 @@ package data;
 
 import java.io.Serializable;
 
-public class Ruta implements Serializable,NameImageGiver{
+public class Ruta implements Serializable,Comparable<Ruta>,NameImageGiver{
 
 	private static final long serialVersionUID = 8944754339534154430L;
 	private String name;
@@ -18,6 +18,11 @@ public class Ruta implements Serializable,NameImageGiver{
 		this.name = name;
 	}
 
+	@Override
+	public String getMainImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public String getName() {
 		return name;
@@ -56,12 +61,8 @@ public class Ruta implements Serializable,NameImageGiver{
 		this.zona = zona;
 	}
 
-
 	@Override
-	public String getMainImage() {
-		// TODO Auto-generated method stub
-		return null;
+	public int compareTo(Ruta o) {
+		return name.compareTo(o.getName());
 	}
-
-
 }

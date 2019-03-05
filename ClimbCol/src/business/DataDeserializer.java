@@ -4,19 +4,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import data.*;
 
 public class DataDeserializer  {
 
 	@SuppressWarnings("unchecked")
-	public static TreeMap<String,Parque> deserializeParks(){
+	public static TreeSet<Parque> deserializeParks(){
 
-		TreeMap<String,Parque> parks = null;
+		TreeSet<Parque> parks = null;
 		try {
 			FileInputStream file = new FileInputStream (FileNameConstants.PARKS_FILE);
 			ObjectInputStream reader = new ObjectInputStream (file);
-			parks = (TreeMap<String,Parque>) reader.readObject();
+			parks = (TreeSet<Parque>) reader.readObject();
 			reader.close();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

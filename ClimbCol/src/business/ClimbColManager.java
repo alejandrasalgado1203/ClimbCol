@@ -1,56 +1,31 @@
 package business;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import data.*;
 
 public class ClimbColManager {
 
-	private static TreeMap<String,Parque> parks;
+	private static TreeSet<Parque> parks;
 
 
 	public static ArrayList<Ruta> getAllRutes() {
 		TreeSet<Ruta> rutes = new TreeSet<Ruta>();
-		for (Parque p : parks.values()) {
-			for (Zona z : p.getZonas().values()) {
-				rutes.addAll(z.getRutas().values());
+		for (Parque p : parks) {
+			for (Zona z : p.getZonas()) {
+				rutes.addAll(z.getRutas());
 			}
 		}
 		return new ArrayList<Ruta> (rutes);
 	}
 
-	public static Object[] getParksNames() {
-		return parks.keySet().toArray();
-	}
-
-	public static Zona getZone(Parque p, String name) {
-		return p.getZona(name);
-	}
-
-	public static Parque getPark(String name) {
-		return parks.get(name);
-	}
-
-	public static Object[] getZonesNames(Parque p) {
-		return p.getZonas().keySet().toArray();
-	}
-
-	public static TreeMap<String,Parque> getParks() {
+	public static TreeSet<Parque> getParks() {
 		return parks;
 	}
 
-	public static void setParks(TreeMap<String,Parque> parks) {
-		ClimbColManager.parks = parks;
-	}
-
-	public static Object[] getRutesNames(Zona zone) {
-		return zone.getRutas().keySet().toArray();
-	}
-
-	public static Ruta getRute(Zona zone, String selectedValue) {
-		return zone.getRuta(selectedValue);
+	public static void setParks(TreeSet<Parque> parques) {
+		ClimbColManager.parks = parques;
 	}
 
 }
