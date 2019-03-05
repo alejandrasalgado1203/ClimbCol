@@ -39,9 +39,6 @@ public class ClimbersManager {
 		return succesful;
 	}
 
-
-
-
 	public static TreeMap<String, Escalador> getEscaladores() {
 		return escaladores;
 	}

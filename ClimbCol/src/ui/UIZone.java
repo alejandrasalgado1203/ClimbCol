@@ -1,8 +1,6 @@
-
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,12 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import business.ClimbColManager;
-import data.Parque;
 import data.Ruta;
 import data.Zona;
 
@@ -84,7 +79,7 @@ public class UIZone extends JPanel {
 	public void createScrollPane() {
 
 		DefaultListModel<Ruta> model = new DefaultListModel<>();
-		for (Ruta rute : zone.getRutas().values()) {
+		for (Ruta rute : zone.getRutas()) {
 			model.addElement(rute);
 		}
 		JList <Ruta> listRutes = new JList <Ruta> (model);
@@ -96,8 +91,7 @@ public class UIZone extends JPanel {
 
 		listRutes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				Ruta rute = zone.getRuta((listRutes.getSelectedValue().getName()));
-				uiMain.showPanel(UIRute.createUIRute(rute, uiMain));	
+				uiMain.showPanel(UIRute.createUIRute(listRutes.getSelectedValue(), uiMain));	
 			}
 		});
 	}
@@ -109,14 +103,14 @@ public class UIZone extends JPanel {
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-		
+
 		JButton b2=new JButton("Return to Park");  
 		b1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				uiMain.showPanel(UIPark.createUIPark(zone.getParque(),uiMain));
 			}  
 		});
-		
+
 		southPanel.add(b1);
 		southPanel.add(b2);
 		this.add(southPanel, BorderLayout.SOUTH);

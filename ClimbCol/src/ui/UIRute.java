@@ -1,28 +1,19 @@
-
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import business.ClimbersManager;
-import data.Parque;
 import data.Ruta;
-import data.Zona;
 
 public class UIRute extends JPanel{
 	private   JPanel panelRute= new JPanel();
@@ -78,7 +69,7 @@ public class UIRute extends JPanel{
 		centerPanel.add(infoPanel);
 		this.add(centerPanel,BorderLayout.CENTER);
 	}
-	
+
 	private void goToLastAndNextPanel() {
 		JPanel southPanel = new JPanel ();
 		JButton b1=new JButton("Return to Welcome");  
@@ -87,27 +78,27 @@ public class UIRute extends JPanel{
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-		
+
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				uiMain.showPanel(UIPark.createUIPark(rute.getZona().getParque(),uiMain));
 			}  
 		});
-		
+
 		JButton b3=new JButton("Return to Zone");  
 		b3.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				uiMain.showPanel(UIZone.createUIZone(rute.getZona(),uiMain));
 			}  
 		});
-		
-		
+
+
 		southPanel.add(b1);
 		southPanel.add(b2);
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
-	
+
 	public   void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		panelRute.add(menuBar);

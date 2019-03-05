@@ -3,9 +3,9 @@ package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
-public class Zona implements Serializable,NameImageGiver{
+public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{
 
 	private static final long serialVersionUID = 8176465641263408346L;
 	private String name;
@@ -13,7 +13,7 @@ public class Zona implements Serializable,NameImageGiver{
 	private double dificultadMin;
 	private double dificultadPromedio;
 	private ArrayList<String> direccionImagenes;
-	private TreeMap <String,Ruta> rutas;
+	private TreeSet <Ruta> rutas;
 	private Parque parque;   
 
 
@@ -25,11 +25,11 @@ public class Zona implements Serializable,NameImageGiver{
 		this.dificultadMax = Integer.MIN_VALUE;
 		this.dificultadMin = Integer.MAX_VALUE;
 		this.dificultadPromedio = 0;
-		this.rutas = new TreeMap <String,Ruta>();
+		this.rutas = new TreeSet <Ruta>();
 	}
 
-	public void putRuta(Ruta r) {
-		this.rutas.put(r.getName(), r);
+	public void addRuta(Ruta r) {
+		this.rutas.add(r);
 		r.setZona(this);
 		this.actualizeDificult(r.getDificultad());
 	}
@@ -38,15 +38,18 @@ public class Zona implements Serializable,NameImageGiver{
 		this.direccionImagenes.add(string);
 	}
 
-	public Ruta getRuta(String s) {
-		return this.rutas.get(s);
+	public String getMainImage() {
+		for (String string : direccionImagenes) {
+			if (string.contains("main"))return string;
+		}
+		return this.direccionImagenes.get(0);
 	}
 
 	private void actualizeDificult(double dificultad) {
 		if(this.dificultadMax<dificultad)this.dificultadMax = dificultad;
 		if(this.dificultadMin>dificultad)this.dificultadMin = dificultad;
 		double sum = 0;
-		for (Ruta r : this.rutas.values()) {
+		for (Ruta r : this.rutas) {
 			sum+=r.getDificultad();
 		}
 		this.dificultadPromedio = sum/this.rutas.size();
@@ -82,10 +85,10 @@ public class Zona implements Serializable,NameImageGiver{
 	public void setDireccionImagen(ArrayList<String> direccionImagen) {
 		this.direccionImagenes = direccionImagen;
 	}
-	public TreeMap<String, Ruta> getRutas() {
+	public TreeSet <Ruta> getRutas() {
 		return rutas;
 	}
-	public void setRutas(TreeMap<String, Ruta> rutas) {
+	public void setRutas(TreeSet <Ruta> rutas) {
 		this.rutas = rutas;
 	}
 	public Parque getParque() {
@@ -96,8 +99,14 @@ public class Zona implements Serializable,NameImageGiver{
 	}
 
 	@Override
-	public String getMainImage() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+		return name ;
 	}
+
+	@Override
+	public int compareTo(Zona o) {
+		return name.compareTo(o.getName());
+	}
+
+
 }

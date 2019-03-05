@@ -3,7 +3,6 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -59,7 +57,7 @@ public class UIPark extends JPanel{
 		panelTittle.add(lblParkName);
 		this.add(panelTittle,BorderLayout.NORTH);
 	}
-	
+
 	private void createImage() {
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
@@ -94,7 +92,7 @@ public class UIPark extends JPanel{
 	private void createScrollPane() {
 
 		DefaultListModel<Zona> model = new DefaultListModel<>();
-		for (Zona zone : park.getZonas().values()) {
+		for (Zona zone : park.getZonas()) {
 			model.addElement(zone);
 		}
 		JList <Zona> listZones = new JList <Zona> (model);
@@ -106,22 +104,21 @@ public class UIPark extends JPanel{
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				Zona zone = park.getZona((listZones.getSelectedValue().getName()));
-				uiMain.showPanel(UIZone.createUIZone(zone, uiMain));	
+				uiMain.showPanel(UIZone.createUIZone(listZones.getSelectedValue(), uiMain));	
 			}
 		});
 
 	}
-	
+
 	private void goToLastPanel() {
-		
+
 		JButton b1=new JButton("Return to Welcome");  
 		b1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-		
+
 		this.southPanel.add(b1);
 	}
 
@@ -189,5 +186,5 @@ public class UIPark extends JPanel{
 		panelFotos.add(toolBar, BorderLayout.SOUTH);
 		return panelFotos;
 	}
-	
+
 }

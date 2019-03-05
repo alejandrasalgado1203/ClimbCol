@@ -9,9 +9,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,10 +26,12 @@ import javax.swing.border.EmptyBorder;
 
 import business.CreadorDeDatos;
 import data.Parque;
+import data.Zona;
 
 
 public class UICreardorDeDatos extends JFrame{
 
+	private static final long serialVersionUID = 3948533140531215034L;
 	private CreadorDeDatos cdd;
 	private JPanel newPark = new JPanel();
 	private JPanel newZone = new JPanel();
@@ -40,7 +43,7 @@ public class UICreardorDeDatos extends JFrame{
 	public UICreardorDeDatos(CreadorDeDatos cdd) {
 		super();
 		this.cdd = cdd;
-		this.setTitle("creador de datos");
+		this.setTitle("data creator");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(280,190);
 		this.setLocation(200,200);
@@ -57,7 +60,7 @@ public class UICreardorDeDatos extends JFrame{
 		Container box = Box.createVerticalBox();
 		this.editZone.add(box);
 
-		JLabel lblAdd = new JLabel ("editar Zona");
+		JLabel lblAdd = new JLabel ("edit zone");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
@@ -67,7 +70,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(Box.createVerticalStrut(10));
 
 
-		String[] fields = {"Direccion imagen"};
+		String[] fields = {"Image path"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
@@ -78,10 +81,7 @@ public class UICreardorDeDatos extends JFrame{
 
 		btnSend.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				ArrayList<String> zone = new ArrayList<String>();
-				zone.addAll(zoneChooser.getStatus());
-				zone.addAll(infoAsker.getStatus());
-				cdd.editZone(zone);
+				cdd.editZone(infoAsker.getStatus(),zoneChooser.getStatus());
 				showHome();
 			}  
 		});  
@@ -92,7 +92,7 @@ public class UICreardorDeDatos extends JFrame{
 		Container box = Box.createVerticalBox();
 		this.editPark.add(box);
 
-		JLabel lblAdd = new JLabel ("editar parque");
+		JLabel lblAdd = new JLabel ("edit park");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
@@ -101,7 +101,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(parkChooser);
 		box.add(Box.createVerticalStrut(10));
 
-		String[] fields = {"Direccion imagen"};
+		String[] fields = {"Image path"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
@@ -112,10 +112,7 @@ public class UICreardorDeDatos extends JFrame{
 
 		btnSend.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				ArrayList<String> park = new ArrayList<String>();
-				park.add(parkChooser.getStatus());
-				park.addAll(infoAsker.getStatus());
-				cdd.editPark(park);
+				cdd.editPark(infoAsker.getStatus(),parkChooser.getStatus());
 				showHome();
 			}  
 		}); 
@@ -127,7 +124,7 @@ public class UICreardorDeDatos extends JFrame{
 		Container box = Box.createVerticalBox();
 		this.newRute.add(box);
 
-		JLabel lblAdd = new JLabel ("Crear Ruta");
+		JLabel lblAdd = new JLabel ("Create ruote");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
@@ -136,8 +133,8 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(zoneChooser);
 		box.add(Box.createVerticalStrut(10));
 
-		String[] fields = {"Nmobre","Dificultad","Numero de chapas","Tipo de ruta",
-		"Altura"};
+		String[] fields = {"Name","Difficulty","Number of plates","Route type",
+		"height"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
@@ -147,9 +144,7 @@ public class UICreardorDeDatos extends JFrame{
 
 		btnSend.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){
-				ArrayList<String> list = zoneChooser.getStatus();
-				list.addAll(infoAsker.getStatus());
-				cdd.createRute(list);
+				cdd.createRute(infoAsker.getStatus(),zoneChooser.getStatus());
 				showHome();
 			}  
 		});  
@@ -161,7 +156,7 @@ public class UICreardorDeDatos extends JFrame{
 		Container box = Box.createVerticalBox();
 		this.newZone.add(box);
 
-		JLabel lblAdd = new JLabel ("Crear zona");
+		JLabel lblAdd = new JLabel ("Create zone");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
@@ -170,7 +165,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(parkChooser);
 		box.add(Box.createVerticalStrut(10));
 
-		String[] fields = {"Nmobre","Direccion imagen"};
+		String[] fields = {"Name","Image path"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
@@ -179,9 +174,8 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(btnSend);
 		btnSend.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				ArrayList<String> list = infoAsker.getStatus();
-				list.add(0, parkChooser.getStatus());
-				cdd.createZone(list);
+				ArrayList<String> info = infoAsker.getStatus();
+				cdd.createZone(info, parkChooser.getStatus());
 				showHome();
 			}  
 		});  
@@ -193,13 +187,13 @@ public class UICreardorDeDatos extends JFrame{
 		Container box = Box.createVerticalBox();
 		this.newPark.add(box);
 
-		JLabel lblAdd = new JLabel ("Crear Parque");
+		JLabel lblAdd = new JLabel ("Create park");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
 
-		String[] fields = {"Nmobre","Ubicacion","Link ubicacion","Temperatura Promedio",
-				"Campeonato","Link parque","Direccion imagen"};
+		String[] fields = {"Name","Ubication","Link ubication","average temperature",
+				"altitude","Link park","imag path"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
@@ -215,8 +209,8 @@ public class UICreardorDeDatos extends JFrame{
 	}
 
 	private void setupMenu() {
-		JMenu menuPark = new JMenu("parque");
-		JMenuItem newPark = new JMenuItem("parque nuevo");
+		JMenu menuPark = new JMenu("park");
+		JMenuItem newPark = new JMenuItem("new park");
 		newPark.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				setupNewParkPanel();
@@ -225,7 +219,7 @@ public class UICreardorDeDatos extends JFrame{
 		});
 		menuPark.add(newPark);
 
-		JMenuItem editPark = new JMenuItem("editar Parque");
+		JMenuItem editPark = new JMenuItem("edit parqk");
 		editPark.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setupEditParkPanel();
@@ -234,8 +228,8 @@ public class UICreardorDeDatos extends JFrame{
 		});
 		menuPark.add(editPark);
 
-		JMenu menuZone = new JMenu("zona");
-		JMenuItem newZone = new JMenuItem("zona nueva");
+		JMenu menuZone = new JMenu("zone");
+		JMenuItem newZone = new JMenuItem("new zone");
 		newZone.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				setupNewZonePanel();
@@ -243,7 +237,7 @@ public class UICreardorDeDatos extends JFrame{
 			}
 		});
 		menuZone.add(newZone);
-		JMenuItem editZone = new JMenuItem("editar zona");
+		JMenuItem editZone = new JMenuItem("edit zone");
 		editZone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setupEditZonePanel();
@@ -252,8 +246,8 @@ public class UICreardorDeDatos extends JFrame{
 		});
 		menuZone.add(editZone);
 
-		JMenu menuRute = new JMenu("ruta");
-		JMenuItem newRute = new JMenuItem("ruta nueva");
+		JMenu menuRute = new JMenu("route");
+		JMenuItem newRute = new JMenuItem("new route");
 		newRute.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				setupNewRutePanel();
@@ -262,7 +256,7 @@ public class UICreardorDeDatos extends JFrame{
 		});
 		menuRute.add(newRute);
 
-		JMenuItem save = new JMenuItem("guardar");
+		JMenuItem save = new JMenuItem("save");
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				cdd.save();
@@ -323,6 +317,8 @@ public class UICreardorDeDatos extends JFrame{
 
 	class InfoAsker extends JPanel{
 
+		private static final long serialVersionUID = -125891320999749783L;
+
 		public InfoAsker(String[] fields) {
 			this.setLayout(new GridLayout(0,1));
 			JLabel lbl;
@@ -351,59 +347,72 @@ public class UICreardorDeDatos extends JFrame{
 
 	class ParkChooser extends JPanel{
 
-		JComboBox  parque;
+		private static final long serialVersionUID = -3632316906732791719L;
+		JComboBox <Parque>  parks;
 
-		public ParkChooser(TreeMap<String,Parque> parks) {
+		public ParkChooser(TreeSet<Parque> parks) {
 			this.setLayout(new GridLayout(0,1));
-			JLabel  lblParque = new JLabel("parque");
-			this.add(lblParque);
-			parque = new JComboBox ( parks.keySet().toArray());
-			parque.setEditable(true);
-			this.add(parque);
+			JLabel  lblPark = new JLabel("park");
+			this.add(lblPark);
+			DefaultComboBoxModel<Parque> model = new DefaultComboBoxModel<>();
+			for(Parque park : parks) {
+				model.addElement(park);
+			}
+			this.parks = new JComboBox <Parque> (model);
+			this.add(this.parks);
 		}
-		public String getStatus(){
-			return (String) parque.getSelectedItem();
+		public Parque getStatus(){
+			return (Parque) parks.getSelectedItem();
 		}
 	}
 
 	class ZoneChooser extends JPanel{
 
-		JComboBox  parque;
-		JComboBox  zona;
-		TreeMap<String,Parque> parks;
+		private static final long serialVersionUID = 1508471468384862963L;
+		JComboBox <Parque> parks;
+		JComboBox <Zona> zones;
 
-		public ZoneChooser(TreeMap<String,Parque> parks) {
-			this.parks = parks;
+		public ZoneChooser(TreeSet<Parque> parks) {
 			this.setLayout(new GridLayout(0,1));
-			JLabel  lblParque = new JLabel("parque");
-			this.add(lblParque);
-			parque = new JComboBox( parks.keySet().toArray());
-			parque.addActionListener(new ActionListener() {
+			JLabel  lblPark = new JLabel("park");
+			this.add(lblPark);
+
+			DefaultComboBoxModel<Parque> modelParks = new DefaultComboBoxModel<>();
+			for(Parque park : parks) {
+				modelParks.addElement(park);
+			}
+			this.parks = new JComboBox <Parque> (modelParks);
+			this.parks.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JComboBox  cb = (JComboBox)e.getSource();
-					actualizeComboboxZone((String)cb.getSelectedItem());
+					actualizeComboboxZone();
 				}
 			});
-			parque.setEditable(true);
-			this.add(parque);
+			this.add(this.parks);
 
-			JLabel lblZone = new JLabel("zona");
+			JLabel lblZone = new JLabel("zone");
 			this.add(lblZone);
-			zona = new JComboBox( parks.get(parque.getSelectedItem()).getZonas().keySet().toArray());
-			zona.setEditable(true);
-			this.add(zona);
+			DefaultComboBoxModel<Zona> modelZone = new DefaultComboBoxModel<>();
+			Parque p = (Parque) this.parks.getSelectedItem();
+			for(Zona zone : p.getZonas()) {
+				modelZone.addElement(zone);
+			}
+			zones = new JComboBox <Zona> (modelZone);
+			this.add(zones);
 		}
-		protected void actualizeComboboxZone(String selectedItem) {
-			this.remove(zona);
-			zona =  new JComboBox ( parks.get(selectedItem).getZonas().keySet().toArray());
-			this.add(zona);
+		protected void actualizeComboboxZone() {
+			this.remove(zones);
+			DefaultComboBoxModel<Zona> modelZone = new DefaultComboBoxModel<>();
+			Parque p = (Parque) parks.getSelectedItem();
+			for(Zona zone : p.getZonas()) {
+				modelZone.addElement(zone);
+			}
+			zones = new JComboBox <Zona> (modelZone);
+
+			this.add(zones);
 			this.validate();
 		}
-		public ArrayList<String> getStatus(){
-			ArrayList<String> status = new ArrayList<String>();
-			status.add((String) parque.getSelectedItem());
-			status.add((String) zona.getSelectedItem());
-			return status;
+		public Zona getStatus(){
+			return (Zona) zones.getSelectedItem();
 		}
 	}
 
