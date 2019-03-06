@@ -3,7 +3,7 @@ package data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import business.FileNameConstants;
 
@@ -14,8 +14,8 @@ public class Escalador implements Serializable{
 	private char[] password;
 	private LocalDate fechaDeNacimiento;
 	private int logradas;
-	private TreeMap<String,Ruta> retos;
-	private TreeMap<String,Ruta> favoritos;
+	private TreeSet <Ruta> retos;
+	private TreeSet <Ruta> favoritos;
 	private String escaladaFavorita;
 	private String direccionImagen;
 	private double maximaDificultadLograda;
@@ -26,8 +26,8 @@ public class Escalador implements Serializable{
 		this.setPassword(password2);
 		this.fechaDeNacimiento = LocalDate.of(1900, 1, 1);
 		this.logradas = 0;
-		this.retos = new TreeMap<String,Ruta>();
-		this.favoritos = new TreeMap<String,Ruta>();
+		this.retos = new TreeSet <Ruta>();
+		this.favoritos = new TreeSet <Ruta>();
 		this.escaladaFavorita = "not specified";
 		this.direccionImagen = FileNameConstants.DEFAULT_USER_IMAGE;
 		this.maximaDificultadLograda = 0.0;
@@ -36,12 +36,12 @@ public class Escalador implements Serializable{
 
 
 	public void putFavoriteRoute(Ruta route) {
-		favoritos.put(route.getName(), route);
+		favoritos.add(route);
 	}
 
 
 	public void putGoalRoute(Ruta route) {
-		retos.put(route.getName(), route);
+		retos.add(route);
 	}
 
 	public String getName() {
@@ -62,16 +62,16 @@ public class Escalador implements Serializable{
 	public void setLogradas(int logradas) {
 		this.logradas = logradas;
 	}
-	public TreeMap<String, Ruta> getRetos() {
+	public TreeSet <Ruta> getRetos() {
 		return retos;
 	}
-	public void setRetos(TreeMap<String, Ruta> retos) {
+	public void setRetos(TreeSet <Ruta> retos) {
 		this.retos = retos;
 	}
-	public TreeMap<String, Ruta> getFavoritos() {
+	public TreeSet <Ruta> getFavoritos() {
 		return favoritos;
 	}
-	public void setFavoritos(TreeMap<String, Ruta> favoritos) {
+	public void setFavoritos(TreeSet <Ruta> favoritos) {
 		this.favoritos = favoritos;
 	}
 	public String getEscaladaFavorita() {
@@ -97,5 +97,15 @@ public class Escalador implements Serializable{
 	}
 	public void setPassword(char[] password) {
 		this.password = password;
+	}
+
+
+
+	public void removeFavorite(Ruta r) {
+		this.favoritos.remove(r);
+	}
+
+	public void removeGoal(Ruta r) {
+		this.retos.remove(r);
 	}
 }
