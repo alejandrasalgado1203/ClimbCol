@@ -84,4 +84,11 @@ public class ClimbersManager {
 		DataSerializer.serializeClimbers(escaladores);
 	}
 
+	public static void removeRoute(Ruta r, String item) {
+		if(item.equals("favorites"))
+			currentUser.removeFavorite(r);
+		if(item.equals("goals"))
+			currentUser.removeGoal(r);
+	}
+
 }
