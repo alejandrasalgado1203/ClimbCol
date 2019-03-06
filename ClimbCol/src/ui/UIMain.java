@@ -19,6 +19,8 @@ import business.ClimbersManager;
 
 public class UIMain extends JFrame{
 
+	private UIUser uiUser;
+
 	public UIMain() {
 		super("CLIMBCOL");
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -80,7 +82,7 @@ public class UIMain extends JFrame{
 		menuBar.add(menuItemLogout);
 		menuItemLogout.setEnabled(user);
 
-		JMenuItem menuItemUser = new JMenuItem("Use's info");
+		JMenuItem menuItemUser = new JMenuItem("User's info");
 		menuBar.add(menuItemUser);
 		menuItemUser.setEnabled(user);
 		if(user) menuItemUser.setText(ClimbersManager.getCurrentUser().getName() + "'s info");
@@ -114,6 +116,8 @@ public class UIMain extends JFrame{
 				menuItemLogin.setEnabled(true);
 				menuItemUser.setText("User's info");
 				menuItemUser.setEnabled(false);
+				uiUser.setVisible(false);
+
 			}
 		});
 
@@ -136,6 +140,6 @@ public class UIMain extends JFrame{
 	}
 
 	private void showUser() {
-		new UIUser(this);		
+		uiUser = new UIUser(this);		
 	}
 }
