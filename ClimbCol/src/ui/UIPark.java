@@ -2,10 +2,17 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -14,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -69,19 +77,61 @@ public class UIPark extends JPanel{
 		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Link Ubicacion: " + park.getLinkUbicacion());
+		lbl = new JLabel("ver en Google Maps");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lbl.setForeground(Color.BLUE.darker());
+		lbl.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(park.getLinkUbicacion().trim()));
+				} catch (IOException | URISyntaxException e1) {
+					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
+							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			public void mouseExited(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("ver en Google Maps");
+			}
+			public void mouseEntered(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("<html><a href=''>" + "ver en Google Maps" + "</a></html>");
+			}
+		});
 		infoPanel.add(lbl);
+
 		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 		lbl = new JLabel("Altitud: " + park.getAltitud());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Link Parque: " + park.getLinkParque());
+		lbl = new JLabel("ver website del parque");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lbl.setForeground(Color.BLUE.darker());
+		lbl.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(park.getLinkParque().trim()));
+				} catch (IOException | URISyntaxException e1) {
+					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
+							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			public void mouseExited(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("ver website del parque");
+			}
+			public void mouseEntered(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("<html><a href=''>" + "ver website del parque" + "</a></html>");
+			}
+		});
 		infoPanel.add(lbl);
-		//lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
+
+		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
