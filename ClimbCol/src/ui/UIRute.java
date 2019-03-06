@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
 import javax.swing.JPanel;
 import business.ClimbersManager;
 import data.Ruta;
@@ -34,13 +32,13 @@ public class UIRute extends JPanel{
 		createTittle();
 		createImage();
 		createDescription();
-		createMenuBar();
 		goToLastAndNextPanel();
 	}
 	public   void createTittle() {
-		JPanel tittle = new JPanel();
+		JPanel tittle = new JPanel(new GridLayout(0,1));
 		JLabel lblWelcomeRute = new JLabel("RUTA "+ this.rute.getName());
 		lblWelcomeRute.setFont(new Font("Tahoma",Font.PLAIN,35));
+                tittle.add(createToolBar());
 		tittle.add(lblWelcomeRute);
 		this.add(lblWelcomeRute,BorderLayout.NORTH);
 	}
@@ -100,31 +98,28 @@ public class UIRute extends JPanel{
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
 
-	public   void createMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-		panelRute.add(menuBar);
+	public JToolBar createToolBar() {
+		JToolBar toolBar = new JToolBar();
 
-		JMenu menuAdd = new JMenu("Agregar");
-		menuBar.add(menuAdd);
+		JButton buttonGoals = new JButton("Agregar a lista Retos");
+		JButton buttonFavorites = new JButton("Agregar a lista favoritos");
 
-		JMenuItem menuItemGoals = new JMenuItem("A la lista Retos");
-		menuAdd.add(menuItemGoals);
-		menuAdd.addSeparator();
-
-		JMenuItem menuItemFavorites = new JMenuItem("A la lista de favoritos");
-		menuAdd.add(menuItemFavorites);
-		menuAdd.addSeparator();
-
-		menuItemGoals.addActionListener(new ActionListener(){
+		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				ClimbersManager.addGoalRute(rute);
 			}
 		});
 
-		menuItemFavorites.addActionListener(new ActionListener(){
+		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				ClimbersManager.addFavoriteRute(rute);
 			}
 		});
+                toolBar = new JToolBar( "ToolBar", JToolBar.HORIZONTAL); 
+		toolBar.setFloatable(false);
+		toolBar.add(buttonGoals);
+		toolBar.addSeparator();
+		toolBar.add(buttonFavorites);
+            return toolBar;    
 	}
 }

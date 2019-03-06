@@ -24,7 +24,7 @@ public class ClimbCol {
 
 	private static void initiComponents() {
 		parques = DataDeserializer.deserializeParks();
-		escaladores = DataDeserializer.deserializeClimbers();
+		//escaladores = DataDeserializer.deserializeClimbers();
 		ClimbColManager.setParks(parques);
 		ClimbersManager.setEscaladores(escaladores);
 	}
