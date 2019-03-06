@@ -12,19 +12,19 @@ public class Ruta implements Serializable,Comparable<Ruta>,NameImageGiver{
 	private String tipoDeRuta;
 	private String altura;
 	private Zona zona;
-        private String image;
+	private String image;
 
 	public Ruta(String name) {
 		super();
 		this.name = name;
 	}
 
-        public String getImage(){
-            return image;
-        }
-        public void setImage(String image){
-            this.image = image;
-        }
+	public String getImage(){
+		return image;
+	}
+	public void setImage(String image){
+		this.image = image;
+	}
 	@Override
 	public String getMainImage() {
 		// TODO Auto-generated method stub
@@ -66,6 +66,11 @@ public class Ruta implements Serializable,Comparable<Ruta>,NameImageGiver{
 	}
 	public void setZona(Zona zona) {
 		this.zona = zona;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 	@Override
