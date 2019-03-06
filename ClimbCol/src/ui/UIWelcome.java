@@ -55,7 +55,8 @@ public class UIWelcome extends JPanel{
 		jp1.add(lblWelcome);
 		panelWelcome.add(jp1);
 
-		JLabel lblDescription = new JLabel("The best aplication to Colombian and international Climbers");
+		JLabel lblDescription = new JLabel("The best aplication to Colombian and international"
+				+ " Climbers");
 		lblDescription.setFont(new Font("Tahoma",Font.PLAIN,20));
 		jp1 = new JPanel();
 		jp1.add(lblDescription);
