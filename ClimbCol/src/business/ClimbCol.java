@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import data.*;
-import javax.swing.ImageIcon;
 import ui.*;
 
 public class ClimbCol {
@@ -15,7 +14,7 @@ public class ClimbCol {
 
 	public static void main(String[] args) {
 
-			initiComponents();
+		initiComponents();
 
 		uiMain = new UIMain();
 
@@ -24,8 +23,9 @@ public class ClimbCol {
 	}
 
 	private static void initiComponents() {
-            parques = DataDeserializer.deserializeParks();
-            ClimbColManager.setParks(parques);
+		parques = DataDeserializer.deserializeParks();
+		escaladores = DataDeserializer.deserializeClimbers();
+		ClimbColManager.setParks(parques);
 		ClimbersManager.setEscaladores(escaladores);
 	}
 
