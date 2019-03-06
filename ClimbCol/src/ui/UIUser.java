@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -18,6 +17,7 @@ import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.TreeSet;
 
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -79,13 +79,30 @@ public class UIUser extends JFrame {
 
 	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
-		JMenuItem menuItemEdit = new JMenuItem("Edit");
-		menuBar.add(menuItemEdit);
-		menuItemEdit.addActionListener(new ActionListener() {
+		JMenuItem editInfo = new JMenuItem("Edit info");
+		menuBar.add(editInfo);
+		editInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showEditPanel();
+				showEditInfoPanel();
 			}
 		});
+
+		JMenuItem editFavorites = new JMenuItem("Edit favorites");
+		menuBar.add(editFavorites);
+		editFavorites.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showEditRoutesPanel(climber.getFavoritos(),"favorites");
+			}
+		});
+
+		JMenuItem editGoals = new JMenuItem("Edit goals");
+		menuBar.add(editGoals);
+		editGoals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showEditRoutesPanel(climber.getRetos(),"goals");
+			}
+		});
+
 		this.setJMenuBar(menuBar);
 	}
 
@@ -96,7 +113,7 @@ public class UIUser extends JFrame {
 		createImage();
 		createInfo();
 		createButtons();
-		this.add(userPanel);
+		this.setContentPane(userPanel);
 		this.pack();
 	}
 
@@ -146,14 +163,14 @@ public class UIUser extends JFrame {
 		JRadioButton buttonGoals= new JRadioButton("Grupo de Retos");
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getRetos().values());
+				setupPanelRutes(climber.getRetos());
 			}
 		});
 
 		JRadioButton buttonFavorites = new JRadioButton("Favoritos");
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getFavoritos().values());
+				setupPanelRutes(climber.getFavoritos());
 			}
 		});
 
@@ -192,14 +209,13 @@ public class UIUser extends JFrame {
 		});
 	}
 
-	private void showEditPanel() {
+	private void showEditInfoPanel() {
 		this.editPanel = new JPanel(new GridBagLayout());
 		this.editValues = new String [] {"","","","",""};
 		createEditImage();
 		creatEditInfo();
 		createEditButtons();
-		this.remove(userPanel);
-		this.add(editPanel, BorderLayout.CENTER);
+		this.setContentPane(editPanel);
 		this.pack();
 	}
 
@@ -299,7 +315,6 @@ public class UIUser extends JFrame {
 		btnSave.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				ClimbersManager.editUser(editValues);
-				remove(editPanel);
 				showUserPanel();
 			}
 		});
@@ -308,14 +323,13 @@ public class UIUser extends JFrame {
 		JButton btnCancel = new JButton("cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				remove(editPanel);
 				showUserPanel();
 			}
 		});
 		this.addGB(editPanel, btnCancel, 1, 3);
 	}
 
-	protected void loadImage() {
+	private void loadImage() {
 		JFileChooser imageChooser = new JFileChooser();
 		imageChooser.setDialogTitle("Edit image");
 		imageChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -323,6 +337,32 @@ public class UIUser extends JFrame {
 		int returnVal = imageChooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
 			editValues [4] = imageChooser.getSelectedFile().getPath();
+	}
+
+	private void showEditRoutesPanel(TreeSet<Ruta> treeSet, String item) {
+		DefaultListModel<Ruta> model = new DefaultListModel<>();
+		for (Ruta r: treeSet) {
+			model.addElement(r);
+		}
+		JList <Ruta> listRutes = new JList <Ruta> (model);
+		listRutes.setCellRenderer(new Renderer());
+		JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
+
+		JButton btnDelete = new JButton("delete selected items");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Ruta r : listRutes.getSelectedValuesList()) {
+					ClimbersManager.removeRoute(r,item);
+				}
+			}
+		});
+		this.editPanel = new JPanel(new GridBagLayout());
+		this.constraints.gridheight = 1;
+		this.constraints.gridwidth = 0;
+		this.addGB(editPanel,scrollPaneRoutes,0,0);
+		this.addGB(editPanel,btnDelete,0,1);
+		this.setContentPane(editPanel);
+		this.pack();
 	}
 
 	private void addGB(JPanel jp,Component comp, int x, int y) {
