@@ -45,7 +45,7 @@ public class UIRute extends JPanel{
 		this.add(lblWelcomeRute,BorderLayout.NORTH);
 	}
 	public   void createImage() {
-		ImageIcon Rute= new ImageIcon(rute.getMainImage());
+		ImageIcon Rute= new ImageIcon(rute.getImage());
 		JLabel labelImage = new JLabel(Rute);
 		centerPanel.add(labelImage);
 	}
@@ -127,6 +127,4 @@ public class UIRute extends JPanel{
 			}
 		});
 	}
-
-
 }
