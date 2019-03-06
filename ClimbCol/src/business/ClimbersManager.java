@@ -39,6 +39,9 @@ public class ClimbersManager {
 		return succesful;
 	}
 
+	public static boolean hasCurrentUser() {
+		return currentUser != null;
+	}
 	public static TreeMap<String, Escalador> getEscaladores() {
 		return escaladores;
 	}
