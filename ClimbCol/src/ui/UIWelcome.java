@@ -67,7 +67,7 @@ public class UIWelcome extends JPanel{
 			model.addElement(r);
 		}
 		JComboBox <Ruta> cBoxRutes = new JComboBox <Ruta> (model);
-		cBoxRutes.setRenderer(new Renderer());
+		//cBoxRutes.setRenderer(new Renderer());
 		cBoxRutes.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox <Ruta> cb = (JComboBox<Ruta>) e.getSource();
