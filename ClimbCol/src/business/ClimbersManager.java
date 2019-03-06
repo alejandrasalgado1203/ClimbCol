@@ -80,4 +80,8 @@ public class ClimbersManager {
 			currentUser.setDireccionImagen(editValues[4]);
 	}
 
+	public static void saveUsers() {
+		DataSerializer.serializeClimbers(escaladores);
+	}
+
 }
