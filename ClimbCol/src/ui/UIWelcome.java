@@ -61,7 +61,7 @@ public class UIWelcome extends JPanel{
 		jp1.add(lblDescription);
 		panelWelcome.add(jp1);
 
-		/*DefaultComboBoxModel<Ruta> model = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<Ruta> model = new DefaultComboBoxModel<>();
 		ArrayList<Ruta> rutes = ClimbColManager.getAllRutes();
 		for(Ruta r : rutes) {
 			model.addElement(r);
@@ -74,7 +74,7 @@ public class UIWelcome extends JPanel{
 				uiMain.showPanel(UIRute.createUIRute((Ruta) cb.getSelectedItem(), uiMain));
 			}			
 		});
-		panelWelcome.add(cBoxRutes);*/
+		panelWelcome.add(cBoxRutes);
 
 		this.constraints.gridwidth = 2;	
 		this.addGB(panelWelcome,0,0);

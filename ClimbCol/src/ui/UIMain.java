@@ -20,8 +20,9 @@ public class UIMain extends JFrame{
 		super("CLIMBCOL");
 		this.panel = new JPanel();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                ImageIcon icon = new ImageIcon("images/2.jpg");
+                this.setIconImage(icon.getImage());
 		this.createMenuBarWelcome();
-		
 		this.showPanel(UIWelcome.createUIWelcome(this),740,670);
 
 	}

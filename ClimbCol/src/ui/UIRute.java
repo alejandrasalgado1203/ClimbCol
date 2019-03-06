@@ -96,6 +96,7 @@ public class UIRute extends JPanel{
 
 		southPanel.add(b1);
 		southPanel.add(b2);
+                southPanel.add(b3);
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
 

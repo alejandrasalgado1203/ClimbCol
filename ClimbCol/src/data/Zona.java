@@ -12,7 +12,7 @@ public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{
 	private double dificultadMax;
 	private double dificultadMin;
 	private double dificultadPromedio;
-	private ArrayList<String> direccionImagenes;
+	private String direccionImagenes;
 	private TreeSet <Ruta> rutas;
 	private Parque parque;   
 
@@ -20,8 +20,7 @@ public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{
 	public Zona(String name, String direccionImagen) {
 		super();
 		this.name = name;
-		this.direccionImagenes = new ArrayList<String>();
-		this.direccionImagenes.add(direccionImagen);
+		this.direccionImagenes=direccionImagen;
 		this.dificultadMax = Integer.MIN_VALUE;
 		this.dificultadMin = Integer.MAX_VALUE;
 		this.dificultadPromedio = 0;
@@ -35,14 +34,11 @@ public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{
 	}
 
 	public void addImage(String string) {
-		this.direccionImagenes.add(string);
+		this.direccionImagenes = string;
 	}
 
 	public String getMainImage() {
-		for (String string : direccionImagenes) {
-			if (string.contains("main"))return string;
-		}
-		return this.direccionImagenes.get(0);
+		return this.direccionImagenes;
 	}
 
 	private void actualizeDificult(double dificultad) {
@@ -79,10 +75,10 @@ public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{
 	public void setDificultadPromedio(double dificultadPromedio) {
 		this.dificultadPromedio = dificultadPromedio;
 	}
-	public ArrayList<String> getDireccionImagen() {
+	public String getDireccionImagen() {
 		return direccionImagenes;
 	}
-	public void setDireccionImagen(ArrayList<String> direccionImagen) {
+	public void setDireccionImagen(String direccionImagen) {
 		this.direccionImagenes = direccionImagen;
 	}
 	public TreeSet <Ruta> getRutas() {

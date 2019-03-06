@@ -32,6 +32,7 @@ public class CreadorDeDatos {
 		r.setNumeroDeChapas(Integer.parseInt(list.get(2).trim()));
 		r.setTipoDeRuta(list.get(3));
 		r.setAltura(list.get(4));
+                r.setImage(list.get(5));
 		zone.addRuta(r);
 	}
 

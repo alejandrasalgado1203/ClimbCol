@@ -105,7 +105,7 @@ public class UIZone extends JPanel {
 		});
 
 		JButton b2=new JButton("Return to Park");  
-		b1.addActionListener(new ActionListener(){  
+		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				uiMain.showPanel(UIPark.createUIPark(zone.getParque(),uiMain));
 			}  

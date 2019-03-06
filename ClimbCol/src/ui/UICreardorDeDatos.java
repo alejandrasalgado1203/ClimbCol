@@ -134,7 +134,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(Box.createVerticalStrut(10));
 
 		String[] fields = {"Name","Difficulty","Number of plates","Route type",
-		"height"};
+		"height","Image"};
 		InfoAsker infoAsker = new InfoAsker(fields);
 		box.add(infoAsker);
 		box.add(Box.createVerticalStrut(20));
