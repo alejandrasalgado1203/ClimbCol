@@ -1,7 +1,13 @@
 package ui;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,7 +24,24 @@ public class UIMain extends JFrame{
 	public UIMain() {
 		super("CLIMBCOL");
 		this.panel = new JPanel();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				ClimbersManager.saveUsers();
+				System.exit(0);
+			}
+		});
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				if((e.getKeyCode() == KeyEvent.VK_Q && e.getModifiers() == InputEvent.META_MASK)
+						||(e.getKeyCode() == KeyEvent.VK_Q && e.getModifiers() == InputEvent.CTRL_MASK)) {
+					ClimbersManager.saveUsers();
+					System.exit(0);
+				}
+				return false;
+			}
+		});
 		ImageIcon icon = new ImageIcon("images/2.jpg");
 		this.setIconImage(icon.getImage());
 		this.createMenuBar();
@@ -108,6 +131,7 @@ public class UIMain extends JFrame{
 
 		menuItemExit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				ClimbersManager.saveUsers();
 				System.exit(0);
 			}
 		});
