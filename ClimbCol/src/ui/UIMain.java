@@ -46,7 +46,10 @@ public class UIMain extends JFrame{
 		this.add(panel);
 	}
 
-	private void createMenuBarWelcome(){
+	public void createMenuBar(){
+
+		boolean user = ClimbersManager.hasCurrentUser();
+
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenuItem menuItemSignIn = new JMenuItem("Sign in");
@@ -54,14 +57,16 @@ public class UIMain extends JFrame{
 
 		JMenuItem menuItemLogin = new JMenuItem("Login");
 		menuBar.add(menuItemLogin);
+		menuItemLogin.setEnabled(!user);
 
 		JMenuItem menuItemLogout = new JMenuItem("Logout");
 		menuBar.add(menuItemLogout);
-		menuItemLogout.setEnabled(false);
+		menuItemLogout.setEnabled(user);
 
 		JMenuItem menuItemUser = new JMenuItem("Use's info");
 		menuBar.add(menuItemUser);
-		menuItemUser.setEnabled(false);
+		menuItemUser.setEnabled(user);
+		if(user) menuItemUser.setText(ClimbersManager.getCurrentUser().getName() + "'s info");
 
 		JMenuItem menuItemExit = new JMenuItem("Exit");
 		menuBar.add(menuItemExit);
@@ -75,7 +80,7 @@ public class UIMain extends JFrame{
 		menuItemLogin.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				UIUser.showLoginFrame();
-				if(ClimbersManager.getCurrentUser()!=null) {
+				if(ClimbersManager.hasCurrentUser()) {
 					menuItemLogin.setEnabled(false);
 					menuItemLogout.setEnabled(true);
 					menuItemUser.setText(ClimbersManager.getCurrentUser().getName()+"'s info");
@@ -98,6 +103,7 @@ public class UIMain extends JFrame{
 		menuItemUser.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				showUser();
+				menuItemUser.setEnabled(false);
 			}
 		});
 
@@ -108,6 +114,7 @@ public class UIMain extends JFrame{
 		});
 
 		this.setJMenuBar(menuBar);
+		this.revalidate();
 	}
 
 	private void showUser() {
