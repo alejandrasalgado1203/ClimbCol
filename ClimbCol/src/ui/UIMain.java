@@ -19,11 +19,8 @@ import business.ClimbersManager;
 
 public class UIMain extends JFrame{
 
-	private JPanel panel;
-
 	public UIMain() {
 		super("CLIMBCOL");
-		this.panel = new JPanel();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
@@ -63,9 +60,7 @@ public class UIMain extends JFrame{
 
 	private void addPanel(JPanel jp) {
 		this.setVisible(false);
-		this.remove(panel);
-		panel = jp;
-		this.add(panel);
+		this.setContentPane(jp);
 	}
 
 	public void createMenuBar(){
