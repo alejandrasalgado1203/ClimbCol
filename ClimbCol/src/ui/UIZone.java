@@ -35,7 +35,7 @@ public class UIZone extends JPanel {
 		this.setupMainPanel();
 	}
 
-	public void setupMainPanel() {
+	private void setupMainPanel() {
 		createTittle();
 		createScrollPane();
 		createImage();
@@ -43,7 +43,7 @@ public class UIZone extends JPanel {
 		goToLastAndNextPanel();
 	}
 
-	public void createTittle() {
+	private void createTittle() {
 		JPanel tittle = new JPanel();
 		JLabel lblWelcomeZone = new JLabel("ZONA "+ this.zone.getName());
 		lblWelcomeZone.setFont(new Font("Tahoma",Font.PLAIN,35));
@@ -51,12 +51,12 @@ public class UIZone extends JPanel {
 		this.add(tittle,BorderLayout.NORTH);
 	}
 
-	public void createImage() {
+	private void createImage() {
 		ImageIcon Zone= new ImageIcon(zone.getMainImage());
 		JLabel labelImage = new JLabel(Zone);
 		description.add(labelImage);
 	}
-	public   void createDescription() {
+	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Dificultad Maxima: " + zone.getDificultadMax());
@@ -76,7 +76,7 @@ public class UIZone extends JPanel {
 		centerPanel.add(description);
 	}
 
-	public void createScrollPane() {
+	private void createScrollPane() {
 
 		DefaultListModel<Ruta> model = new DefaultListModel<>();
 		for (Ruta rute : zone.getRutas()) {

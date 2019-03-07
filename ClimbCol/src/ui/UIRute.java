@@ -28,13 +28,13 @@ public class UIRute extends JPanel{
 		this.setLayout(new BorderLayout());
 		this.setupMainPanel();
 	}
-	public   void setupMainPanel() {
+	private   void setupMainPanel() {
 		createTittle();
 		createImage();
 		createDescription();
 		goToLastAndNextPanel();
 	}
-	public   void createTittle() {
+	private   void createTittle() {
 		JPanel tittle = new JPanel(new GridLayout(0,1));
 		JLabel lblWelcomeRute = new JLabel("RUTA "+ this.rute.getName());
 		lblWelcomeRute.setFont(new Font("Tahoma",Font.PLAIN,35));
@@ -42,12 +42,12 @@ public class UIRute extends JPanel{
 		tittle.add(lblWelcomeRute);
 		this.add(lblWelcomeRute,BorderLayout.NORTH);
 	}
-	public   void createImage() {
+	private  void createImage() {
 		ImageIcon Rute= new ImageIcon(rute.getImage());
 		JLabel labelImage = new JLabel(Rute);
 		centerPanel.add(labelImage);
 	}
-	public   void createDescription() {
+	private   void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Dificultad: " + rute.getDificultad());
@@ -98,7 +98,7 @@ public class UIRute extends JPanel{
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
 
-	public JToolBar createToolBar() {
+	private JToolBar createToolBar() {
 		JToolBar toolBar = new JToolBar();
 
 		JButton buttonGoals = new JButton("Agregar a lista Retos");

@@ -28,12 +28,17 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Dimension;
+import java.awt.Insets;
 
 import data.Parque;
 import data.Zona;
+import java.awt.Component;
 
 public class UIPark extends JPanel{
-	private JPanel centerPanel = new JPanel(new GridLayout(1,0));
+        private GridBagConstraints constraints = new GridBagConstraints();
 	private JPanel southPanel = new JPanel();
 	private JPanel description = new JPanel(new GridLayout(0,1));
 	private Parque park;
@@ -46,7 +51,7 @@ public class UIPark extends JPanel{
 	public UIPark(Parque park, UIMain main) {
 		this.park = park;
 		this.uiMain = main;
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridBagLayout());
 		this.setupMainPanel();
 	}
 
@@ -59,11 +64,12 @@ public class UIPark extends JPanel{
 		createButtonFotos();
 	}
 	private void createTittle() {
+                JPanel panelTittle = new JPanel(new GridLayout(0,1));
 		JLabel lblParkName = new JLabel("PARQUE "+ this.park.getName());
 		lblParkName.setFont(new Font("Tahoma",Font.PLAIN,35));
-		JPanel panelTittle = new JPanel();
 		panelTittle.add(lblParkName);
-		this.add(panelTittle,BorderLayout.NORTH);
+                this.constraints.gridwidth = 2;
+                this.addGB(panelTittle,0,0);
 	}
 
 	private void createImage() {
@@ -136,21 +142,22 @@ public class UIPark extends JPanel{
 		infoPanel.add(lbl);
 
 		description.add(infoPanel);
-		centerPanel.add(description);
 	}
 
 	private void createScrollPane() {
-
 		DefaultListModel<Zona> model = new DefaultListModel<>();
 		for (Zona zone : park.getZonas()) {
 			model.addElement(zone);
 		}
 		JList <Zona> listZones = new JList <Zona> (model);
 		listZones.setCellRenderer(new Renderer());
-		JScrollPane scrollPaneParks = new JScrollPane(listZones);
+		JScrollPane scrollPaneZones = new JScrollPane(listZones);
+                scrollPaneZones.setMinimumSize(new Dimension(300,400));
 
-		centerPanel.add(scrollPaneParks);
-		this.add(centerPanel, BorderLayout.CENTER);
+		this.constraints.gridwidth = 1;
+                this.constraints.gridheight = 1;
+                this.constraints.insets = new Insets(10,20,0,20);
+		this.addGB(scrollPaneZones,0,2);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -235,6 +242,12 @@ public class UIPark extends JPanel{
 		toolBar.add(b2);
 		panelFotos.add(toolBar, BorderLayout.SOUTH);
 		return panelFotos;
+	}
+        
+        private void addGB(Component comp, int x, int y) {
+		this.constraints.gridx = x;
+		this.constraints.gridy = y;
+		this.add(comp, this.constraints);
 	}
 
 }
