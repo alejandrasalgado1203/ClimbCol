@@ -58,14 +58,6 @@ public class ClimbersManager {
 		ClimbersManager.currentUser = currentUser;
 	}
 
-	public static void addGoalRute(Ruta route) {
-		currentUser.putGoalRoute(route);
-	}
-
-	public static void addFavoriteRute(Ruta route) {
-		currentUser.putFavoriteRoute(route);
-	}
-
 	public static void editUser(String[] editValues) {
 		if (!editValues[0].isEmpty()) 
 			currentUser.setFechaDeNacimiento(LocalDate.parse(editValues[0],
@@ -75,8 +67,6 @@ public class ClimbersManager {
 		if (!editValues[2].isEmpty())
 			currentUser.setEscaladaFavorita(editValues[2]);
 		if (!editValues[3].isEmpty())
-			currentUser.setMaximaDificultadLograda(Double.valueOf(editValues[3]));
-		if (!editValues[4].isEmpty())
 			currentUser.setDireccionImagen(editValues[4]);
 	}
 
@@ -89,6 +79,12 @@ public class ClimbersManager {
 			currentUser.removeFavorite(r);
 		if(item.equals("goals"))
 			currentUser.removeGoal(r);
+	}
+
+	public static void addRute(Ruta route, String actionCommand) {
+		if (actionCommand.equals("Goals"))currentUser.putGoalRoute(route);
+		if (actionCommand.equals("Favorites"))currentUser.putFavoriteRoute(route);
+		if (actionCommand.equals("Achieveds"))currentUser.putAchievedsRoute(route);
 	}
 
 }
