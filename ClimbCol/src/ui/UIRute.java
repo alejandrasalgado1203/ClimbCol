@@ -102,24 +102,38 @@ public class UIRute extends JPanel{
 		JToolBar toolBar = new JToolBar();
 
 		JButton buttonGoals = new JButton("Agregar a lista Retos");
+		buttonGoals.setActionCommand("Goals");
 		JButton buttonFavorites = new JButton("Agregar a lista favoritos");
+		buttonFavorites.setActionCommand("Favorites");
+		JButton buttonAchieveds = new JButton("Agregar a lista achieveds");
+		buttonAchieveds.setActionCommand("Achieveds");
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addGoalRute(rute);
+				ClimbersManager.addRute(rute,e.getActionCommand());
 			}
 		});
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addFavoriteRute(rute);
+				ClimbersManager.addRute(rute,e.getActionCommand());
 			}
 		});
-                toolBar = new JToolBar( "ToolBar", JToolBar.HORIZONTAL); 
+
+		buttonAchieveds.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				ClimbersManager.addRute(rute,e.getActionCommand());
+			}
+		});
+
+		toolBar = new JToolBar( "ToolBar", JToolBar.HORIZONTAL); 
 		toolBar.setFloatable(false);
 		toolBar.add(buttonGoals);
 		toolBar.addSeparator();
 		toolBar.add(buttonFavorites);
-            return toolBar;    
+		toolBar.addSeparator();
+		toolBar.add(buttonAchieveds);
+		return toolBar;    
+
 	}
 }
