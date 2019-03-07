@@ -16,6 +16,7 @@ public class Escalador implements Serializable{
 	private int logradas;
 	private TreeSet <Ruta> retos;
 	private TreeSet <Ruta> favoritos;
+	private TreeSet <Ruta> achieveds;
 	private String escaladaFavorita;
 	private String direccionImagen;
 	private double maximaDificultadLograda;
@@ -28,6 +29,7 @@ public class Escalador implements Serializable{
 		this.logradas = 0;
 		this.retos = new TreeSet <Ruta>();
 		this.favoritos = new TreeSet <Ruta>();
+		this.achieveds = new TreeSet <Ruta>();
 		this.escaladaFavorita = "not specified";
 		this.direccionImagen = FileNameConstants.DEFAULT_USER_IMAGE;
 		this.maximaDificultadLograda = 0.0;
@@ -35,13 +37,26 @@ public class Escalador implements Serializable{
 
 
 
+	public void removeFavorite(Ruta r) {
+		this.favoritos.remove(r);
+	}
+
+	public void removeGoal(Ruta r) {
+		this.retos.remove(r);
+	}
+
 	public void putFavoriteRoute(Ruta route) {
 		favoritos.add(route);
 	}
 
-
 	public void putGoalRoute(Ruta route) {
-		retos.add(route);
+		achieveds.add(route);
+	}
+
+	public void putAchievedsRoute(Ruta route) {
+		achieveds.add(route);
+		if (route.getDificultad()>this.maximaDificultadLograda)
+			this.maximaDificultadLograda = route.getDificultad();
 	}
 
 	public String getName() {
@@ -99,13 +114,11 @@ public class Escalador implements Serializable{
 		this.password = password;
 	}
 
-
-
-	public void removeFavorite(Ruta r) {
-		this.favoritos.remove(r);
+	public TreeSet <Ruta> getAchieveds() {
+		return achieveds;
 	}
 
-	public void removeGoal(Ruta r) {
-		this.retos.remove(r);
+	public void setAchieveds(TreeSet <Ruta> logrados) {
+		this.achieveds = logrados;
 	}
 }
