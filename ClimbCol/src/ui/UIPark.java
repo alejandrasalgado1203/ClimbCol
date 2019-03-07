@@ -40,7 +40,6 @@ import java.awt.Component;
 public class UIPark extends JPanel{
         private GridBagConstraints constraints = new GridBagConstraints();
 	private JPanel southPanel = new JPanel();
-	private JPanel description = new JPanel(new GridLayout(0,1));
 	private Parque park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
@@ -73,9 +72,11 @@ public class UIPark extends JPanel{
 	}
 
 	private void createImage() {
+                JPanel image = new JPanel(new GridLayout(0,1));
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
-		description.add(labelImage);
+		image.add(labelImage);
+                this.addGB(image,0,1);
 	}
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
@@ -83,6 +84,7 @@ public class UIPark extends JPanel{
 		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
+                
 		lbl = new JLabel("ver en Google Maps");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -106,14 +108,8 @@ public class UIPark extends JPanel{
 			}
 		});
 		infoPanel.add(lbl);
-
-		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-		lbl = new JLabel("Altitud: " + park.getAltitud());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-		lbl = new JLabel("ver website del parque");
+                
+                lbl = new JLabel("ver website del parque");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lbl.setForeground(Color.BLUE.darker());
@@ -137,11 +133,19 @@ public class UIPark extends JPanel{
 		});
 		infoPanel.add(lbl);
 
+		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+                
+		lbl = new JLabel("Altitud: " + park.getAltitud());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+                
 		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
-		description.add(infoPanel);
+		this.addGB(infoPanel,0,2);
 	}
 
 	private void createScrollPane() {
@@ -155,9 +159,9 @@ public class UIPark extends JPanel{
                 scrollPaneZones.setMinimumSize(new Dimension(300,400));
 
 		this.constraints.gridwidth = 1;
-                this.constraints.gridheight = 1;
+                this.constraints.gridheight = 2;
                 this.constraints.insets = new Insets(10,20,0,20);
-		this.addGB(scrollPaneZones,0,2);
+		this.addGB(scrollPaneZones,1,1);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
