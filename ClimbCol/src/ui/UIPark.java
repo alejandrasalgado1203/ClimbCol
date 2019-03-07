@@ -39,7 +39,6 @@ import java.awt.Component;
 
 public class UIPark extends JPanel{
         private GridBagConstraints constraints = new GridBagConstraints();
-	private JPanel southPanel = new JPanel();
 	private Parque park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
@@ -179,8 +178,8 @@ public class UIPark extends JPanel{
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-
-		this.southPanel.add(b1);
+                this.constraints.gridwidth = 2;
+		this.addGB(b1,0,3);
 	}
 
 	private void createButtonFotos(){
@@ -189,9 +188,8 @@ public class UIPark extends JPanel{
 		fotos.setBackground(Color.WHITE);
 		JPanel jp = new JPanel();
 		jp.add(fotos);
-		this.southPanel.add(jp);
-		this.add(southPanel, BorderLayout.SOUTH);
-
+                this.constraints.gridwidth = 2;
+                this.addGB(jp,0,4);
 
 		fotos.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
