@@ -15,7 +15,7 @@ public class ClimbCol {
 	public static void main(String[] args) {
 
 		initiComponents();
-
+		DataSerializer.serializeParks(parques);//quitas esto
 		uiMain = new UIMain();
 
 		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
@@ -23,8 +23,8 @@ public class ClimbCol {
 	}
 
 	private static void initiComponents() {
-		parques = DataDeserializer.deserializeParks();
-		//escaladores = DataDeserializer.deserializeClimbers();
+		//parques = DataDeserializer.deserializeParks();  descomentas
+		escaladores = DataDeserializer.deserializeClimbers();
 		ClimbColManager.setParks(parques);
 		ClimbersManager.setEscaladores(escaladores);
 	}
