@@ -68,7 +68,6 @@ public class UIWelcome extends JPanel{
 			model.addElement(r);
 		}
 		JComboBox <Ruta> cBoxRutes = new JComboBox <Ruta> (model);
-		//cBoxRutes.setRenderer(new Renderer());
 		cBoxRutes.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox <Ruta> cb = (JComboBox<Ruta>) e.getSource();
@@ -94,7 +93,7 @@ public class UIWelcome extends JPanel{
 
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				uiMain.showPanel(UIPark.createUIPark(listParks.getSelectedValue(), uiMain));	
+				uiMain.showPanel(UIPark.createUIPark(listParks.getSelectedValue(), uiMain),750,670);	
 			}
 		});
 
