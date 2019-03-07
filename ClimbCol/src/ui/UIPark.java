@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -38,7 +37,7 @@ import data.Zona;
 import java.awt.Component;
 
 public class UIPark extends JPanel{
-        private GridBagConstraints constraints = new GridBagConstraints();
+	private GridBagConstraints constraints = new GridBagConstraints();
 	private Parque park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
@@ -46,6 +45,7 @@ public class UIPark extends JPanel{
 	public static UIPark createUIPark(Parque park,UIMain main){
 		return new UIPark(park,main);
 	}
+
 	public UIPark(Parque park, UIMain main) {
 		this.park = park;
 		this.uiMain = main;
@@ -54,6 +54,7 @@ public class UIPark extends JPanel{
 	}
 
 	private void setupMainPanel() {
+		this.constraints.insets = new Insets(15,15,15,15);
 		createTittle();
 		createImage();
 		createDescription();
@@ -62,20 +63,19 @@ public class UIPark extends JPanel{
 		createButtonFotos();
 	}
 	private void createTittle() {
-                JPanel panelTittle = new JPanel(new GridLayout(0,1));
+		JPanel panelTittle = new JPanel(new GridLayout(0,1));
 		JLabel lblParkName = new JLabel("PARQUE "+ this.park.getName());
 		lblParkName.setFont(new Font("Tahoma",Font.PLAIN,35));
 		panelTittle.add(lblParkName);
-                this.constraints.gridwidth = 2;
-                this.addGB(panelTittle,0,0);
+		this.constraints.gridwidth = 2;
+		this.addGB(panelTittle,0,0);
 	}
 
 	private void createImage() {
-                JPanel image = new JPanel(new GridLayout(0,1));
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
-		image.add(labelImage);
-                this.addGB(image,0,1);
+		this.constraints.gridwidth = 1;
+		this.addGB(labelImage,0,1);
 	}
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
@@ -83,7 +83,7 @@ public class UIPark extends JPanel{
 		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
+
 		lbl = new JLabel("ver en Google Maps");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -107,8 +107,8 @@ public class UIPark extends JPanel{
 			}
 		});
 		infoPanel.add(lbl);
-                
-                lbl = new JLabel("ver website del parque");
+
+		lbl = new JLabel("ver website del parque");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lbl.setForeground(Color.BLUE.darker());
@@ -135,11 +135,11 @@ public class UIPark extends JPanel{
 		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
+
 		lbl = new JLabel("Altitud: " + park.getAltitud());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
+
 		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
@@ -155,11 +155,10 @@ public class UIPark extends JPanel{
 		JList <Zona> listZones = new JList <Zona> (model);
 		listZones.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneZones = new JScrollPane(listZones);
-                scrollPaneZones.setMinimumSize(new Dimension(300,400));
+		scrollPaneZones.setMinimumSize(new Dimension(300,400));
 
 		this.constraints.gridwidth = 1;
-                this.constraints.gridheight = 2;
-                this.constraints.insets = new Insets(10,20,0,20);
+		this.constraints.gridheight = 2;
 		this.addGB(scrollPaneZones,1,1);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
@@ -178,8 +177,8 @@ public class UIPark extends JPanel{
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-                this.constraints.gridwidth = 2;
-		this.addGB(b1,0,3);
+		this.constraints.gridwidth = 2;
+		this.addGB(b1,0,4);
 	}
 
 	private void createButtonFotos(){
@@ -188,8 +187,9 @@ public class UIPark extends JPanel{
 		fotos.setBackground(Color.WHITE);
 		JPanel jp = new JPanel();
 		jp.add(fotos);
-                this.constraints.gridwidth = 2;
-                this.addGB(jp,0,4);
+
+		this.constraints.gridwidth = 2;		
+		this.addGB(jp,0,3);
 
 		fotos.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -201,12 +201,12 @@ public class UIPark extends JPanel{
 	private void showFrameFotos() {
 		JFrame frameFotos = new JFrame("FOTOS");
 		frameFotos.add(setupPanelFotos());
-		frameFotos.pack();
+		frameFotos.setSize(950, 550);
 		frameFotos.setVisible(true);
 	}
 
 	private JPanel setupPanelFotos() {
-		JPanel panelFotos = new JPanel(new BorderLayout()); 
+		JPanel panelFotos = new JPanel(new GridBagLayout()); 
 		JToolBar toolBar;
 
 		ArrayList <ImageIcon>images = new ArrayList <ImageIcon>();
@@ -214,7 +214,10 @@ public class UIPark extends JPanel{
 			images.add(new ImageIcon(s));
 		}
 		JLabel label = new JLabel (images.get(0));
-		panelFotos.add(label,BorderLayout.CENTER);  
+		this.constraints.gridx = 0;
+		this.constraints.gridy = 0;
+		this.constraints.gridheight = 1;
+		panelFotos.add(label,constraints);  
 
 		JButton b1 = new JButton(new ImageIcon("images/previous.png"));
 		b1.addActionListener(new ActionListener(){  
@@ -242,11 +245,13 @@ public class UIPark extends JPanel{
 		toolBar.add(b1);
 		toolBar.addSeparator();
 		toolBar.add(b2);
-		panelFotos.add(toolBar, BorderLayout.SOUTH);
+		this.constraints.gridx = 0;
+		this.constraints.gridy = 1;
+		panelFotos.add(toolBar,constraints);  
 		return panelFotos;
 	}
-        
-        private void addGB(Component comp, int x, int y) {
+
+	private void addGB(Component comp, int x, int y) {
 		this.constraints.gridx = x;
 		this.constraints.gridy = y;
 		this.add(comp, this.constraints);
