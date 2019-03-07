@@ -16,7 +16,6 @@ import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.TreeSet;
 
 import javax.swing.JRadioButton;
@@ -160,7 +159,7 @@ public class UIUser extends JFrame {
 	private void createButtons() {
 		JPanel btnsPanel = new JPanel(); 
 
-		JRadioButton buttonGoals= new JRadioButton("Grupo de Retos");
+		JRadioButton buttonGoals= new JRadioButton("Retos");
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				setupPanelRutes(climber.getRetos());
@@ -174,12 +173,21 @@ public class UIUser extends JFrame {
 			}
 		});
 
+		JRadioButton buttonAchieveds = new JRadioButton("Logrados");
+		buttonAchieveds.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				setupPanelRutes(climber.getAchieveds());
+			}
+		});
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(buttonFavorites);
 		bg.add(buttonGoals);
+		bg.add(buttonAchieveds);
 
 		btnsPanel.add(buttonGoals);
 		btnsPanel.add(buttonFavorites);
+		btnsPanel.add(buttonAchieveds);
 
 		constraints.gridheight = 1;
 		constraints.gridwidth = 1;
@@ -211,7 +219,7 @@ public class UIUser extends JFrame {
 
 	private void showEditInfoPanel() {
 		this.editPanel = new JPanel(new GridBagLayout());
-		this.editValues = new String [] {"","","","",""};
+		this.editValues = new String [] {"","","",""};
 		createEditImage();
 		creatEditInfo();
 		createEditButtons();
@@ -280,19 +288,6 @@ public class UIUser extends JFrame {
 
 		editInfoPanel.add(txtFavoriteClimbing);
 
-		lbl = new JLabel("Maximum difficulty achieved: ");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
-		editInfoPanel.add(lbl);
-		JFormattedTextField txtMaxDifficulty = new JFormattedTextField(NumberFormat.getInstance(Locale.ENGLISH));
-		txtMaxDifficulty.setValue(climber.getMaximaDificultadLograda());
-		txtMaxDifficulty.addPropertyChangeListener("value", new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				editValues [3] =  txtMaxDifficulty.getText();
-			}
-
-		});
-
-		editInfoPanel.add(txtMaxDifficulty);
 
 		constraints.gridheight = 1;
 		constraints.gridwidth = 1;
@@ -336,7 +331,7 @@ public class UIUser extends JFrame {
 		imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif","jpg"));
 		int returnVal = imageChooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
-			editValues [4] = imageChooser.getSelectedFile().getPath();
+			editValues [3] = imageChooser.getSelectedFile().getPath();
 	}
 
 	private void showEditRoutesPanel(TreeSet<Ruta> treeSet, String item) {
