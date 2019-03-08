@@ -219,7 +219,7 @@ public class UIUser extends JFrame {
 
 	private void showEditInfoPanel() {
 		this.editPanel = new JPanel(new GridBagLayout());
-		this.editValues = new String [] {"","","",""};
+		this.editValues = new String [] {"","",""};
 		createEditImage();
 		creatEditInfo();
 		createEditButtons();
@@ -253,20 +253,6 @@ public class UIUser extends JFrame {
 		});
 		editInfoPanel.add(txtBirthdate);
 
-		lbl = new JLabel("Achieved routes: ");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
-		editInfoPanel.add(lbl);
-		JFormattedTextField txtAchievedRoutes = new JFormattedTextField(
-				NumberFormat.getIntegerInstance());
-		txtAchievedRoutes.setValue(climber.getLogradas());
-		txtAchievedRoutes.addPropertyChangeListener("value", new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				editValues [1] = txtAchievedRoutes.getText();
-			}
-
-		});
-		editInfoPanel.add(txtAchievedRoutes);
-
 		lbl = new JLabel("Favorite climbing: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
@@ -282,7 +268,7 @@ public class UIUser extends JFrame {
 				edit();
 			}
 			public void edit() {
-				editValues [2] = txtFavoriteClimbing.getText();
+				editValues [1] = txtFavoriteClimbing.getText();
 			}
 		});
 
@@ -331,7 +317,7 @@ public class UIUser extends JFrame {
 		imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif","jpg"));
 		int returnVal = imageChooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
-			editValues [3] = imageChooser.getSelectedFile().getPath();
+			editValues [2] = imageChooser.getSelectedFile().getPath();
 	}
 
 	private void showEditRoutesPanel(TreeSet<Route> treeSet, String item) {
