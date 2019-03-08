@@ -38,7 +38,7 @@ public class UIRute extends JPanel{
 		JPanel tittle = new JPanel(new GridLayout(0,1));
 		JLabel lblWelcomeRute = new JLabel("RUTA "+ this.rute.getName());
 		lblWelcomeRute.setFont(new Font("Tahoma",Font.PLAIN,35));
-                tittle.add(createToolBar());
+		tittle.add(createToolBar());
 		tittle.add(lblWelcomeRute);
 		this.add(lblWelcomeRute,BorderLayout.NORTH);
 	}
@@ -94,7 +94,7 @@ public class UIRute extends JPanel{
 
 		southPanel.add(b1);
 		southPanel.add(b2);
-                southPanel.add(b3);
+		southPanel.add(b3);
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
 
@@ -110,19 +110,19 @@ public class UIRute extends JPanel{
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+				ClimbersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+				ClimbersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 
 		buttonAchieveds.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+				ClimbersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 
