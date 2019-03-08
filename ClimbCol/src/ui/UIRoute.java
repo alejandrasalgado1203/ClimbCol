@@ -17,16 +17,16 @@ import java.awt.Insets;
 import business.UsersManager;
 import data.Route;
 
-public class UIRute extends JPanel{
+public class UIRoute extends JPanel{
         private GridBagConstraints constraints = new GridBagConstraints();
 	private Route route;
 	private UIMain uiMain;
 
-	public static   UIRute createUIRute(Route route,UIMain main){
-		return new UIRute(route,main);
+	public static   UIRoute createUIRute(Route route,UIMain main){
+		return new UIRoute(route,main);
 	}
 
-	public UIRute(Route route, UIMain main) {
+	public UIRoute(Route route, UIMain main) {
                 this.constraints.insets = new Insets(15,15,15,15);
 		this.route =route;
 		this.uiMain = main;
@@ -126,8 +126,9 @@ public class UIRute extends JPanel{
                                 if(UsersManager.hasCurrentUser() == true){
                                     UsersManager.addRoute(route,e.getActionCommand());
                                 }
-                                else{
-                                    //JOptionPane.showMessageDialog(this, "No ha inicado sesion");
+                                else if(UsersManager.hasCurrentUser()== false){
+                                    JOptionPane.showMessageDialog(null,"You are not register",
+							null, JOptionPane.WARNING_MESSAGE);
                                 }
 			}
 		});
@@ -137,13 +138,25 @@ public class UIRute extends JPanel{
                             if(UsersManager.hasCurrentUser() == true){
                                 UsersManager.addRoute(route,e.getActionCommand());
                             }  
+                            else if(UsersManager.hasCurrentUser()== false){
+                                    JOptionPane.showMessageDialog(null,"You are not register",
+							null, JOptionPane.WARNING_MESSAGE);
+                            }
 			}
 		});
 
 		buttonAchieveds.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-                            if(UsersManager.hasCurrentUser() == true){
-                                UsersManager.addRoute(route,e.getActionCommand());
+                            if(UsersManager.hasCurrentUser()){
+                                    UsersManager.addRoute(route,e.getActionCommand());
+                                    if(!UsersManager.addRoute(route,e.getActionCommand())){
+                                        JOptionPane.showMessageDialog(null,"You are not register",
+                                                    null, JOptionPane.WARNING_MESSAGE);
+                                    }
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null,"You are not register",
+                                                    null, JOptionPane.WARNING_MESSAGE);
                             }
 			}
 		});
@@ -160,9 +173,10 @@ public class UIRute extends JPanel{
                 this.constraints.gridheight = 1;
                 this.addGB(toolBarPanel,0,3);
 	}
-            private void addGB(Component comp, int x, int y) {
-            this.constraints.gridx = x;
-            this.constraints.gridy = y;
-            this.add(comp, this.constraints);
+        
+        private void addGB(Component comp, int x, int y) {
+        this.constraints.gridx = x;
+        this.constraints.gridy = y;
+        this.add(comp, this.constraints);
 	}
 }

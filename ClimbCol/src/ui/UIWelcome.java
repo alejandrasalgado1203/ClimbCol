@@ -71,7 +71,7 @@ public class UIWelcome extends JPanel{
 		cBoxRutes.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox <Route> cb = (JComboBox<Route>) e.getSource();
-				uiMain.showPanel(UIRute.createUIRute((Route) cb.getSelectedItem(), uiMain));
+				uiMain.showPanel(UIRoute.createUIRute((Route) cb.getSelectedItem(), uiMain));
 			}			
 		});
 		panelWelcome.add(cBoxRutes);

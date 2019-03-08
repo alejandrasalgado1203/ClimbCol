@@ -17,7 +17,7 @@ public class ClimbCol {
 		initiComponents();
 		uiMain = new UIMain();
 
-		//UICreardorDeDatos cr = new UICreardorDeDatos(new DataCreator(parks));
+		UIDataCreator cr = new UIDataCreator(new DataCreator(parks));
 
 	}
 
