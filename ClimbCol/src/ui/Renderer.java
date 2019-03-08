@@ -10,9 +10,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import data.NameImageGiver;
+import data.Renderable;
 
-public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver> {
+public class Renderer extends JPanel implements ListCellRenderer<Renderable> {
 
 	private JLabel image;
 	private JLabel name;
@@ -26,7 +26,7 @@ public class Renderer extends JPanel implements ListCellRenderer<NameImageGiver>
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends NameImageGiver> list, NameImageGiver value, int index,
+	public Component getListCellRendererComponent(JList<? extends Renderable> list, Renderable value, int index,
 			boolean isSelected, boolean cellHasFocus) {
 		ImageIcon icon = new ImageIcon(value.getMainImage());
 		if(icon.getIconWidth()>130 || icon.getIconHeight()>90) {

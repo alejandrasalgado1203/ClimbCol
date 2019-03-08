@@ -32,21 +32,21 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 
-import data.Parque;
-import data.Zona;
+import data.Park;
+import data.Zone;
 import java.awt.Component;
 
 public class UIPark extends JPanel{
 	private GridBagConstraints constraints = new GridBagConstraints();
-	private Parque park;
+	private Park park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
 
-	public static UIPark createUIPark(Parque park,UIMain main){
+	public static UIPark createUIPark(Park park,UIMain main){
 		return new UIPark(park,main);
 	}
 
-	public UIPark(Parque park, UIMain main) {
+	public UIPark(Park park, UIMain main) {
 		this.park = park;
 		this.uiMain = main;
 		this.setLayout(new GridBagLayout());
@@ -80,7 +80,7 @@ public class UIPark extends JPanel{
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
+		JLabel lbl = new JLabel("Ubicacion: " + park.getLocation());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
@@ -91,7 +91,7 @@ public class UIPark extends JPanel{
 		lbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop().browse(new URI(park.getLinkUbicacion().trim()));
+					Desktop.getDesktop().browse(new URI(park.getLinkLocation().trim()));
 				} catch (IOException | URISyntaxException e1) {
 					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
 							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
@@ -115,7 +115,7 @@ public class UIPark extends JPanel{
 		lbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop().browse(new URI(park.getLinkParque().trim()));
+					Desktop.getDesktop().browse(new URI(park.getLinkPatk().trim()));
 				} catch (IOException | URISyntaxException e1) {
 					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
 							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
@@ -132,15 +132,15 @@ public class UIPark extends JPanel{
 		});
 		infoPanel.add(lbl);
 
-		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
+		lbl = new JLabel("Temperatura Promedio: " + park.getAverageTemperature());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
-		lbl = new JLabel("Altitud: " + park.getAltitud());
+		lbl = new JLabel("Altitud: " + park.getAltitude());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
-		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
+		lbl = new JLabel("Numero de zonas: " + park.getZones().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
@@ -148,11 +148,11 @@ public class UIPark extends JPanel{
 	}
 
 	private void createScrollPane() {
-		DefaultListModel<Zona> model = new DefaultListModel<>();
-		for (Zona zone : park.getZonas()) {
+		DefaultListModel<Zone> model = new DefaultListModel<>();
+		for (Zone zone : park.getZones()) {
 			model.addElement(zone);
 		}
-		JList <Zona> listZones = new JList <Zona> (model);
+		JList <Zone> listZones = new JList <Zone> (model);
 		listZones.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneZones = new JScrollPane(listZones);
 		scrollPaneZones.setMinimumSize(new Dimension(300,400));
@@ -210,7 +210,7 @@ public class UIPark extends JPanel{
 		JToolBar toolBar;
 
 		ArrayList <ImageIcon>images = new ArrayList <ImageIcon>();
-		for(String  s : park.getDireccionImagenes()) {
+		for(String  s : park.getImagesPaths()) {
 			images.add(new ImageIcon(s));
 		}
 		JLabel label = new JLabel (images.get(0));

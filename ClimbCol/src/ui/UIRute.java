@@ -10,19 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.JPanel;
-import business.ClimbersManager;
-import data.Ruta;
+import business.UsersManager;
+import data.Route;
 
 public class UIRute extends JPanel{
 	private   JPanel panelRute= new JPanel();
 	private   JPanel centerPanel = new JPanel();
-	private Ruta rute;
+	private Route rute;
 	private UIMain uiMain;
 
-	public static   UIRute createUIRute(Ruta rute,UIMain main){
+	public static   UIRute createUIRute(Route rute,UIMain main){
 		return new UIRute(rute,main);
 	}
-	public UIRute(Ruta rute, UIMain main) {
+	public UIRute(Route rute, UIMain main) {
 		this.rute =rute;
 		this.uiMain = main;
 		this.setLayout(new BorderLayout());
@@ -43,23 +43,23 @@ public class UIRute extends JPanel{
 		this.add(lblWelcomeRute,BorderLayout.NORTH);
 	}
 	private  void createImage() {
-		ImageIcon Rute= new ImageIcon(rute.getImage());
+		ImageIcon Rute= new ImageIcon(rute.getImagePath());
 		JLabel labelImage = new JLabel(Rute);
 		centerPanel.add(labelImage);
 	}
 	private   void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Dificultad: " + rute.getDificultad());
+		JLabel lbl = new JLabel("Dificultad: " + rute.getDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Numero de Chapas: " + rute.getNumeroDeChapas());
+		lbl = new JLabel("Numero de Chapas: " + rute.getNumberOfPlates());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Tipo de Rute: " + rute.getTipoDeRuta());
+		lbl = new JLabel("Tipo de Rute: " + rute.getRouteType());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Altura: " + rute.getAltura());
+		lbl = new JLabel("Altura: " + rute.getHeight());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
@@ -80,14 +80,14 @@ public class UIRute extends JPanel{
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIPark.createUIPark(rute.getZona().getParque(),uiMain));
+				uiMain.showPanel(UIPark.createUIPark(rute.getZone().getPark(),uiMain));
 			}  
 		});
 
 		JButton b3=new JButton("Return to Zone");  
 		b3.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIZone.createUIZone(rute.getZona(),uiMain));
+				uiMain.showPanel(UIZone.createUIZone(rute.getZone(),uiMain));
 			}  
 		});
 
@@ -110,19 +110,19 @@ public class UIRute extends JPanel{
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRoute(rute,e.getActionCommand());
+				UsersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRoute(rute,e.getActionCommand());
+				UsersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 
 		buttonAchieveds.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRoute(rute,e.getActionCommand());
+				UsersManager.addRoute(rute,e.getActionCommand());
 			}
 		});
 

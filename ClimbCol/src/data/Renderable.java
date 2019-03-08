@@ -1,6 +1,6 @@
 package data;
 
-public interface NameImageGiver {
+public interface Renderable {
 
 	String getMainImage();
 

@@ -11,13 +11,13 @@ import data.*;
 public class DataDeserializer  {
 
 	@SuppressWarnings("unchecked")
-	public static TreeSet<Parque> deserializeParks(){
+	public static TreeSet<Park> deserializeParks(){
 
-		TreeSet<Parque> parks = null;
+		TreeSet<Park> parks = null;
 		try {
 			FileInputStream file = new FileInputStream (FileNameConstants.PARKS_FILE);
 			ObjectInputStream reader = new ObjectInputStream (file);
-			parks = (TreeSet<Parque>) reader.readObject();
+			parks = (TreeSet<Park>) reader.readObject();
 			reader.close();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -26,18 +26,18 @@ public class DataDeserializer  {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static TreeMap<String, Escalador> deserializeClimbers(){
+	public static TreeMap<String, User> deserializeClimbers(){
 
-		TreeMap<String,Escalador> climbers = null;
+		TreeMap<String,User> users = null;
 		try {
-			FileInputStream file = new FileInputStream (FileNameConstants.CLIMBERS_FILE);
+			FileInputStream file = new FileInputStream (FileNameConstants.USERS_FILE);
 			ObjectInputStream reader = new ObjectInputStream (file);
-			climbers = (TreeMap<String,Escalador>) reader.readObject();
+			users = (TreeMap<String,User>) reader.readObject();
 			reader.close();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return climbers;
+		return users;
 	}
 
 }

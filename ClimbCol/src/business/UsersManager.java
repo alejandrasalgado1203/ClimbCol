@@ -4,16 +4,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.TreeMap;
 
-import data.Escalador;
-import data.Ruta;
+import data.User;
+import data.Route;
 
-public class ClimbersManager {
+public class UsersManager {
 
-	private static TreeMap<String, Escalador> users;
-	private static Escalador currentUser;
+	private static TreeMap<String, User> users;
+	private static User currentUser;
 
 	public static void creatUser(String text, char[] password) {
-		Escalador climber = new Escalador(text,password);
+		User climber = new User(text,password);
 		users.put(climber.getPassword(), climber);
 	}
 
@@ -22,7 +22,7 @@ public class ClimbersManager {
 	}
 
 	public static boolean isValidName(String text) {
-		for (Escalador c : users.values()) {
+		for (User c : users.values()) {
 			if(c.getName().equals(text))return false;
 		}
 		return true;
@@ -30,7 +30,7 @@ public class ClimbersManager {
 
 	public static boolean doLogin(String text, char[] password) {
 		boolean succesful = false;
-		Escalador user = users.get(new String (password));
+		User user = users.get(new String (password));
 		if(user!=null && user.getName().equals(text)) {
 			succesful = true;
 			currentUser = user;
@@ -41,46 +41,44 @@ public class ClimbersManager {
 	public static boolean hasCurrentUser() {
 		return currentUser != null;
 	}
-	public static TreeMap<String, Escalador> getUsers() {
+	public static TreeMap<String, User> getUsers() {
 		return users;
 	}
 
-	public static void setUsers(TreeMap<String, Escalador> users) {
-		ClimbersManager.users = users;
+	public static void setUsers(TreeMap<String, User> users) {
+		UsersManager.users = users;
 	}
 
-	public static Escalador getCurrentUser() {
+	public static User getCurrentUser() {
 		return currentUser;
 	}
 
-	public static void setCurrentUser(Escalador currentUser) {
-		ClimbersManager.currentUser = currentUser;
+	public static void setCurrentUser(User currentUser) {
+		UsersManager.currentUser = currentUser;
 	}
 
 	public static void editUser(String[] editValues) {
 		if (!editValues[0].isEmpty()) 
-			currentUser.setFechaDeNacimiento(LocalDate.parse(editValues[0],
+			currentUser.setBirthdate(LocalDate.parse(editValues[0],
 					DateTimeFormatter.ofPattern("d MMMM uuuu")));
 		if (!editValues[1].isEmpty())
-			currentUser.setLogradas(Integer.parseInt(editValues[1]));
+			currentUser.setFavoriteClimbing(editValues[2]);
 		if (!editValues[2].isEmpty())
-			currentUser.setEscaladaFavorita(editValues[2]);
-		if (!editValues[3].isEmpty())
-			currentUser.setDireccionImagen(editValues[4]);
+			currentUser.setImagePath(editValues[4]);
 	}
 
 	public static void saveUsers() {
-		DataSerializer.serializeClimbers(users);
+		DataSerializer.serializeUsers(users);
 	}
 
-	public static void removeRoute(Ruta r, String item) {
+	public static void removeRoute(Route r, String item) {
 		if(item.equals("favorites"))
 			currentUser.removeFavorite(r);
 		if(item.equals("goals"))
 			currentUser.removeGoal(r);
 	}
 
-	public static boolean addRoute(Ruta route, String actionCommand) {
+	public static boolean addRoute(Route route, String actionCommand) {
 		if (actionCommand.equals("Goals"))return currentUser.addGoalRoute(route);
 		if (actionCommand.equals("Favorites"))return currentUser.addFavoriteRoute(route);
 		if (actionCommand.equals("Achieveds"))return currentUser.addAchievedsRoute(route);

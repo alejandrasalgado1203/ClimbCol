@@ -16,19 +16,19 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import data.Ruta;
-import data.Zona;
+import data.Route;
+import data.Zone;
 
 public class UIZone extends JPanel {
 	private   JPanel centerPanel = new JPanel();
-	private Zona zone;
+	private Zone zone;
 	private UIMain uiMain;
 	private JPanel description = new JPanel(new GridLayout(2,1));
 
-	public static   UIZone createUIZone(Zona zone,UIMain main){
+	public static   UIZone createUIZone(Zone zone,UIMain main){
 		return new UIZone(zone,main);
 	}
-	public UIZone(Zona zone, UIMain main) {
+	public UIZone(Zone zone, UIMain main) {
 		this.zone = zone;
 		this.uiMain = main;
 		this.setLayout(new BorderLayout());
@@ -59,16 +59,16 @@ public class UIZone extends JPanel {
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Dificultad Maxima: " + zone.getDificultadMax());
+		JLabel lbl = new JLabel("Dificultad Maxima: " + zone.getMaxDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Dificultad Minima: " + zone.getDificultadMin());
+		lbl = new JLabel("Dificultad Minima: " + zone.getMinDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Dificultad Promedio: " + zone.getDificultadPromedio());
+		lbl = new JLabel("Dificultad Promedio: " + zone.getAverageDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("No. de Rutas: " + zone.getRutas().size());
+		lbl = new JLabel("No. de Rutas: " + zone.getRoutes().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
@@ -78,11 +78,11 @@ public class UIZone extends JPanel {
 
 	private void createScrollPane() {
 
-		DefaultListModel<Ruta> model = new DefaultListModel<>();
-		for (Ruta rute : zone.getRutas()) {
+		DefaultListModel<Route> model = new DefaultListModel<>();
+		for (Route rute : zone.getRoutes()) {
 			model.addElement(rute);
 		}
-		JList <Ruta> listRutes = new JList <Ruta> (model);
+		JList <Route> listRutes = new JList <Route> (model);
 		listRutes.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneRutes = new JScrollPane(listRutes);
 
@@ -107,7 +107,7 @@ public class UIZone extends JPanel {
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIPark.createUIPark(zone.getParque(),uiMain));
+				uiMain.showPanel(UIPark.createUIPark(zone.getPark(),uiMain));
 			}  
 		});
 

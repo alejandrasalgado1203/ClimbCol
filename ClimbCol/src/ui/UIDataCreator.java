@@ -24,23 +24,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import business.CreadorDeDatos;
-import data.Parque;
-import data.Zona;
+import business.DataCreator;
+import data.Park;
+import data.Zone;
 
 
-public class UICreardorDeDatos extends JFrame{
+public class UIDataCreator extends JFrame{
 
 	private static final long serialVersionUID = 3948533140531215034L;
-	private CreadorDeDatos cdd;
+	private DataCreator cdd;
 	private JPanel newPark = new JPanel();
 	private JPanel newZone = new JPanel();
-	private JPanel newRute = new JPanel();
+	private JPanel newRoute = new JPanel();
 	private JPanel editPark = new JPanel();
 	private JPanel editZone = new JPanel();
 
 
-	public UICreardorDeDatos(CreadorDeDatos cdd) {
+	public UIDataCreator(DataCreator cdd) {
 		super();
 		this.cdd = cdd;
 		this.setTitle("data creator");
@@ -65,7 +65,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
 
-		ZoneChooser zoneChooser = new ZoneChooser(cdd.getParques());
+		ZoneChooser zoneChooser = new ZoneChooser(cdd.getParks());
 		box.add(zoneChooser);
 		box.add(Box.createVerticalStrut(10));
 
@@ -97,7 +97,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
 
-		ParkChooser parkChooser = new ParkChooser(cdd.getParques());
+		ParkChooser parkChooser = new ParkChooser(cdd.getParks());
 		box.add(parkChooser);
 		box.add(Box.createVerticalStrut(10));
 
@@ -118,18 +118,18 @@ public class UICreardorDeDatos extends JFrame{
 		}); 
 	}
 
-	private void setupNewRutePanel() {
+	private void setupNewRoutePanel() {
 
-		this.newRute = new JPanel();
+		this.newRoute = new JPanel();
 		Container box = Box.createVerticalBox();
-		this.newRute.add(box);
+		this.newRoute.add(box);
 
-		JLabel lblAdd = new JLabel ("Create ruote");
+		JLabel lblAdd = new JLabel ("Create route");
 		lblAdd.setFont(new Font("Tahoma",Font.PLAIN,25));
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
 
-		ZoneChooser zoneChooser = new ZoneChooser(cdd.getParques());
+		ZoneChooser zoneChooser = new ZoneChooser(cdd.getParks());
 		box.add(zoneChooser);
 		box.add(Box.createVerticalStrut(10));
 
@@ -144,7 +144,7 @@ public class UICreardorDeDatos extends JFrame{
 
 		btnSend.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){
-				cdd.createRute(infoAsker.getStatus(),zoneChooser.getStatus());
+				cdd.createRoute(infoAsker.getStatus(),zoneChooser.getStatus());
 				showHome();
 			}  
 		});  
@@ -161,7 +161,7 @@ public class UICreardorDeDatos extends JFrame{
 		box.add(lblAdd);
 		box.add(Box.createVerticalStrut(10));
 
-		ParkChooser parkChooser = new ParkChooser(cdd.getParques());
+		ParkChooser parkChooser = new ParkChooser(cdd.getParks());
 		box.add(parkChooser);
 		box.add(Box.createVerticalStrut(10));
 
@@ -250,8 +250,8 @@ public class UICreardorDeDatos extends JFrame{
 		JMenuItem newRute = new JMenuItem("new route");
 		newRute.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupNewRutePanel();
-				showNewRute();
+				setupNewRoutePanel();
+				showNewRoute();
 			}
 		});
 		menuRute.add(newRute);
@@ -273,42 +273,33 @@ public class UICreardorDeDatos extends JFrame{
 
 
 	protected void showHome() {
-		this.remove(editPark);
-		this.remove(editZone);
-		this.remove(newPark);
-		this.remove(newRute);
-		this.remove(newZone);
+		this.setContentPane(null);
 		this.setSize(280,190);
 	}
 
 
-	protected void showNewRute() {
-		this.showHome();
-		this.add(newRute);
+	protected void showNewRoute() {
+		this.setContentPane(newRoute);
 		this.pack();
 	}
 
 	protected void showEditZone() {
-		this.showHome();
-		this.add(editZone);
+		this.setContentPane(editZone);
 		this.pack();
 	}
 
 	protected void showNewZone() {
-		this.showHome();
-		this.add(newZone);
+		this.setContentPane(newZone);
 		this.pack();	
 	}
 
 	protected void showEditPark() {
-		this.showHome();
-		this.add(editPark);
+		this.setContentPane(editPark);
 		this.pack();	
 	}
 
 	protected void showNewPark() {
-		this.showHome();
-		this.add(newPark);
+		this.setContentPane(newPark);
 		this.pack();
 	}
 
@@ -348,40 +339,40 @@ public class UICreardorDeDatos extends JFrame{
 	class ParkChooser extends JPanel{
 
 		private static final long serialVersionUID = -3632316906732791719L;
-		JComboBox <Parque>  parks;
+		JComboBox <Park>  parks;
 
-		public ParkChooser(TreeSet<Parque> parks) {
+		public ParkChooser(TreeSet<Park> parks) {
 			this.setLayout(new GridLayout(0,1));
 			JLabel  lblPark = new JLabel("park");
 			this.add(lblPark);
-			DefaultComboBoxModel<Parque> model = new DefaultComboBoxModel<>();
-			for(Parque park : parks) {
+			DefaultComboBoxModel<Park> model = new DefaultComboBoxModel<>();
+			for(Park park : parks) {
 				model.addElement(park);
 			}
-			this.parks = new JComboBox <Parque> (model);
+			this.parks = new JComboBox <Park> (model);
 			this.add(this.parks);
 		}
-		public Parque getStatus(){
-			return (Parque) parks.getSelectedItem();
+		public Park getStatus(){
+			return (Park) parks.getSelectedItem();
 		}
 	}
 
 	class ZoneChooser extends JPanel{
 
 		private static final long serialVersionUID = 1508471468384862963L;
-		JComboBox <Parque> parks;
-		JComboBox <Zona> zones;
+		JComboBox <Park> parks;
+		JComboBox <Zone> zones;
 
-		public ZoneChooser(TreeSet<Parque> parks) {
+		public ZoneChooser(TreeSet<Park> parks) {
 			this.setLayout(new GridLayout(0,1));
 			JLabel  lblPark = new JLabel("park");
 			this.add(lblPark);
 
-			DefaultComboBoxModel<Parque> modelParks = new DefaultComboBoxModel<>();
-			for(Parque park : parks) {
+			DefaultComboBoxModel<Park> modelParks = new DefaultComboBoxModel<>();
+			for(Park park : parks) {
 				modelParks.addElement(park);
 			}
-			this.parks = new JComboBox <Parque> (modelParks);
+			this.parks = new JComboBox <Park> (modelParks);
 			this.parks.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					actualizeComboboxZone();
@@ -391,28 +382,28 @@ public class UICreardorDeDatos extends JFrame{
 
 			JLabel lblZone = new JLabel("zone");
 			this.add(lblZone);
-			DefaultComboBoxModel<Zona> modelZone = new DefaultComboBoxModel<>();
-			Parque p = (Parque) this.parks.getSelectedItem();
-			for(Zona zone : p.getZonas()) {
+			DefaultComboBoxModel<Zone> modelZone = new DefaultComboBoxModel<>();
+			Park p = (Park) this.parks.getSelectedItem();
+			for(Zone zone : p.getZones()) {
 				modelZone.addElement(zone);
 			}
-			zones = new JComboBox <Zona> (modelZone);
+			zones = new JComboBox <Zone> (modelZone);
 			this.add(zones);
 		}
 		protected void actualizeComboboxZone() {
 			this.remove(zones);
-			DefaultComboBoxModel<Zona> modelZone = new DefaultComboBoxModel<>();
-			Parque p = (Parque) parks.getSelectedItem();
-			for(Zona zone : p.getZonas()) {
+			DefaultComboBoxModel<Zone> modelZone = new DefaultComboBoxModel<>();
+			Park p = (Park) parks.getSelectedItem();
+			for(Zone zone : p.getZones()) {
 				modelZone.addElement(zone);
 			}
-			zones = new JComboBox <Zona> (modelZone);
+			zones = new JComboBox <Zone> (modelZone);
 
 			this.add(zones);
 			this.validate();
 		}
-		public Zona getStatus(){
-			return (Zona) zones.getSelectedItem();
+		public Zone getStatus(){
+			return (Zone) zones.getSelectedItem();
 		}
 	}
 
