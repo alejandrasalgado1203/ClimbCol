@@ -45,18 +45,18 @@ public class Escalador implements Serializable{
 		this.retos.remove(r);
 	}
 
-	public void putFavoriteRoute(Ruta route) {
-		favoritos.add(route);
+	public boolean addFavoriteRoute(Ruta route) {
+		return favoritos.add(route);
 	}
 
-	public void putGoalRoute(Ruta route) {
-		achieveds.add(route);
+	public boolean addGoalRoute(Ruta route) {
+		return achieveds.add(route);
 	}
 
-	public void putAchievedsRoute(Ruta route) {
-		achieveds.add(route);
+	public boolean addAchievedsRoute(Ruta route) {
 		if (route.getDificultad()>this.maximaDificultadLograda)
 			this.maximaDificultadLograda = route.getDificultad();
+		return achieveds.add(route);
 	}
 
 	public String getName() {
