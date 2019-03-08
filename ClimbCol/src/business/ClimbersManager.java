@@ -1,4 +1,3 @@
-
 package business;
 
 import java.time.LocalDate;
@@ -10,20 +9,20 @@ import data.Ruta;
 
 public class ClimbersManager {
 
-	private static TreeMap<String, Escalador> escaladores;
+	private static TreeMap<String, Escalador> users;
 	private static Escalador currentUser;
 
 	public static void creatUser(String text, char[] password) {
 		Escalador climber = new Escalador(text,password);
-		escaladores.put(climber.getPassword(), climber);
+		users.put(climber.getPassword(), climber);
 	}
 
 	public static boolean isValidPassword(char[] password) {	
-		return password.length>5 && (!escaladores.containsKey(new String(password)));
+		return password.length>5 && (!users.containsKey(new String(password)));
 	}
 
 	public static boolean isValidName(String text) {
-		for (Escalador c : escaladores.values()) {
+		for (Escalador c : users.values()) {
 			if(c.getName().equals(text))return false;
 		}
 		return true;
@@ -31,7 +30,7 @@ public class ClimbersManager {
 
 	public static boolean doLogin(String text, char[] password) {
 		boolean succesful = false;
-		Escalador user = escaladores.get(new String (password));
+		Escalador user = users.get(new String (password));
 		if(user!=null && user.getName().equals(text)) {
 			succesful = true;
 			currentUser = user;
@@ -42,12 +41,12 @@ public class ClimbersManager {
 	public static boolean hasCurrentUser() {
 		return currentUser != null;
 	}
-	public static TreeMap<String, Escalador> getEscaladores() {
-		return escaladores;
+	public static TreeMap<String, Escalador> getUsers() {
+		return users;
 	}
 
-	public static void setEscaladores(TreeMap<String, Escalador> escaladores) {
-		ClimbersManager.escaladores = escaladores;
+	public static void setUsers(TreeMap<String, Escalador> users) {
+		ClimbersManager.users = users;
 	}
 
 	public static Escalador getCurrentUser() {
@@ -71,7 +70,7 @@ public class ClimbersManager {
 	}
 
 	public static void saveUsers() {
-		DataSerializer.serializeClimbers(escaladores);
+		DataSerializer.serializeClimbers(users);
 	}
 
 	public static void removeRoute(Ruta r, String item) {
@@ -81,10 +80,11 @@ public class ClimbersManager {
 			currentUser.removeGoal(r);
 	}
 
-	public static void addRute(Ruta route, String actionCommand) {
-		if (actionCommand.equals("Goals"))currentUser.putGoalRoute(route);
-		if (actionCommand.equals("Favorites"))currentUser.putFavoriteRoute(route);
-		if (actionCommand.equals("Achieveds"))currentUser.putAchievedsRoute(route);
+	public static boolean addRoute(Ruta route, String actionCommand) {
+		if (actionCommand.equals("Goals"))return currentUser.addGoalRoute(route);
+		if (actionCommand.equals("Favorites"))return currentUser.addFavoriteRoute(route);
+		if (actionCommand.equals("Achieveds"))return currentUser.addAchievedsRoute(route);
+		return false;
 	}
 
 }
