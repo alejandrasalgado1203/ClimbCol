@@ -26,7 +26,7 @@ public class ClimbCol {
 		//parques = DataDeserializer.deserializeParks();  descomentas
 		escaladores = DataDeserializer.deserializeClimbers();
 		ClimbColManager.setParks(parques);
-		ClimbersManager.setEscaladores(escaladores);
+		ClimbersManager.setUsers(escaladores);
 	}
 
 
