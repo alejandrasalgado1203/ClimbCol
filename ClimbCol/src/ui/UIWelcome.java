@@ -24,8 +24,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import business.ClimbColManager;
-import data.Parque;
-import data.Ruta;
+import data.Park;
+import data.Route;
 
 public class UIWelcome extends JPanel{
 	private UIMain uiMain;
@@ -62,17 +62,16 @@ public class UIWelcome extends JPanel{
 		jp1.add(lblDescription);
 		panelWelcome.add(jp1);
 
-		DefaultComboBoxModel<Ruta> model = new DefaultComboBoxModel<>();
-		ArrayList<Ruta> rutes = ClimbColManager.getAllRutes();
-		for(Ruta r : rutes) {
+		DefaultComboBoxModel<Route> model = new DefaultComboBoxModel<>();
+		ArrayList<Route> rutes = ClimbColManager.getAllRoutes();
+		for(Route r : rutes) {
 			model.addElement(r);
 		}
-		JComboBox <Ruta> cBoxRutes = new JComboBox <Ruta> (model);
-		//cBoxRutes.setRenderer(new Renderer());
+		JComboBox <Route> cBoxRutes = new JComboBox <Route> (model);
 		cBoxRutes.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox <Ruta> cb = (JComboBox<Ruta>) e.getSource();
-				uiMain.showPanel(UIRute.createUIRute((Ruta) cb.getSelectedItem(), uiMain));
+				JComboBox <Route> cb = (JComboBox<Route>) e.getSource();
+				uiMain.showPanel(UIRute.createUIRute((Route) cb.getSelectedItem(), uiMain));
 			}			
 		});
 		panelWelcome.add(cBoxRutes);
@@ -83,11 +82,11 @@ public class UIWelcome extends JPanel{
 	}
 
 	private void createScrollPane() {
-		DefaultListModel<Parque> model = new DefaultListModel<>();
-		for (Parque park : ClimbColManager.getParks()) {
+		DefaultListModel<Park> model = new DefaultListModel<>();
+		for (Park park : ClimbColManager.getParks()) {
 			model.addElement(park);
 		}
-		JList <Parque> listParks = new JList <Parque> (model);
+		JList <Park> listParks = new JList <Park> (model);
 		listParks.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneParks = new JScrollPane(listParks);
 		scrollPaneParks.setMinimumSize(new Dimension(300,400));

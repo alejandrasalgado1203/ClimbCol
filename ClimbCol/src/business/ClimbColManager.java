@@ -7,25 +7,25 @@ import data.*;
 
 public class ClimbColManager {
 
-	private static TreeSet<Parque> parks;
+	private static TreeSet<Park> parks;
 
 
-	public static ArrayList<Ruta> getAllRutes() {
-		TreeSet<Ruta> rutes = new TreeSet<Ruta>();
-		for (Parque p : parks) {
-			for (Zona z : p.getZonas()) {
-				rutes.addAll(z.getRutas());
+	public static ArrayList<Route> getAllRoutes() {
+		TreeSet<Route> routes = new TreeSet<Route>();
+		for (Park p : parks) {
+			for (Zone z : p.getZones()) {
+				routes.addAll(z.getRoutes());
 			}
 		}
-		return new ArrayList<Ruta> (rutes);
+		return new ArrayList<Route> (routes);
 	}
 
-	public static TreeSet<Parque> getParks() {
+	public static TreeSet<Park> getParks() {
 		return parks;
 	}
 
-	public static void setParks(TreeSet<Parque> parques) {
-		ClimbColManager.parks = parques;
+	public static void setParks(TreeSet<Park> parks) {
+		ClimbColManager.parks = parks;
 	}
 
 }

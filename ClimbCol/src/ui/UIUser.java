@@ -44,14 +44,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import business.ClimbersManager;
-import data.Escalador;
-import data.Ruta;
+import business.UsersManager;
+import data.User;
+import data.Route;
 
 
 public class UIUser extends JFrame {
 
-	private Escalador climber;
+	private User climber;
 	private UIMain uiMain;
 	private JPanel userPanel;
 	private JPanel editPanel;
@@ -60,7 +60,7 @@ public class UIUser extends JFrame {
 
 	public UIUser(UIMain main) {
 		super("User's info");
-		this.climber = ClimbersManager.getCurrentUser();
+		this.climber = UsersManager.getCurrentUser();
 		this.uiMain = main;
 		createMenu();
 		showUserPanel();
@@ -90,7 +90,7 @@ public class UIUser extends JFrame {
 		menuBar.add(editFavorites);
 		editFavorites.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showEditRoutesPanel(climber.getFavoritos(),"favorites");
+				showEditRoutesPanel(climber.getFavorites(),"favorites");
 			}
 		});
 
@@ -98,7 +98,7 @@ public class UIUser extends JFrame {
 		menuBar.add(editGoals);
 		editGoals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showEditRoutesPanel(climber.getRetos(),"goals");
+				showEditRoutesPanel(climber.getGoals(),"goals");
 			}
 		});
 
@@ -125,7 +125,7 @@ public class UIUser extends JFrame {
 	}
 
 	private void createImage() {
-		ImageIcon user= new ImageIcon(this.climber.getDireccionImagen());
+		ImageIcon user= new ImageIcon(this.climber.getImagePath());
 		JLabel labelImage = new JLabel(user);
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
@@ -137,16 +137,16 @@ public class UIUser extends JFrame {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Birthdate: " + 
-				climber.getFechaDeNacimiento().format(DateTimeFormatter.ofPattern( "d MMMM uuuu")));
+				climber.getBirthdate().format(DateTimeFormatter.ofPattern( "d MMMM uuuu")));
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 		lbl = new JLabel("Achieved routes: " + climber.getLogradas());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Favorite climbing: " + climber.getEscaladaFavorita());
+		lbl = new JLabel("Favorite climbing: " + climber.getFavoriteClimbing());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-		lbl = new JLabel("Maximum difficulty achieved: " + climber.getMaximaDificultadLograda());
+		lbl = new JLabel("Maximum difficulty achieved: " + climber.getMaxDifficultyAchieved());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
@@ -162,14 +162,14 @@ public class UIUser extends JFrame {
 		JRadioButton buttonGoals= new JRadioButton("Retos");
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getRetos());
+				setupPanelRutes(climber.getGoals());
 			}
 		});
 
 		JRadioButton buttonFavorites = new JRadioButton("Favoritos");
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getFavoritos());
+				setupPanelRutes(climber.getFavorites());
 			}
 		});
 
@@ -195,12 +195,12 @@ public class UIUser extends JFrame {
 		this.addGB(userPanel, btnsPanel, 1, 2);
 	}
 
-	private void setupPanelRutes(Collection<Ruta> collection) {
-		DefaultListModel<Ruta> model = new DefaultListModel<>();
-		for (Ruta r: collection) {
+	private void setupPanelRutes(Collection<Route> collection) {
+		DefaultListModel<Route> model = new DefaultListModel<>();
+		for (Route r: collection) {
 			model.addElement(r);
 		}
-		JList <Ruta> listRutes = new JList <Ruta> (model);
+		JList <Route> listRutes = new JList <Route> (model);
 		listRutes.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
 
@@ -211,7 +211,7 @@ public class UIUser extends JFrame {
 
 		listRutes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				Ruta rute = listRutes.getSelectedValue();
+				Route rute = listRutes.getSelectedValue();
 				uiMain.showPanel(UIRute.createUIRute(rute, uiMain));	
 			}
 		});
@@ -219,7 +219,7 @@ public class UIUser extends JFrame {
 
 	private void showEditInfoPanel() {
 		this.editPanel = new JPanel(new GridBagLayout());
-		this.editValues = new String [] {"","","",""};
+		this.editValues = new String [] {"","",""};
 		createEditImage();
 		creatEditInfo();
 		createEditButtons();
@@ -228,7 +228,7 @@ public class UIUser extends JFrame {
 	}
 
 	private void createEditImage() {
-		ImageIcon user= new ImageIcon(this.climber.getDireccionImagen());
+		ImageIcon user= new ImageIcon(this.climber.getImagePath());
 		JLabel labelImage = new JLabel(user);
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
@@ -244,7 +244,7 @@ public class UIUser extends JFrame {
 		editInfoPanel.add(lbl);
 		JFormattedTextField txtBirthdate = new JFormattedTextField(
 				DateTimeFormatter.ofPattern( "d MMMM uuuu").toFormat());
-		txtBirthdate.setValue(climber.getFechaDeNacimiento());
+		txtBirthdate.setValue(climber.getBirthdate());
 		txtBirthdate.addPropertyChangeListener("value", new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				editValues [0] = txtBirthdate.getText();
@@ -253,24 +253,10 @@ public class UIUser extends JFrame {
 		});
 		editInfoPanel.add(txtBirthdate);
 
-		lbl = new JLabel("Achieved routes: ");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
-		editInfoPanel.add(lbl);
-		JFormattedTextField txtAchievedRoutes = new JFormattedTextField(
-				NumberFormat.getIntegerInstance());
-		txtAchievedRoutes.setValue(climber.getLogradas());
-		txtAchievedRoutes.addPropertyChangeListener("value", new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				editValues [1] = txtAchievedRoutes.getText();
-			}
-
-		});
-		editInfoPanel.add(txtAchievedRoutes);
-
 		lbl = new JLabel("Favorite climbing: ");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
 		editInfoPanel.add(lbl);
-		JTextField txtFavoriteClimbing = new JTextField(climber.getEscaladaFavorita());
+		JTextField txtFavoriteClimbing = new JTextField(climber.getFavoriteClimbing());
 		txtFavoriteClimbing.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				edit();
@@ -282,7 +268,7 @@ public class UIUser extends JFrame {
 				edit();
 			}
 			public void edit() {
-				editValues [2] = txtFavoriteClimbing.getText();
+				editValues [1] = txtFavoriteClimbing.getText();
 			}
 		});
 
@@ -309,7 +295,7 @@ public class UIUser extends JFrame {
 		JButton btnSave = new JButton("save");
 		btnSave.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.editUser(editValues);
+				UsersManager.editUser(editValues);
 				showUserPanel();
 			}
 		});
@@ -331,23 +317,23 @@ public class UIUser extends JFrame {
 		imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif","jpg"));
 		int returnVal = imageChooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
-			editValues [3] = imageChooser.getSelectedFile().getPath();
+			editValues [2] = imageChooser.getSelectedFile().getPath();
 	}
 
-	private void showEditRoutesPanel(TreeSet<Ruta> treeSet, String item) {
-		DefaultListModel<Ruta> model = new DefaultListModel<>();
-		for (Ruta r: treeSet) {
+	private void showEditRoutesPanel(TreeSet<Route> treeSet, String item) {
+		DefaultListModel<Route> model = new DefaultListModel<>();
+		for (Route r: treeSet) {
 			model.addElement(r);
 		}
-		JList <Ruta> listRutes = new JList <Ruta> (model);
+		JList <Route> listRutes = new JList <Route> (model);
 		listRutes.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
 
 		JButton btnDelete = new JButton("delete selected items");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (Ruta r : listRutes.getSelectedValuesList()) {
-					ClimbersManager.removeRoute(r,item);
+				for (Route r : listRutes.getSelectedValuesList()) {
+					UsersManager.removeRoute(r,item);
 				}
 			}
 		});
@@ -377,7 +363,7 @@ public class UIUser extends JFrame {
 		nameField.setInputVerifier(new InputVerifier() {
 			public boolean verify(JComponent input) {
 				JTextField tf = (JTextField) input;
-				boolean b = ClimbersManager.isValidName(tf.getText());
+				boolean b = UsersManager.isValidName(tf.getText());
 				if(!b) {
 					input.getToolkit().beep();
 					JOptionPane.showMessageDialog(null, "already exist an user with this name",
@@ -393,7 +379,7 @@ public class UIUser extends JFrame {
 		passwordField.setInputVerifier(new InputVerifier() {
 			public boolean verify(JComponent input) {
 				JPasswordField pf = (JPasswordField) input;
-				boolean b = ClimbersManager.isValidPassword(pf.getPassword());
+				boolean b = UsersManager.isValidPassword(pf.getPassword());
 				if(!b) {
 					input.getToolkit().beep();
 					JOptionPane.showMessageDialog(null, "the password is too short or already exist",
@@ -415,7 +401,7 @@ public class UIUser extends JFrame {
 					Window w = SwingUtilities.getWindowAncestor(btnSignIn);
 					if (w != null) 
 						w.setVisible(false);
-					ClimbersManager.creatUser(nameField.getText(),passwordField.getPassword());
+					UsersManager.creatUser(nameField.getText(),passwordField.getPassword());
 					JOptionPane.showMessageDialog(null,"The user was create");
 				}
 			}
@@ -451,7 +437,7 @@ public class UIUser extends JFrame {
 		JButton btnLogin = new JButton ("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(ClimbersManager.doLogin(nameField.getText(),passwordField.getPassword())) {
+				if(UsersManager.doLogin(nameField.getText(),passwordField.getPassword())) {
 					Window w = SwingUtilities.getWindowAncestor(btnLogin);
 					if (w!=null) 
 						w.setVisible(false);

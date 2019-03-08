@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,24 +9,26 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.JPanel;
-import business.ClimbersManager;
-import data.Ruta;
+import javax.swing.JOptionPane;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import business.UsersManager;
+import data.Route;
 
 public class UIRute extends JPanel{
         private GridBagConstraints constraints = new GridBagConstraints();
-	private Ruta rute;
+	private Route route;
 	private UIMain uiMain;
 
-	public static   UIRute createUIRute(Ruta rute,UIMain main){
-		return new UIRute(rute,main);
+	public static   UIRute createUIRute(Route route,UIMain main){
+		return new UIRute(route,main);
 	}
-	public UIRute(Ruta rute, UIMain main) {
+
+	public UIRute(Route route, UIMain main) {
                 this.constraints.insets = new Insets(15,15,15,15);
-		this.rute =rute;
+		this.route =route;
 		this.uiMain = main;
 		this.setLayout(new GridBagLayout());
 		this.setupMainPanel();
@@ -41,7 +42,7 @@ public class UIRute extends JPanel{
 	}
 	private   void createTittle() {
 		JPanel tittle = new JPanel(new GridLayout(0,1));
-		JLabel lblRouteName = new JLabel("Route "+ this.rute.getName());
+		JLabel lblRouteName = new JLabel("Route "+ this.route.getName());
 		lblRouteName.setFont(new Font("Tahoma",Font.PLAIN,35));
 		tittle.add(lblRouteName);
                 this.constraints.gridwidth = 3;
@@ -49,30 +50,29 @@ public class UIRute extends JPanel{
 	}
 	private  void createImage() {
                 JPanel image = new JPanel(new GridLayout(0,1));
-		ImageIcon routeImage= new ImageIcon(rute.getImage());
+		ImageIcon routeImage= new ImageIcon(route.getImagePath());
 		JLabel labelImage = new JLabel(routeImage);
                 image.add(labelImage);
                 this.constraints.gridwidth = 3;
                 this.constraints.gridheight = 1;
                 this.addGB(image,0,1);
-		
 	}
 	private   void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Dificultad: " + rute.getDificultad());
+		JLabel lbl = new JLabel("Dificulty: " + route.getDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("Numero de Chapas: " + rute.getNumeroDeChapas());
+      
+		lbl = new JLabel("Number of Plates: " + route.getNumberOfPlates());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("Tipo de Rute: " + rute.getTipoDeRuta());
+
+		lbl = new JLabel("Type of Route: " + route.getRouteType());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("Altura: " + rute.getAltura());
+
+		lbl = new JLabel("Height: " + route.getHeight());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
                 
@@ -93,17 +93,16 @@ public class UIRute extends JPanel{
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIPark.createUIPark(rute.getZona().getParque(),uiMain),730,670);
+				uiMain.showPanel(UIPark.createUIPark(route.getZone().getPark(),uiMain),730,670);
 			}  
 		});
 
 		JButton b3=new JButton("Return to Zone");  
 		b3.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIZone.createUIZone(rute.getZona(),uiMain),730,670);
+				uiMain.showPanel(UIZone.createUIZone(route.getZone(),uiMain),730,670);
 			}  
 		});
-
                 this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
 		this.addGB(b1,0,4);
@@ -124,19 +123,28 @@ public class UIRute extends JPanel{
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+                                if(UsersManager.hasCurrentUser() == true){
+                                    UsersManager.addRoute(route,e.getActionCommand());
+                                }
+                                else{
+                                    //JOptionPane.showMessageDialog(this, "No ha inicado sesion");
+                                }
 			}
 		});
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+                            if(UsersManager.hasCurrentUser() == true){
+                                UsersManager.addRoute(route,e.getActionCommand());
+                            }  
 			}
 		});
 
 		buttonAchieveds.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ClimbersManager.addRute(rute,e.getActionCommand());
+                            if(UsersManager.hasCurrentUser() == true){
+                                UsersManager.addRoute(route,e.getActionCommand());
+                            }
 			}
 		});
 

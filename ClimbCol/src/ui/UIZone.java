@@ -15,24 +15,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import data.Ruta;
-import data.Zona;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
+import data.Route;
+import data.Zone;
 
 public class UIZone extends JPanel {
         private GridBagConstraints constraints = new GridBagConstraints();
-	private Zona zone;
+	private Zone zone;
 	private UIMain uiMain;
 
-	public static   UIZone createUIZone(Zona zone,UIMain main){
-		return new UIZone(zone,main);
+	public static  UIZone createUIZone(Zone zone,UIMain main){
+            return new UIZone(zone,main);
 	}
-	public UIZone(Zona zone, UIMain main) {
+	public UIZone(Zone zone, UIMain main) {
                 this.constraints.insets = new Insets(15,15,15,15);
 		this.zone = zone;
 		this.uiMain = main;
@@ -69,21 +68,22 @@ public class UIZone extends JPanel {
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Dificultad Maxima: " + zone.getDificultadMax());
+		JLabel lbl = new JLabel("Max Difficulty: " + zone.getMaxDifficulty());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
                 
-		lbl = new JLabel("Dificultad Minima: " + zone.getDificultadMin());
+		lbl = new JLabel("Min Difficulty: " + zone.getMinDifficulty());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+
+		lbl = new JLabel("Average Difficulty: " + zone.getAverageDifficulty());
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		infoPanel.add(lbl);
+
+		lbl = new JLabel("Number of Routes: " + zone.getRoutes().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
                 
-		lbl = new JLabel("Dificultad Promedio: " + zone.getDificultadPromedio());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-                
-		lbl = new JLabel("No. de Rutas: " + zone.getRutas().size());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
                 this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
                 this.addGB(infoPanel,1,2);
@@ -91,11 +91,12 @@ public class UIZone extends JPanel {
 
 	private void createScrollPane() {
 
-		DefaultListModel<Ruta> model = new DefaultListModel<>();
-		for (Ruta rute : zone.getRutas()) {
+		DefaultListModel<Route> model = new DefaultListModel<>();
+		for (Route rute : zone.getRoutes()) {
 			model.addElement(rute);
 		}
-		JList <Ruta> listRoutes = new JList <Ruta> (model);
+
+		JList <Route> listRoutes = new JList <Route> (model);
 		listRoutes.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneRoutes = new JScrollPane(listRoutes);
                 scrollPaneRoutes.setMinimumSize(new Dimension(300,400));
@@ -111,6 +112,7 @@ public class UIZone extends JPanel {
 		});
 	}
 	private void goToLastAndNextPanel() {
+            
 		JButton b1=new JButton("Return to Welcome");  
 		b1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
@@ -121,7 +123,7 @@ public class UIZone extends JPanel {
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIPark.createUIPark(zone.getParque(),uiMain),730,670);
+                        uiMain.showPanel(UIPark.createUIPark(zone.getPark(),uiMain),730,670);
 			}  
 		});
 

@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -33,20 +32,21 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 
-import data.Parque;
-import data.Zona;
+import data.Park;
+import data.Zone;
 import java.awt.Component;
 
 public class UIPark extends JPanel{
-        private GridBagConstraints constraints = new GridBagConstraints();
-	private Parque park;
+	private GridBagConstraints constraints = new GridBagConstraints();
+	private Park park;
 	private UIMain uiMain;
 	private int imageIndex = 0;
 
-	public static UIPark createUIPark(Parque park,UIMain main){
+	public static UIPark createUIPark(Park park,UIMain main){
 		return new UIPark(park,main);
 	}
-	public UIPark(Parque park, UIMain main) {
+        
+	public UIPark(Park park, UIMain main) {
                 this.constraints.insets = new Insets(15,15,15,15);
 		this.park = park;
 		this.uiMain = main;
@@ -67,8 +67,8 @@ public class UIPark extends JPanel{
 		JLabel lblParkName = new JLabel("Park "+ this.park.getName());
 		lblParkName.setFont(new Font("Tahoma",Font.PLAIN,35));
 		panelTittle.add(lblParkName);
-                this.constraints.gridwidth = 2;
-                this.addGB(panelTittle,0,0);
+		this.constraints.gridwidth = 2;
+		this.addGB(panelTittle,0,0);
 	}
 
 	private void createImage() {
@@ -83,18 +83,18 @@ public class UIPark extends JPanel{
 	private void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
-		JLabel lbl = new JLabel("Ubicacion: " + park.getUbicacion());
+		JLabel lbl = new JLabel("Location: " + park.getLocation());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("ver en Google Maps");
+
+		lbl = new JLabel("Go to Google Maps");
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lbl.setForeground(Color.BLUE.darker());
 		lbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop().browse(new URI(park.getLinkUbicacion().trim()));
+					Desktop.getDesktop().browse(new URI(park.getLinkLocation().trim()));
 				} catch (IOException | URISyntaxException e1) {
 					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
 							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
@@ -102,48 +102,48 @@ public class UIPark extends JPanel{
 			}
 			public void mouseExited(MouseEvent e) {
 				JLabel lbl = (JLabel) e.getSource();
-				lbl.setText("ver en Google Maps");
+				lbl.setText("Go to Google Maps");
 			}
 			public void mouseEntered(MouseEvent e) {
 				JLabel lbl = (JLabel) e.getSource();
-				lbl.setText("<html><a href=''>" + "ver en Google Maps" + "</a></html>");
-			}
-		});
-		infoPanel.add(lbl);
-                
-                lbl = new JLabel("ver website del parque");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lbl.setForeground(Color.BLUE.darker());
-		lbl.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				try {
-					Desktop.getDesktop().browse(new URI(park.getLinkParque().trim()));
-				} catch (IOException | URISyntaxException e1) {
-					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
-							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			public void mouseExited(MouseEvent e) {
-				JLabel lbl = (JLabel) e.getSource();
-				lbl.setText("ver website del parque");
-			}
-			public void mouseEntered(MouseEvent e) {
-				JLabel lbl = (JLabel) e.getSource();
-				lbl.setText("<html><a href=''>" + "ver website del parque" + "</a></html>");
+				lbl.setText("<html><a href=''>" + "Go to Google Maps" + "</a></html>");
 			}
 		});
 		infoPanel.add(lbl);
 
-		lbl = new JLabel("Temperatura Promedio: " + park.getTemperaturaPromedio());
+		lbl = new JLabel("Go to ParkWebSite");
+		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
+		lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lbl.setForeground(Color.BLUE.darker());
+		lbl.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(park.getLinkPatk().trim()));
+				} catch (IOException | URISyntaxException e1) {
+					JOptionPane.showMessageDialog(null, "ha ocurrido un error, "
+							+ "el link no se puede abrir", null, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			public void mouseExited(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("Go to ParkWebSite");
+			}
+			public void mouseEntered(MouseEvent e) {
+				JLabel lbl = (JLabel) e.getSource();
+				lbl.setText("<html><a href=''>" + "Go to ParkWebSite" + "</a></html>");
+			}
+		});
+		infoPanel.add(lbl);
+
+		lbl = new JLabel("Average Temperature: " + park.getAverageTemperature());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("Altitud: " + park.getAltitud());
+
+		lbl = new JLabel("Altitude: " + park.getAltitude());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-                
-		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
+
+		lbl = new JLabel("Number of Zones: " + park.getZones().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
                 
@@ -153,17 +153,17 @@ public class UIPark extends JPanel{
 	}
 
 	private void createScrollPane() {
-		DefaultListModel<Zona> model = new DefaultListModel<>();
-		for (Zona zone : park.getZonas()) {
+		DefaultListModel<Zone> model = new DefaultListModel<>();
+		for (Zone zone : park.getZones()) {
 			model.addElement(zone);
 		}
-		JList <Zona> listZones = new JList <Zona> (model);
+		JList <Zone> listZones = new JList <Zone> (model);
 		listZones.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneZones = new JScrollPane(listZones);
-                scrollPaneZones.setMinimumSize(new Dimension(300,400));
+		scrollPaneZones.setMinimumSize(new Dimension(300,400));
 
 		this.constraints.gridwidth = 1;
-                this.constraints.gridheight = 2;
+		this.constraints.gridheight = 2;
 		this.addGB(scrollPaneZones,1,1);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
@@ -182,7 +182,7 @@ public class UIPark extends JPanel{
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-                this.constraints.gridwidth = 1;
+		this.constraints.gridwidth = 1;
 		this.addGB(b1,0,3);
 	}
 
@@ -205,20 +205,23 @@ public class UIPark extends JPanel{
 	private void showFrameFotos() {
 		JFrame frameFotos = new JFrame("FOTOS");
 		frameFotos.add(setupPanelFotos());
-		frameFotos.pack();
+		frameFotos.setSize(950, 550);
 		frameFotos.setVisible(true);
 	}
 
 	private JPanel setupPanelFotos() {
-		JPanel panelFotos = new JPanel(new BorderLayout()); 
+		JPanel panelFotos = new JPanel(new GridBagLayout()); 
 		JToolBar toolBar;
 
 		ArrayList <ImageIcon>images = new ArrayList <ImageIcon>();
-		for(String  s : park.getDireccionImagenes()) {
+		for(String  s : park.getImagesPaths()) {
 			images.add(new ImageIcon(s));
 		}
 		JLabel label = new JLabel (images.get(0));
-		panelFotos.add(label,BorderLayout.CENTER);  
+		this.constraints.gridx = 0;
+		this.constraints.gridy = 0;
+		this.constraints.gridheight = 1;
+		panelFotos.add(label,constraints);  
 
 		JButton b1 = new JButton(new ImageIcon("images/previous.png"));
 		b1.addActionListener(new ActionListener(){  
@@ -246,11 +249,13 @@ public class UIPark extends JPanel{
 		toolBar.add(b1);
 		toolBar.addSeparator();
 		toolBar.add(b2);
-		panelFotos.add(toolBar, BorderLayout.SOUTH);
+		this.constraints.gridx = 0;
+		this.constraints.gridy = 1;
+		panelFotos.add(toolBar,constraints);  
 		return panelFotos;
 	}
-        
-        private void addGB(Component comp, int x, int y) {
+
+	private void addGB(Component comp, int x, int y) {
 		this.constraints.gridx = x;
 		this.constraints.gridy = y;
 		this.add(comp, this.constraints);

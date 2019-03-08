@@ -9,24 +9,23 @@ import ui.*;
 
 public class ClimbCol {
 	private static UIMain uiMain;
-	private static TreeSet <Parque> parques = new TreeSet <Parque>();
-	private static TreeMap<String, Escalador> escaladores = new TreeMap <String,Escalador>();
+	private static TreeSet <Park> parks = new TreeSet <Park>();
+	private static TreeMap<String, User> users = new TreeMap <String,User>();
 
 	public static void main(String[] args) {
 
 		initiComponents();
-
 		uiMain = new UIMain();
 
-		//UICreardorDeDatos cr = new UICreardorDeDatos(new CreadorDeDatos(parques));
+		//UICreardorDeDatos cr = new UICreardorDeDatos(new DataCreator(parks));
 
 	}
 
 	private static void initiComponents() {
-		parques = DataDeserializer.deserializeParks();
-		//escaladores = DataDeserializer.deserializeClimbers();
-		ClimbColManager.setParks(parques);
-		ClimbersManager.setEscaladores(escaladores);
+		parks = DataDeserializer.deserializeParks();
+		users = DataDeserializer.deserializeClimbers();
+		ClimbColManager.setParks(parks);
+		UsersManager.setUsers(users);
 	}
 
 

@@ -10,12 +10,12 @@ import data.*;
 
 public class DataSerializer {
 
-	public static void serializeParks(TreeSet<Parque> parques) {
+	public static void serializeParks(TreeSet<Park> parks) {
 		FileOutputStream file;
 		try {
 			file = new FileOutputStream (FileNameConstants.PARKS_FILE);
 			ObjectOutputStream  writer = new ObjectOutputStream (file);
-			writer.writeObject(parques);
+			writer.writeObject(parks);
 			writer.close();
 
 		} catch (IOException e) {
@@ -23,12 +23,12 @@ public class DataSerializer {
 		}	
 	}
 
-	public static void serializeClimbers(TreeMap<String,Escalador> climbers) {
+	public static void serializeUsers(TreeMap<String,User> users) {
 		FileOutputStream file;
 		try {
-			file = new FileOutputStream (FileNameConstants.CLIMBERS_FILE);
+			file = new FileOutputStream (FileNameConstants.USERS_FILE);
 			ObjectOutputStream  writer = new ObjectOutputStream (file);
-			writer.writeObject(climbers);
+			writer.writeObject(users);
 			writer.close();
 
 		} catch (IOException e) {
