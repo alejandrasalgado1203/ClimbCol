@@ -47,6 +47,7 @@ public class UIPark extends JPanel{
 		return new UIPark(park,main);
 	}
 	public UIPark(Parque park, UIMain main) {
+                this.constraints.insets = new Insets(15,15,15,15);
 		this.park = park;
 		this.uiMain = main;
 		this.setLayout(new GridBagLayout());
@@ -63,7 +64,7 @@ public class UIPark extends JPanel{
 	}
 	private void createTittle() {
                 JPanel panelTittle = new JPanel(new GridLayout(0,1));
-		JLabel lblParkName = new JLabel("PARQUE "+ this.park.getName());
+		JLabel lblParkName = new JLabel("Park "+ this.park.getName());
 		lblParkName.setFont(new Font("Tahoma",Font.PLAIN,35));
 		panelTittle.add(lblParkName);
                 this.constraints.gridwidth = 2;
@@ -75,6 +76,8 @@ public class UIPark extends JPanel{
 		ImageIcon parkImage = new ImageIcon(park.getMainImage());
 		JLabel labelImage = new JLabel(parkImage);
 		image.add(labelImage);
+                this.constraints.gridwidth = 1;
+                this.constraints.gridheight = 1;
                 this.addGB(image,0,1);
 	}
 	private void createDescription() {
@@ -143,7 +146,9 @@ public class UIPark extends JPanel{
 		lbl = new JLabel("Numero de zonas: " + park.getZonas().size());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-
+                
+                this.constraints.gridwidth = 1;
+                this.constraints.gridheight = 1;
 		this.addGB(infoPanel,0,2);
 	}
 
@@ -159,12 +164,11 @@ public class UIPark extends JPanel{
 
 		this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 2;
-                this.constraints.insets = new Insets(10,20,0,20);
 		this.addGB(scrollPaneZones,1,1);
 
 		listZones.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				uiMain.showPanel(UIZone.createUIZone(listZones.getSelectedValue(), uiMain));	
+				uiMain.showPanel(UIZone.createUIZone(listZones.getSelectedValue(), uiMain),730,670);	
 			}
 		});
 
@@ -178,7 +182,7 @@ public class UIPark extends JPanel{
 				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
 			}  
 		});
-                this.constraints.gridwidth = 2;
+                this.constraints.gridwidth = 1;
 		this.addGB(b1,0,3);
 	}
 
@@ -188,8 +192,8 @@ public class UIPark extends JPanel{
 		fotos.setBackground(Color.WHITE);
 		JPanel jp = new JPanel();
 		jp.add(fotos);
-                this.constraints.gridwidth = 2;
-                this.addGB(jp,0,4);
+                this.constraints.gridwidth = 1;
+                this.addGB(jp,1,3);
 
 		fotos.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {

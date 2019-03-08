@@ -12,10 +12,13 @@ import javax.swing.JToolBar;
 import javax.swing.JPanel;
 import business.ClimbersManager;
 import data.Ruta;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class UIRute extends JPanel{
-	private   JPanel panelRute= new JPanel();
-	private   JPanel centerPanel = new JPanel();
+        private GridBagConstraints constraints = new GridBagConstraints();
 	private Ruta rute;
 	private UIMain uiMain;
 
@@ -23,9 +26,10 @@ public class UIRute extends JPanel{
 		return new UIRute(rute,main);
 	}
 	public UIRute(Ruta rute, UIMain main) {
+                this.constraints.insets = new Insets(15,15,15,15);
 		this.rute =rute;
 		this.uiMain = main;
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridBagLayout());
 		this.setupMainPanel();
 	}
 	private   void setupMainPanel() {
@@ -33,19 +37,25 @@ public class UIRute extends JPanel{
 		createImage();
 		createDescription();
 		goToLastAndNextPanel();
+                createToolBar();
 	}
 	private   void createTittle() {
 		JPanel tittle = new JPanel(new GridLayout(0,1));
-		JLabel lblWelcomeRute = new JLabel("RUTA "+ this.rute.getName());
-		lblWelcomeRute.setFont(new Font("Tahoma",Font.PLAIN,35));
-                tittle.add(createToolBar());
-		tittle.add(lblWelcomeRute);
-		this.add(lblWelcomeRute,BorderLayout.NORTH);
+		JLabel lblRouteName = new JLabel("Route "+ this.rute.getName());
+		lblRouteName.setFont(new Font("Tahoma",Font.PLAIN,35));
+		tittle.add(lblRouteName);
+                this.constraints.gridwidth = 3;
+		this.addGB(lblRouteName,0,0);
 	}
 	private  void createImage() {
-		ImageIcon Rute= new ImageIcon(rute.getImage());
-		JLabel labelImage = new JLabel(Rute);
-		centerPanel.add(labelImage);
+                JPanel image = new JPanel(new GridLayout(0,1));
+		ImageIcon routeImage= new ImageIcon(rute.getImage());
+		JLabel labelImage = new JLabel(routeImage);
+                image.add(labelImage);
+                this.constraints.gridwidth = 3;
+                this.constraints.gridheight = 1;
+                this.addGB(image,0,1);
+		
 	}
 	private   void createDescription() {
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
@@ -53,59 +63,63 @@ public class UIRute extends JPanel{
 		JLabel lbl = new JLabel("Dificultad: " + rute.getDificultad());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
+                
 		lbl = new JLabel("Numero de Chapas: " + rute.getNumeroDeChapas());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
+                
 		lbl = new JLabel("Tipo de Rute: " + rute.getTipoDeRuta());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
+                
 		lbl = new JLabel("Altura: " + rute.getAltura());
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
-
-
-		centerPanel.add(infoPanel);
-		this.add(centerPanel,BorderLayout.CENTER);
+                
+                this.constraints.gridwidth = 3;
+                this.constraints.gridheight = 1;
+		this.addGB(infoPanel,0,2);
 	}
 
 	private void goToLastAndNextPanel() {
-		JPanel southPanel = new JPanel ();
+            
 		JButton b1=new JButton("Return to Welcome");  
 		b1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),740,670);
+				uiMain.showPanel(UIWelcome.createUIWelcome(uiMain),730,670);
 			}  
 		});
 
 		JButton b2=new JButton("Return to Park");  
 		b2.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIPark.createUIPark(rute.getZona().getParque(),uiMain));
+				uiMain.showPanel(UIPark.createUIPark(rute.getZona().getParque(),uiMain),730,670);
 			}  
 		});
 
 		JButton b3=new JButton("Return to Zone");  
 		b3.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
-				uiMain.showPanel(UIZone.createUIZone(rute.getZona(),uiMain));
+				uiMain.showPanel(UIZone.createUIZone(rute.getZona(),uiMain),730,670);
 			}  
 		});
 
-
-		southPanel.add(b1);
-		southPanel.add(b2);
-                southPanel.add(b3);
-		this.add(southPanel, BorderLayout.SOUTH);
+                this.constraints.gridwidth = 1;
+                this.constraints.gridheight = 1;
+		this.addGB(b1,0,4);
+		this.addGB(b2,1,4);
+		this.addGB(b3,2,4);
 	}
 
-	private JToolBar createToolBar() {
+	private void createToolBar() {
+                JPanel toolBarPanel = new JPanel();
 		JToolBar toolBar = new JToolBar();
 
-		JButton buttonGoals = new JButton("Agregar a lista Retos");
+		JButton buttonGoals = new JButton("Add to Goals Routes");
 		buttonGoals.setActionCommand("Goals");
-		JButton buttonFavorites = new JButton("Agregar a lista favoritos");
+		JButton buttonFavorites = new JButton("Add to Favorites Routes");
 		buttonFavorites.setActionCommand("Favorites");
-		JButton buttonAchieveds = new JButton("Agregar a lista achieveds");
+		JButton buttonAchieveds = new JButton("Add to Achieveds Routes");
 		buttonAchieveds.setActionCommand("Achieveds");
 
 		buttonGoals.addActionListener(new ActionListener(){
@@ -133,7 +147,14 @@ public class UIRute extends JPanel{
 		toolBar.add(buttonFavorites);
 		toolBar.addSeparator();
 		toolBar.add(buttonAchieveds);
-		return toolBar;    
-
+                toolBarPanel.add(toolBar);
+                this.constraints.gridwidth = 3;
+                this.constraints.gridheight = 1;
+                this.addGB(toolBarPanel,0,3);
+	}
+            private void addGB(Component comp, int x, int y) {
+            this.constraints.gridx = x;
+            this.constraints.gridy = y;
+            this.add(comp, this.constraints);
 	}
 }

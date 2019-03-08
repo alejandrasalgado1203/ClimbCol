@@ -2,7 +2,6 @@
 package data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Zona implements Serializable,Comparable<Zona>,NameImageGiver{

@@ -94,7 +94,7 @@ public class UIWelcome extends JPanel{
 
 		listParks.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				uiMain.showPanel(UIPark.createUIPark(listParks.getSelectedValue(), uiMain));	
+				uiMain.showPanel(UIPark.createUIPark(listParks.getSelectedValue(), uiMain),730,670);	
 			}
 		});
 
