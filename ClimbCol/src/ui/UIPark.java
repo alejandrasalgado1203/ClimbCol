@@ -231,9 +231,10 @@ public class UIPark extends JPanel{
 				if (imageIndex != 0) {
 					imageIndex--;
 					label.setIcon(images.get(imageIndex));
-                                        /*if (images.get(imageIndex).getIconWidth() > 130 || images.get(imageIndex).getIconHeight() > 90) {
-                                            images.getImage(imageIndex) = new ImageIcon(images.get(imageIndex).getImage().getScaledInstance(130, 90, Image.SCALE_AREA_AVERAGING));
-                                        }*/
+                                        ImageIcon icon = images.get(imageIndex);
+                                        if (icon.getIconWidth() > 130 || icon.getIconHeight() > 90) {
+                                            icon = new ImageIcon(icon.getImage().getScaledInstance(130, 90, Image.SCALE_AREA_AVERAGING));
+                                        }
 				}
 			}  
 		});  
