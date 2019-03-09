@@ -27,8 +27,8 @@ public class Route implements Serializable,Comparable<Route>,Renderable{
 	}
 	@Override
 	public String getMainImage() {
-		// TODO Auto-generated method stub
-		return null;
+            String icon ="images/IconRoutes.png";
+		return icon ;
 	}
 
 	public String getName() {

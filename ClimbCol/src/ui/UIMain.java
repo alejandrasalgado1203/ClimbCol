@@ -41,7 +41,7 @@ public class UIMain extends JFrame{
 				return false;
 			}
 		});
-		ImageIcon icon = new ImageIcon("images/2.jpg");
+		ImageIcon icon = new ImageIcon("images/icono.png");
 		this.setIconImage(icon.getImage());
 		this.createMenuBar();
 		this.showPanel(UIWelcome.createUIWelcome(this),740,670);
