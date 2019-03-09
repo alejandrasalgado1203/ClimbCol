@@ -123,10 +123,14 @@ public class UIRoute extends JPanel{
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-                                if(UsersManager.hasCurrentUser() == true){
+                                if(UsersManager.hasCurrentUser()){
                                     UsersManager.addRoute(route,e.getActionCommand());
+                                    if(!UsersManager.addRoute(route,e.getActionCommand())){
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
+                                                    null, JOptionPane.WARNING_MESSAGE);
+                                    }
                                 }
-                                else if(UsersManager.hasCurrentUser()== false){
+                                else{
                                     JOptionPane.showMessageDialog(null,"You are not register",
 							null, JOptionPane.WARNING_MESSAGE);
                                 }
@@ -135,10 +139,14 @@ public class UIRoute extends JPanel{
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-                            if(UsersManager.hasCurrentUser() == true){
+                            if(UsersManager.hasCurrentUser()){
                                 UsersManager.addRoute(route,e.getActionCommand());
+                                if(!UsersManager.addRoute(route,e.getActionCommand())){
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
+                                                    null, JOptionPane.WARNING_MESSAGE);
+                                    }
                             }  
-                            else if(UsersManager.hasCurrentUser()== false){
+                            else{
                                     JOptionPane.showMessageDialog(null,"You are not register",
 							null, JOptionPane.WARNING_MESSAGE);
                             }
@@ -150,7 +158,7 @@ public class UIRoute extends JPanel{
                             if(UsersManager.hasCurrentUser()){
                                     UsersManager.addRoute(route,e.getActionCommand());
                                     if(!UsersManager.addRoute(route,e.getActionCommand())){
-                                        JOptionPane.showMessageDialog(null,"You are not register",
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
                                                     null, JOptionPane.WARNING_MESSAGE);
                                     }
                             }
