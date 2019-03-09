@@ -35,6 +35,7 @@ import java.awt.Insets;
 import data.Park;
 import data.Zone;
 import java.awt.Component;
+import java.awt.Image;
 
 public class UIPark extends JPanel{
 	private GridBagConstraints constraints = new GridBagConstraints();
@@ -215,8 +216,9 @@ public class UIPark extends JPanel{
 
 		ArrayList <ImageIcon>images = new ArrayList <ImageIcon>();
 		for(String  s : park.getImagesPaths()) {
-			images.add(new ImageIcon(s));
+			images.add(new ImageIcon(s));          
 		}
+                
 		JLabel label = new JLabel (images.get(0));
 		this.constraints.gridx = 0;
 		this.constraints.gridy = 0;
@@ -229,6 +231,9 @@ public class UIPark extends JPanel{
 				if (imageIndex != 0) {
 					imageIndex--;
 					label.setIcon(images.get(imageIndex));
+                                        /*if (images.get(imageIndex).getIconWidth() > 130 || images.get(imageIndex).getIconHeight() > 90) {
+                                            images.getImage(imageIndex) = new ImageIcon(images.get(imageIndex).getImage().getScaledInstance(130, 90, Image.SCALE_AREA_AVERAGING));
+                                        }*/
 				}
 			}  
 		});  

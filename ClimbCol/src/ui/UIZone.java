@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,6 +21,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import data.Route;
 import data.Zone;
+import java.text.DecimalFormat;
 
 public class UIZone extends JPanel {
         private GridBagConstraints constraints = new GridBagConstraints();
@@ -66,6 +66,7 @@ public class UIZone extends JPanel {
                 this.addGB(image,1,1);
 	}
 	private void createDescription() {
+                DecimalFormat df = new DecimalFormat("#.##");
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Max Difficulty: " + zone.getMaxDifficulty());
@@ -76,7 +77,7 @@ public class UIZone extends JPanel {
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
-		lbl = new JLabel("Average Difficulty: " + zone.getAverageDifficulty());
+		lbl = new JLabel("Average Difficulty: " + df.format(zone.getAverageDifficulty()));
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
 
