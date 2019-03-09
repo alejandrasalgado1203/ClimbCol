@@ -53,7 +53,7 @@ public class UIRoute extends JPanel{
 		ImageIcon routeImage= new ImageIcon(route.getImagePath());
 		JLabel labelImage = new JLabel(routeImage);
                 image.add(labelImage);
-                this.constraints.gridwidth = 3;
+                this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
                 this.addGB(image,0,1);
 	}
@@ -76,9 +76,9 @@ public class UIRoute extends JPanel{
 		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
 		infoPanel.add(lbl);
                 
-                this.constraints.gridwidth = 3;
+                this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
-		this.addGB(infoPanel,0,2);
+		this.addGB(infoPanel,1,1);
 	}
 
 	private void goToLastAndNextPanel() {
@@ -105,9 +105,9 @@ public class UIRoute extends JPanel{
 		});
                 this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
-		this.addGB(b1,0,4);
-		this.addGB(b2,1,4);
-		this.addGB(b3,2,4);
+		this.addGB(b1,0,3);
+		this.addGB(b2,1,3);
+		this.addGB(b3,2,3);
 	}
 
 	private void createToolBar() {
@@ -123,10 +123,14 @@ public class UIRoute extends JPanel{
 
 		buttonGoals.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-                                if(UsersManager.hasCurrentUser() == true){
+                                if(UsersManager.hasCurrentUser()){
                                     UsersManager.addRoute(route,e.getActionCommand());
+                                    if(!UsersManager.addRoute(route,e.getActionCommand())){
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
+                                                    null, JOptionPane.WARNING_MESSAGE);
+                                    }
                                 }
-                                else if(UsersManager.hasCurrentUser()== false){
+                                else{
                                     JOptionPane.showMessageDialog(null,"You are not register",
 							null, JOptionPane.WARNING_MESSAGE);
                                 }
@@ -135,10 +139,14 @@ public class UIRoute extends JPanel{
 
 		buttonFavorites.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-                            if(UsersManager.hasCurrentUser() == true){
+                            if(UsersManager.hasCurrentUser()){
                                 UsersManager.addRoute(route,e.getActionCommand());
+                                if(!UsersManager.addRoute(route,e.getActionCommand())){
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
+                                                    null, JOptionPane.WARNING_MESSAGE);
+                                    }
                             }  
-                            else if(UsersManager.hasCurrentUser()== false){
+                            else{
                                     JOptionPane.showMessageDialog(null,"You are not register",
 							null, JOptionPane.WARNING_MESSAGE);
                             }
@@ -150,7 +158,7 @@ public class UIRoute extends JPanel{
                             if(UsersManager.hasCurrentUser()){
                                     UsersManager.addRoute(route,e.getActionCommand());
                                     if(!UsersManager.addRoute(route,e.getActionCommand())){
-                                        JOptionPane.showMessageDialog(null,"You are not register",
+                                        JOptionPane.showMessageDialog(null,"The route is add yet",
                                                     null, JOptionPane.WARNING_MESSAGE);
                                     }
                             }
@@ -171,7 +179,7 @@ public class UIRoute extends JPanel{
                 toolBarPanel.add(toolBar);
                 this.constraints.gridwidth = 3;
                 this.constraints.gridheight = 1;
-                this.addGB(toolBarPanel,0,3);
+                this.addGB(toolBarPanel,0,2);
 	}
         
         private void addGB(Component comp, int x, int y) {
