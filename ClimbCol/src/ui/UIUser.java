@@ -47,6 +47,7 @@ import business.UsersManager;
 import data.User;
 import data.Route;
 import javax.swing.ListSelectionModel;
+import javax.swing.Box;
 
 public class UIUser extends JFrame {
 
@@ -126,7 +127,7 @@ public class UIUser extends JFrame {
     private void createImage() {
         ImageIcon user = new ImageIcon(this.climber.getImagePath());
         JLabel labelImage = new JLabel(user);
-        constraints.gridheight = 2;
+        constraints.gridheight = 1;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.addGB(userPanel, labelImage, 0, 1);
@@ -156,26 +157,36 @@ public class UIUser extends JFrame {
     }
 
     private void createButtons() {
+        Box box = Box.createVerticalBox();
         JPanel btnsPanel = new JPanel();
-
+        box.add(btnsPanel);
+        box.add(Box.createVerticalStrut(8));
+        box.add(setupPanelRutes(climber.getFavorites()));
+        
         JRadioButton buttonGoals = new JRadioButton("Retos");
         buttonGoals.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setupPanelRutes(climber.getGoals());
+                box.remove(2);
+                box.add(setupPanelRutes(climber.getGoals()));
+                UIUser.this.pack();
             }
         });
 
-        JRadioButton buttonFavorites = new JRadioButton("Favoritos");
+        JRadioButton buttonFavorites = new JRadioButton("Favoritos",true);
         buttonFavorites.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setupPanelRutes(climber.getFavorites());
+                box.remove(2);
+                box.add(setupPanelRutes(climber.getFavorites()));
+                UIUser.this.pack();
             }
         });
 
         JRadioButton buttonAchieveds = new JRadioButton("Logrados");
         buttonAchieveds.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setupPanelRutes(climber.getAchieveds());
+                box.remove(2);
+                box.add(setupPanelRutes(climber.getAchieveds()));
+                UIUser.this.pack();
             }
         });
 
@@ -188,12 +199,12 @@ public class UIUser extends JFrame {
         btnsPanel.add(buttonFavorites);
         btnsPanel.add(buttonAchieveds);
 
-        constraints.gridheight = 1;
+        constraints.gridheight = 3;
         constraints.gridwidth = 1;
-        this.addGB(userPanel, btnsPanel, 1, 1);
+        this.addGB(userPanel, box, 1, 1);
     }
 
-    private void setupPanelRutes(Collection<Route> collection) {
+    private JScrollPane setupPanelRutes(Collection<Route> collection) {
         DefaultListModel<Route> model = new DefaultListModel<>();
         for (Route r : collection) {
             model.addElement(r);
@@ -203,20 +214,13 @@ public class UIUser extends JFrame {
         JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
         scrollPaneRoutes.setPreferredSize(new Dimension(300, 400));
 
-        if (this.userPanel.getComponentCount() == 5) {
-            this.userPanel.remove(4);
-        }
-        constraints.gridheight = 1;
-        constraints.gridwidth = 1;
-        this.addGB(userPanel, scrollPaneRoutes, 1, 2);
-
         listRutes.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 Route rute = listRutes.getSelectedValue();
                 uiMain.showPanel(UIRoute.createUIRute(rute, uiMain), 730, 670);
             }
         });
-        this.pack();
+        return scrollPaneRoutes;
     }
 
     private void showEditInfoPanel() {
