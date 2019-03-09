@@ -8,21 +8,20 @@ import data.*;
 import ui.*;
 
 public class ClimbCol {
-	private static UIMain uiMain;
-	private static TreeSet <Park> parks = new TreeSet <Park>();
-	private static TreeMap<String, User> users = new TreeMap <String,User>();
+	private static TreeSet <Park> parks;
+	private static TreeMap<String, User> users;
 
 	public static void main(String[] args) {
 
 		initiComponents();
-		uiMain = new UIMain();
+		UIMain uiMain = new UIMain();
 		//UIDataCreator cr = new UIDataCreator(new DataCreator(parks));
 
 	}
 
 	private static void initiComponents() {
 		parks = DataDeserializer.deserializeParks();
-		users = DataDeserializer.deserializeClimbers();
+		users = DataDeserializer.deserializeUsers();
 		ClimbColManager.setParks(parks);
 		UsersManager.setUsers(users);
 	}

@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import business.UsersManager;
+import javax.swing.JOptionPane;
 
 public class UIMain extends JFrame{
 
@@ -142,4 +143,8 @@ public class UIMain extends JFrame{
 	private void showUser() {
 		uiUser = new UIUser(this);		
 	}
+        
+        public static void reportProblem(String report){
+            JOptionPane.showMessageDialog(null, report, null, JOptionPane.WARNING_MESSAGE);
+        }
 }
