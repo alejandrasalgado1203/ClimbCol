@@ -69,7 +69,7 @@ public class User implements Serializable{
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
-	public int getLogradas() {
+	public int getNumAchieveds() {
 		return achieveds.size();
 	}
 	public TreeSet <Route> getGoals() {

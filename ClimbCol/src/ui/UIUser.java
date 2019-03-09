@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.format.DateTimeFormatter;
@@ -42,428 +43,451 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import business.UsersManager;
 import data.User;
 import data.Route;
-
+import javax.swing.ListSelectionModel;
 
 public class UIUser extends JFrame {
 
-	private User climber;
-	private UIMain uiMain;
-	private JPanel userPanel;
-	private JPanel editPanel;
-	private GridBagConstraints constraints = new GridBagConstraints();
-	private String [] editValues;
+    private User climber;
+    private UIMain uiMain;
+    private JPanel userPanel;
+    private JPanel editPanel;
+    private GridBagConstraints constraints = new GridBagConstraints();
+    private String[] editValues;
 
-	public UIUser(UIMain main) {
-		super("User's info");
-		this.climber = UsersManager.getCurrentUser();
-		this.uiMain = main;
-		createMenu();
-		showUserPanel();
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent windowEvent) {
-				uiMain.createMenuBar();
-				setVisible(false);
-			}
-		});
-		this.setResizable(true);
-		this.pack();
-		this.setVisible(true);
-	}
+    public UIUser(UIMain main) {
+        super("User's info");
+        this.climber = UsersManager.getCurrentUser();
+        this.uiMain = main;
+        createMenu();
+        showUserPanel();
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                uiMain.createMenuBar();
+                setVisible(false);
+            }
+        });
+        this.setResizable(true);
+        this.pack();
+        this.setVisible(true);
+    }
 
-	private void createMenu() {
-		JMenuBar menuBar = new JMenuBar();
-		JMenuItem editInfo = new JMenuItem("Edit info");
-		menuBar.add(editInfo);
-		editInfo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showEditInfoPanel();
-			}
-		});
+    private void createMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenuItem editInfo = new JMenuItem("Edit info");
+        menuBar.add(editInfo);
+        editInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showEditInfoPanel();
+            }
+        });
 
-		JMenuItem editFavorites = new JMenuItem("Edit favorites");
-		menuBar.add(editFavorites);
-		editFavorites.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showEditRoutesPanel(climber.getFavorites(),"favorites");
-			}
-		});
+        JMenuItem editFavorites = new JMenuItem("Edit favorites");
+        menuBar.add(editFavorites);
+        editFavorites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showEditRoutesPanel(climber.getFavorites(), "favorites");
+            }
+        });
 
-		JMenuItem editGoals = new JMenuItem("Edit goals");
-		menuBar.add(editGoals);
-		editGoals.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showEditRoutesPanel(climber.getGoals(),"goals");
-			}
-		});
+        JMenuItem editGoals = new JMenuItem("Edit goals");
+        menuBar.add(editGoals);
+        editGoals.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showEditRoutesPanel(climber.getGoals(), "goals");
+            }
+        });
 
-		this.setJMenuBar(menuBar);
-	}
+        this.setJMenuBar(menuBar);
+    }
 
-	private void showUserPanel() {
-		this.userPanel = new JPanel(new GridBagLayout());
-		this.constraints.insets = new Insets(10,10,10,10);
-		createTittle();
-		createImage();
-		createInfo();
-		createButtons();
-		this.setContentPane(userPanel);
-		this.pack();
-	}
+    private void showUserPanel() {
+        this.userPanel = new JPanel(new GridBagLayout());
+        this.constraints.insets = new Insets(10, 10, 10, 10);
+        createTittle();
+        createImage();
+        createInfo();
+        createButtons();
+        this.setContentPane(userPanel);
+        this.pack();
+    }
 
-	private void createTittle() {
-		JLabel lblTittle = new JLabel(this.climber.getName());
-		lblTittle.setFont(new Font("Tahoma",Font.PLAIN,35));
-		constraints.gridwidth = 2;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(userPanel,lblTittle, 0, 0);
-	}
+    private void createTittle() {
+        JLabel lblTittle = new JLabel(this.climber.getName());
+        lblTittle.setFont(new Font("Tahoma", Font.PLAIN, 35));
+        constraints.gridwidth = 2;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.addGB(userPanel, lblTittle, 0, 0);
+    }
 
-	private void createImage() {
-		ImageIcon user= new ImageIcon(this.climber.getImagePath());
-		JLabel labelImage = new JLabel(user);
-		constraints.gridheight = 2;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(userPanel,labelImage, 0, 1);
-	}
+    private void createImage() {
+        ImageIcon user = new ImageIcon(this.climber.getImagePath());
+        JLabel labelImage = new JLabel(user);
+        constraints.gridheight = 2;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.addGB(userPanel, labelImage, 0, 1);
+    }
 
-	private   void createInfo() { 
-		JPanel infoPanel = new JPanel(new GridLayout(0,1));
+    private void createInfo() {
+        JPanel infoPanel = new JPanel(new GridLayout(0, 1));
 
-		JLabel lbl = new JLabel("Birthdate: " + 
-				climber.getBirthdate().format(DateTimeFormatter.ofPattern( "d MMMM uuuu")));
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-		lbl = new JLabel("Achieved routes: " + climber.getLogradas());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-		lbl = new JLabel("Favorite climbing: " + climber.getFavoriteClimbing());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
-		lbl = new JLabel("Maximum difficulty achieved: " + climber.getMaxDifficultyAchieved());
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,20));
-		infoPanel.add(lbl);
+        JLabel lbl = new JLabel("Birthdate: "
+                + climber.getBirthdate().format(DateTimeFormatter.ofPattern("d MMMM uuuu")));
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        infoPanel.add(lbl);
+        lbl = new JLabel("Achieved routes: " + climber.getNumAchieveds());
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        infoPanel.add(lbl);
+        lbl = new JLabel("Favorite climbing: " + climber.getFavoriteClimbing());
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        infoPanel.add(lbl);
+        lbl = new JLabel("Maximum difficulty achieved: " + climber.getMaxDifficultyAchieved());
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        infoPanel.add(lbl);
 
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(userPanel, infoPanel, 1, 1);
-	}
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.addGB(userPanel, infoPanel, 0, 3);
+    }
 
-	private void createButtons() {
-		JPanel btnsPanel = new JPanel(); 
+    private void createButtons() {
+        JPanel btnsPanel = new JPanel();
 
-		JRadioButton buttonGoals= new JRadioButton("Retos");
-		buttonGoals.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getGoals());
-			}
-		});
+        JRadioButton buttonGoals = new JRadioButton("Retos");
+        buttonGoals.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setupPanelRutes(climber.getGoals());
+            }
+        });
 
-		JRadioButton buttonFavorites = new JRadioButton("Favoritos");
-		buttonFavorites.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getFavorites());
-			}
-		});
+        JRadioButton buttonFavorites = new JRadioButton("Favoritos");
+        buttonFavorites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setupPanelRutes(climber.getFavorites());
+            }
+        });
 
-		JRadioButton buttonAchieveds = new JRadioButton("Logrados");
-		buttonAchieveds.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				setupPanelRutes(climber.getAchieveds());
-			}
-		});
+        JRadioButton buttonAchieveds = new JRadioButton("Logrados");
+        buttonAchieveds.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setupPanelRutes(climber.getAchieveds());
+            }
+        });
 
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(buttonFavorites);
-		bg.add(buttonGoals);
-		bg.add(buttonAchieveds);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(buttonFavorites);
+        bg.add(buttonGoals);
+        bg.add(buttonAchieveds);
 
-		btnsPanel.add(buttonGoals);
-		btnsPanel.add(buttonFavorites);
-		btnsPanel.add(buttonAchieveds);
+        btnsPanel.add(buttonGoals);
+        btnsPanel.add(buttonFavorites);
+        btnsPanel.add(buttonAchieveds);
 
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(userPanel, btnsPanel, 1, 2);
-	}
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        this.addGB(userPanel, btnsPanel, 1, 1);
+    }
 
-	private void setupPanelRutes(Collection<Route> collection) {
-		DefaultListModel<Route> model = new DefaultListModel<>();
-		for (Route r: collection) {
-			model.addElement(r);
-		}
-		JList <Route> listRutes = new JList <Route> (model);
-		listRutes.setCellRenderer(new Renderer());
-		JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
+    private void setupPanelRutes(Collection<Route> collection) {
+        DefaultListModel<Route> model = new DefaultListModel<>();
+        for (Route r : collection) {
+            model.addElement(r);
+        }
+        JList<Route> listRutes = new JList<Route>(model);
+        listRutes.setCellRenderer(new Renderer());
+        JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
+        scrollPaneRoutes.setPreferredSize(new Dimension(300, 400));
 
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(userPanel, scrollPaneRoutes, 1, 3);
+        if (this.userPanel.getComponentCount() == 5) {
+            this.userPanel.remove(4);
+        }
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        this.addGB(userPanel, scrollPaneRoutes, 1, 2);
 
-		listRutes.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-				Route rute = listRutes.getSelectedValue();
-				uiMain.showPanel(UIRoute.createUIRute(rute, uiMain),730,670);	
-			}
-		});
-                this.pack();
-	}
+        listRutes.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent arg0) {
+                Route rute = listRutes.getSelectedValue();
+                uiMain.showPanel(UIRoute.createUIRute(rute, uiMain), 730, 670);
+            }
+        });
+        this.pack();
+    }
 
-	private void showEditInfoPanel() {
-		this.editPanel = new JPanel(new GridBagLayout());
-		this.editValues = new String [] {"","",""};
-		createEditImage();
-		creatEditInfo();
-		createEditButtons();
-		this.setContentPane(editPanel);
-		this.pack();
-	}
+    private void showEditInfoPanel() {
+        this.editPanel = new JPanel(new GridBagLayout());
+        this.editValues = new String[]{"", "", ""};
+        createEditImage();
+        creatEditInfo();
+        createEditButtons();
+        this.setContentPane(editPanel);
+        this.pack();
+    }
 
-	private void createEditImage() {
-		ImageIcon user= new ImageIcon(this.climber.getImagePath());
-		JLabel labelImage = new JLabel(user);
-		constraints.gridheight = 2;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(editPanel,labelImage, 0, 0);
-	}
+    private void createEditImage() {
+        ImageIcon user = new ImageIcon(this.climber.getImagePath());
+        JLabel labelImage = new JLabel(user);
+        constraints.gridheight = 2;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.addGB(editPanel, labelImage, 0, 0);
+    }
 
-	private void creatEditInfo() {
-		JPanel editInfoPanel = new JPanel(new GridLayout(0,1));
+    private void creatEditInfo() {
+        JPanel editInfoPanel = new JPanel(new GridLayout(0, 1));
 
-		JLabel lbl = new JLabel("Birthdate: ");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
-		editInfoPanel.add(lbl);
-		JFormattedTextField txtBirthdate = new JFormattedTextField(
-				DateTimeFormatter.ofPattern( "d MMMM uuuu").toFormat());
-		txtBirthdate.setValue(climber.getBirthdate());
-		txtBirthdate.addPropertyChangeListener("value", new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				editValues [0] = txtBirthdate.getText();
-			}
+        JLabel lbl = new JLabel("Birthdate: ");
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        editInfoPanel.add(lbl);
+        JFormattedTextField txtBirthdate = new JFormattedTextField(
+                DateTimeFormatter.ofPattern("d MMMM uuuu").toFormat());
+        txtBirthdate.setValue(climber.getBirthdate());
+        txtBirthdate.addPropertyChangeListener("value", new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                editValues[0] = txtBirthdate.getText();
+            }
 
-		});
-		editInfoPanel.add(txtBirthdate);
+        });
+        editInfoPanel.add(txtBirthdate);
 
-		lbl = new JLabel("Favorite climbing: ");
-		lbl.setFont(new Font("Tahoma",Font.PLAIN,15));
-		editInfoPanel.add(lbl);
-		JTextField txtFavoriteClimbing = new JTextField(climber.getFavoriteClimbing());
-		txtFavoriteClimbing.getDocument().addDocumentListener(new DocumentListener() {
-			public void changedUpdate(DocumentEvent e) {
-				edit();
-			}
-			public void removeUpdate(DocumentEvent e) {
-				edit();
-			}
-			public void insertUpdate(DocumentEvent e) {
-				edit();
-			}
-			public void edit() {
-				editValues [1] = txtFavoriteClimbing.getText();
-			}
-		});
+        lbl = new JLabel("Favorite climbing: ");
+        lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        editInfoPanel.add(lbl);
+        JTextField txtFavoriteClimbing = new JTextField(climber.getFavoriteClimbing());
+        txtFavoriteClimbing.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                edit();
+            }
 
-		editInfoPanel.add(txtFavoriteClimbing);
+            public void removeUpdate(DocumentEvent e) {
+                edit();
+            }
 
+            public void insertUpdate(DocumentEvent e) {
+                edit();
+            }
 
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.addGB(editPanel, editInfoPanel, 1, 0);
-	}
+            public void edit() {
+                editValues[1] = txtFavoriteClimbing.getText();
+            }
+        });
 
-	private void createEditButtons() {
-		JButton btnEditImage = new JButton("Edit Image");
-		btnEditImage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				loadImage();
-			}
-		});
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		this.addGB(editPanel, btnEditImage, 0, 2);
+        editInfoPanel.add(txtFavoriteClimbing);
 
-		JButton btnSave = new JButton("save");
-		btnSave.addActionListener(new ActionListener () {
-			public void actionPerformed(ActionEvent e) {
-				UsersManager.editUser(editValues);
-				showUserPanel();
-			}
-		});
-		this.addGB(editPanel, btnSave, 0, 3);
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.addGB(editPanel, editInfoPanel, 1, 0);
+    }
 
-		JButton btnCancel = new JButton("cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showUserPanel();
-			}
-		});
-		this.addGB(editPanel, btnCancel, 1, 3);
-	}
+    private void createEditButtons() {
+        JButton btnEditImage = new JButton("Edit Image");
+        btnEditImage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadImage();
+            }
+        });
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        this.addGB(editPanel, btnEditImage, 0, 2);
 
-	private void loadImage() {
-		JFileChooser imageChooser = new JFileChooser();
-		imageChooser.setDialogTitle("Edit image");
-		imageChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif","jpg"));
-		int returnVal = imageChooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) 
-			editValues [2] = imageChooser.getSelectedFile().getPath();
-	}
+        JButton btnSave = new JButton("save");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                UsersManager.editUser(editValues);
+                showUserPanel();
+            }
+        });
+        this.addGB(editPanel, btnSave, 0, 3);
 
-	private void showEditRoutesPanel(TreeSet<Route> treeSet, String item) {
-		DefaultListModel<Route> model = new DefaultListModel<>();
-		for (Route r: treeSet) {
-			model.addElement(r);
-		}
-		JList <Route> listRutes = new JList <Route> (model);
-		listRutes.setCellRenderer(new Renderer());
-		JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
+        JButton btnCancel = new JButton("cancel");
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showUserPanel();
+            }
+        });
+        this.addGB(editPanel, btnCancel, 1, 3);
+    }
 
-		JButton btnDelete = new JButton("delete selected items");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Route r : listRutes.getSelectedValuesList()) {
-					UsersManager.removeRoute(r,item);
-				}
-			}
-		});
-		this.editPanel = new JPanel(new GridBagLayout());
-		this.constraints.gridheight = 1;
-		this.constraints.gridwidth = 0;
-		this.addGB(editPanel,scrollPaneRoutes,0,0);
-		this.addGB(editPanel,btnDelete,0,1);
-		this.setContentPane(editPanel);
-		this.pack();
-	}
+    private void loadImage() {
+        JFileChooser imageChooser = new JFileChooser();
+        imageChooser.setDialogTitle("Edit image");
+        imageChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        imageChooser.setFileFilter(new FileNameExtensionFilter("images", "png", "gif", "jpg"));
+        int returnVal = imageChooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            editValues[2] = imageChooser.getSelectedFile().getPath();
+        }
+    }
 
-	private void addGB(JPanel jp,Component comp, int x, int y) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		jp.add(comp, constraints);
-	}
+    private void showEditRoutesPanel(TreeSet<Route> treeSet, String item) {
+        JLabel title = new JLabel("Edit " + item);
+        title.setFont(new Font("Tahoma", Font.PLAIN, 35));
 
+        DefaultListModel<Route> model = new DefaultListModel<>();
+        for (Route r : treeSet) {
+            model.addElement(r);
+        }
+        JList<Route> listRutes = new JList<Route>(model);
+        listRutes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
+        scrollPaneRoutes.setPreferredSize(new Dimension(300, 200));
 
-	//Sign in
-	public static void showSignInFrame() {
-		JFrame frame = new JFrame ();
+        JButton btnDelete = new JButton("delete selected items");
+        btnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Route r : listRutes.getSelectedValuesList()) {
+                    UsersManager.removeRoute(r, item);
+                }
+                UIUser.this.setContentPane(userPanel);
+                UIUser.this.pack();
+            }
+        });
 
-		JLabel nameLabel= new JLabel("Name: ");
-		JTextField nameField =  new JTextField(25);
+        JButton btnCancel = new JButton("Cancel");
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                UIUser.this.setContentPane(userPanel);
+                UIUser.this.pack();
+            }
+        });
 
-		nameField.setInputVerifier(new InputVerifier() {
-			public boolean verify(JComponent input) {
-				JTextField tf = (JTextField) input;
-				boolean b = UsersManager.isValidName(tf.getText());
-				if(!b) {
-					input.getToolkit().beep();
-					JOptionPane.showMessageDialog(null, "already exist an user with this name",
-							null, JOptionPane.WARNING_MESSAGE);
-				}
-				return b;
-			}
-		});
+        this.editPanel = new JPanel(new GridBagLayout());
+        this.constraints.gridwidth = 2;
+        this.addGB(editPanel, title, 0, 0);
+        this.addGB(editPanel, scrollPaneRoutes, 0, 1);
+        this.constraints.gridwidth = 1;
+        this.addGB(editPanel, btnDelete, 0, 2);
+        this.addGB(editPanel, btnCancel, 1, 2);
+        this.setContentPane(editPanel);
+        this.pack();
+    }
 
-		JLabel passwordLabel = new JLabel ("Password: ");
-		JPasswordField passwordField = new JPasswordField(25);
+    private void addGB(JPanel jp, Component comp, int x, int y) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+        jp.add(comp, constraints);
+    }
 
-		passwordField.setInputVerifier(new InputVerifier() {
-			public boolean verify(JComponent input) {
-				JPasswordField pf = (JPasswordField) input;
-				boolean b = UsersManager.isValidPassword(pf.getPassword());
-				if(!b) {
-					input.getToolkit().beep();
-					JOptionPane.showMessageDialog(null, "the password is too short or already exist",
-							null, JOptionPane.WARNING_MESSAGE);
-				}
-				return b;
-			}
-		});
+    //Sign in
+    public static void showSignInFrame() {
+        JFrame frame = new JFrame();
 
-		JLabel passwordRulesLbl = new JLabel("*the password must have more than 5 characters");
-		passwordRulesLbl.setFont(new Font("Tahoma",Font.PLAIN,12));
+        JLabel nameLabel = new JLabel("Name: ");
+        JTextField nameField = new JTextField(25);
 
-		JButton btnSignIn = new JButton ("Sign in");
-		btnSignIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(nameField.getText().isEmpty()|| passwordField.getPassword().length==0) {
-					JOptionPane.showMessageDialog(null,"A space is Empty",null,JOptionPane.ERROR_MESSAGE);	
-				}else {
-					Window w = SwingUtilities.getWindowAncestor(btnSignIn);
-					if (w != null) 
-						w.setVisible(false);
-					UsersManager.creatUser(nameField.getText(),passwordField.getPassword());
-					JOptionPane.showMessageDialog(null,"The user was create");
-				}
-			}
-		});
+        nameField.setInputVerifier(new InputVerifier() {
+            public boolean verify(JComponent input) {
+                JTextField tf = (JTextField) input;
+                boolean b = UsersManager.isValidName(tf.getText());
+                if (!b) {
+                    input.getToolkit().beep();
+                    JOptionPane.showMessageDialog(null, "already exist an user with this name",
+                            null, JOptionPane.WARNING_MESSAGE);
+                }
+                return b;
+            }
+        });
 
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Window w = SwingUtilities.getWindowAncestor(btnCancel);
-				if(w!=null)
-					w.setVisible(false);
-			}
-		});
+        JLabel passwordLabel = new JLabel("Password: ");
+        JPasswordField passwordField = new JPasswordField(25);
 
+        passwordField.setInputVerifier(new InputVerifier() {
+            public boolean verify(JComponent input) {
+                JPasswordField pf = (JPasswordField) input;
+                boolean b = UsersManager.isValidPassword(pf.getPassword());
+                if (!b) {
+                    input.getToolkit().beep();
+                    JOptionPane.showMessageDialog(null, "the password is too short or already exist",
+                            null, JOptionPane.WARNING_MESSAGE);
+                }
+                return b;
+            }
+        });
 
-		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,
-				passwordField,passwordRulesLbl };
-		Object[] options = new Object[] {btnSignIn, btnCancel};
-		JOptionPane.showOptionDialog(frame, message, "Sign in", 0,
-				JOptionPane.QUESTION_MESSAGE, null, options, btnSignIn);
-	}
+        JLabel passwordRulesLbl = new JLabel("*the password must have more than 5 characters");
+        passwordRulesLbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-	//login
-	public static void showLoginFrame() {
-		JFrame frame = new JFrame();
+        JButton btnSignIn = new JButton("Sign in");
+        btnSignIn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (nameField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+                    JOptionPane.showMessageDialog(null, "A space is Empty", null, JOptionPane.ERROR_MESSAGE);
+                } else {
+                    Window w = SwingUtilities.getWindowAncestor(btnSignIn);
+                    if (w != null) {
+                        w.setVisible(false);
+                    }
+                    UsersManager.creatUser(nameField.getText(), passwordField.getPassword());
+                    JOptionPane.showMessageDialog(null, "The user was create");
+                }
+            }
+        });
 
-		JLabel nameLabel= new JLabel("Name: ");
-		JTextField nameField =  new JTextField(25);
+        JButton btnCancel = new JButton("Cancel");
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Window w = SwingUtilities.getWindowAncestor(btnCancel);
+                if (w != null) {
+                    w.setVisible(false);
+                }
+            }
+        });
 
-		JLabel passwordLabel = new JLabel ("Password: ");
-		JPasswordField passwordField = new JPasswordField(25);
+        Object[] message = new Object[]{nameLabel, nameField, passwordLabel,
+            passwordField, passwordRulesLbl};
+        Object[] options = new Object[]{btnSignIn, btnCancel};
+        JOptionPane.showOptionDialog(frame, message, "Sign in", 0,
+                JOptionPane.QUESTION_MESSAGE, null, options, btnSignIn);
+    }
 
-		JButton btnLogin = new JButton ("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(UsersManager.doLogin(nameField.getText(),passwordField.getPassword())) {
-					Window w = SwingUtilities.getWindowAncestor(btnLogin);
-					if (w!=null) 
-						w.setVisible(false);
-					JOptionPane.showMessageDialog(null,"The Login was successful");
-				}else {
-					JOptionPane.showMessageDialog(null,"the password or the names are incorrect "
-							+ "or you are not register yet",
-							null,JOptionPane.ERROR_MESSAGE);
-					nameField.setText(null);
-					passwordField.setText(null);;
-				}
-			}
-		});
+    //login
+    public static void showLoginFrame() {
+        JFrame frame = new JFrame();
 
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Window w = SwingUtilities.getWindowAncestor(btnCancel);
-				if(w!=null)
-					w.setVisible(false);
-			}
-		});
+        JLabel nameLabel = new JLabel("Name: ");
+        JTextField nameField = new JTextField(25);
 
-		Object [] message = new Object[] {nameLabel,nameField,passwordLabel,passwordField};
-		Object[] options = new Object[] {btnLogin, btnCancel};
-		JOptionPane.showOptionDialog(frame, message, "Login", 0,
-				JOptionPane.QUESTION_MESSAGE, null, options, btnLogin);
-	}
+        JLabel passwordLabel = new JLabel("Password: ");
+        JPasswordField passwordField = new JPasswordField(25);
+
+        JButton btnLogin = new JButton("Login");
+        btnLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (UsersManager.doLogin(nameField.getText(), passwordField.getPassword())) {
+                    Window w = SwingUtilities.getWindowAncestor(btnLogin);
+                    if (w != null) {
+                        w.setVisible(false);
+                    }
+                    JOptionPane.showMessageDialog(null, "The Login was successful");
+                } else {
+                    JOptionPane.showMessageDialog(null, "the password or the names are incorrect "
+                            + "or you are not register yet",
+                            null, JOptionPane.ERROR_MESSAGE);
+                    nameField.setText(null);
+                    passwordField.setText(null);;
+                }
+            }
+        });
+
+        JButton btnCancel = new JButton("Cancel");
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Window w = SwingUtilities.getWindowAncestor(btnCancel);
+                if (w != null) {
+                    w.setVisible(false);
+                }
+            }
+        });
+
+        Object[] message = new Object[]{nameLabel, nameField, passwordLabel, passwordField};
+        Object[] options = new Object[]{btnLogin, btnCancel};
+        JOptionPane.showOptionDialog(frame, message, "Login", 0,
+                JOptionPane.QUESTION_MESSAGE, null, options, btnLogin);
+    }
 }

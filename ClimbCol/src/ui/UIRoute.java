@@ -130,7 +130,7 @@ public class UIRoute extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (UsersManager.hasCurrentUser()) {
                     if (!UsersManager.addRoute(route, e.getActionCommand())) {
-                        JOptionPane.showMessageDialog(null, "The route is add yet",
+                        JOptionPane.showMessageDialog(null, "the route already exists in your list",
                                 null, JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
@@ -144,7 +144,7 @@ public class UIRoute extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (UsersManager.hasCurrentUser()) {
                     if (!UsersManager.addRoute(route, e.getActionCommand())) {
-                        JOptionPane.showMessageDialog(null, "The route is add yet",
+                        JOptionPane.showMessageDialog(null, "the route already exists in your list",
                                 null, JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
@@ -158,7 +158,7 @@ public class UIRoute extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (UsersManager.hasCurrentUser()) {
                     if (!UsersManager.addRoute(route, e.getActionCommand())) {
-                        JOptionPane.showMessageDialog(null, "The route is add yet",
+                        JOptionPane.showMessageDialog(null, "the route already exists in your list",
                                 null, JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
