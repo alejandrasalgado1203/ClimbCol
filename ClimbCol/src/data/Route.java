@@ -1,6 +1,7 @@
 
 package data;
 
+import business.FileNameConstants;
 import java.io.Serializable;
 
 public class Route implements Serializable,Comparable<Route>,Renderable{
@@ -27,8 +28,7 @@ public class Route implements Serializable,Comparable<Route>,Renderable{
 	}
 	@Override
 	public String getMainImage() {
-            String icon ="images/IconRoutes.png";
-		return icon ;
+		return FileNameConstants.ROUTES_ICON;
 	}
 
 	public String getName() {

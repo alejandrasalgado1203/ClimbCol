@@ -1,5 +1,6 @@
 package ui;
 
+import business.FileNameConstants;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -46,6 +47,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import business.UsersManager;
 import data.User;
 import data.Route;
+import java.awt.MediaTracker;
 import javax.swing.ListSelectionModel;
 import javax.swing.Box;
 
@@ -127,6 +129,8 @@ public class UIUser extends JFrame {
 
     private void createImage() {
         ImageIcon user = new ImageIcon(this.climber.getImagePath());
+        if(user.getImageLoadStatus()!=MediaTracker.COMPLETE)
+            user = new ImageIcon(FileNameConstants.DEFAULT_USER_IMAGE);
         JLabel labelImage = new JLabel(user);
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
@@ -237,6 +241,8 @@ public class UIUser extends JFrame {
 
     private void createEditImage() {
         ImageIcon user = new ImageIcon(this.climber.getImagePath());
+        if(user.getImageLoadStatus()!=MediaTracker.COMPLETE)
+            user = new ImageIcon(FileNameConstants.DEFAULT_USER_IMAGE);
         JLabel labelImage = new JLabel(user);
         constraints.gridheight = 2;
         constraints.gridwidth = 1;
