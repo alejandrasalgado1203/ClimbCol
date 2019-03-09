@@ -202,6 +202,7 @@ public class UIUser extends JFrame {
 
         constraints.gridheight = 3;
         constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.NORTH;
         this.addGB(userPanel, box, 1, 1);
     }
 
@@ -301,10 +302,11 @@ public class UIUser extends JFrame {
         constraints.gridwidth = 1;
         this.addGB(editPanel, btnEditImage, 0, 2);
 
-        JButton btnSave = new JButton("save");
+        JButton btnSave = new JButton("edit");
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UsersManager.editUser(editValues);
+                String report = UsersManager.editUser(editValues);
+                JOptionPane.showMessageDialog(null, report);
                 showUserPanel();
             }
         });
