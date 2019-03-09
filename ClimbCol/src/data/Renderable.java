@@ -2,8 +2,8 @@ package data;
 
 public interface Renderable {
 
-	String getMainImage();
+	public String getMainImage();
 
-	String getName();
+	public String getName();
 
 }

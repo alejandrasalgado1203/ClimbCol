@@ -59,6 +59,7 @@ public class UIUser extends JFrame {
 
     public UIUser(UIMain main) {
         super("User's info");
+        this.constraints.insets = new Insets(5, 5, 5, 5);
         this.climber = UsersManager.getCurrentUser();
         this.uiMain = main;
         createMenu();
@@ -106,7 +107,7 @@ public class UIUser extends JFrame {
 
     private void showUserPanel() {
         this.userPanel = new JPanel(new GridBagLayout());
-        this.constraints.insets = new Insets(10, 10, 10, 10);
+        this.constraints.insets = new Insets(5, 5, 5, 5);
         createTittle();
         createImage();
         createInfo();
@@ -133,18 +134,22 @@ public class UIUser extends JFrame {
     }
 
     private void createInfo() {
+        this.constraints.insets = new Insets(5, 5, 5, 5);
         JPanel infoPanel = new JPanel(new GridLayout(0, 1));
 
         JLabel lbl = new JLabel("Birthdate: "
                 + climber.getBirthdate().format(DateTimeFormatter.ofPattern("d MMMM uuuu")));
         lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
         infoPanel.add(lbl);
+        
         lbl = new JLabel("Achieved routes: " + climber.getNumAchieveds());
         lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
         infoPanel.add(lbl);
+        
         lbl = new JLabel("Favorite climbing: " + climber.getFavoriteClimbing());
         lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
         infoPanel.add(lbl);
+        
         lbl = new JLabel("Maximum difficulty achieved: " + climber.getMaxDifficultyAchieved());
         lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
         infoPanel.add(lbl);
@@ -201,7 +206,7 @@ public class UIUser extends JFrame {
         JList<Route> listRutes = new JList<Route>(model);
         listRutes.setCellRenderer(new Renderer());
         JScrollPane scrollPaneRoutes = new JScrollPane(listRutes);
-        scrollPaneRoutes.setPreferredSize(new Dimension(300, 400));
+        scrollPaneRoutes.setPreferredSize(new Dimension(300, 300));
 
         if (this.userPanel.getComponentCount() == 5) {
             this.userPanel.remove(4);
