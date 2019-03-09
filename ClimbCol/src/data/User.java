@@ -48,7 +48,7 @@ public class User implements Serializable{
 	}
 
 	public boolean addGoalRoute(Route route) {
-		return achieveds.add(route);
+		return goals.add(route);
 	}
 
 	public boolean addAchievedsRoute(Route route) {
