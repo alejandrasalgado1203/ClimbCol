@@ -27,7 +27,7 @@ public class UIRoute extends JPanel{
 	}
 
 	public UIRoute(Route route, UIMain main) {
-                this.constraints.insets = new Insets(15,15,15,15);
+                this.constraints.insets = new Insets(5,5,5,5);
 		this.route =route;
 		this.uiMain = main;
 		this.setLayout(new GridBagLayout());

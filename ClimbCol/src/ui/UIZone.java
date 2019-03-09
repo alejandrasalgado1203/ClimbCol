@@ -107,7 +107,7 @@ public class UIZone extends JPanel {
 
 		listRoutes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				uiMain.showPanel(UIRoute.createUIRute(listRoutes.getSelectedValue(), uiMain),730,670);	
+				uiMain.showPanel(UIRoute.createUIRute(listRoutes.getSelectedValue(), uiMain),730,680);	
 			}
 		});
 	}

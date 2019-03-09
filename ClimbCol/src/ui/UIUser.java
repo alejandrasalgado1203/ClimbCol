@@ -212,9 +212,10 @@ public class UIUser extends JFrame {
 		listRutes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				Route rute = listRutes.getSelectedValue();
-				uiMain.showPanel(UIRoute.createUIRute(rute, uiMain));	
+				uiMain.showPanel(UIRoute.createUIRute(rute, uiMain),730,670);	
 			}
 		});
+                this.pack();
 	}
 
 	private void showEditInfoPanel() {
