@@ -3,13 +3,12 @@ package ui;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Color;
+import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-
 import data.Renderable;
 
 public class Renderer extends JPanel implements ListCellRenderer<Renderable> {
@@ -19,10 +18,11 @@ public class Renderer extends JPanel implements ListCellRenderer<Renderable> {
 
     public Renderer() {
         super();
+        setLayout(new BorderLayout(5, 5));
         this.image = new JLabel();
         this.name = new JLabel();
-        this.add(image);
-        this.add(name);
+        this.add(image,BorderLayout.WEST);
+        this.add(name,BorderLayout.CENTER);
     }
 
     @Override
