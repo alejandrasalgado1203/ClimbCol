@@ -45,12 +45,10 @@ public class UIRoute extends JPanel {
     }
 
     private void createTittle() {
-        JPanel tittle = new JPanel(new GridLayout(0, 1));
         JLabel lblRouteName = new JLabel("Route " + this.route.getName());
         lblRouteName.setFont(new Font("Tahoma", Font.PLAIN, 35));
-        tittle.add(lblRouteName);
         this.constraints.gridwidth = 3;
-        this.addGB(lblRouteName, 0, 0);
+        this.addGB(lblRouteName, 0, 1);
     }
 
     private void createImage() {
@@ -63,7 +61,7 @@ public class UIRoute extends JPanel {
         image.add(labelImage);
         this.constraints.gridwidth = 1;
         this.constraints.gridheight = 1;
-        this.addGB(image, 0, 1);
+        this.addGB(image, 0, 2);
     }
 
     private void createDescription() {
@@ -87,7 +85,7 @@ public class UIRoute extends JPanel {
 
         this.constraints.gridwidth = 1;
         this.constraints.gridheight = 1;
-        this.addGB(infoPanel, 1, 1);
+        this.addGB(infoPanel, 1, 2);
     }
 
     private void goToLastAndNextPanel() {
@@ -120,7 +118,6 @@ public class UIRoute extends JPanel {
     }
 
     private void createToolBar() {
-        JPanel toolBarPanel = new JPanel();
         JToolBar toolBar = new JToolBar();
 
         JButton buttonGoals = new JButton("Add to Goals Routes");
@@ -179,10 +176,9 @@ public class UIRoute extends JPanel {
         toolBar.add(buttonFavorites);
         toolBar.addSeparator();
         toolBar.add(buttonAchieveds);
-        toolBarPanel.add(toolBar);
         this.constraints.gridwidth = 3;
         this.constraints.gridheight = 1;
-        this.addGB(toolBarPanel, 0, 2);
+        this.addGB(toolBar, 0, 0);
     }
 
     private void addGB(Component comp, int x, int y) {

@@ -3,7 +3,6 @@ package data;
 
 import java.io.Serializable;
 import java.util.TreeSet;
-import java.text.DecimalFormat;
 
 public class Zone implements Serializable,Comparable<Zone>,Renderable{
 

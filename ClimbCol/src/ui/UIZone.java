@@ -31,6 +31,7 @@ public class UIZone extends JPanel {
 	public static  UIZone createUIZone(Zone zone,UIMain main){
             return new UIZone(zone,main);
 	}
+        
 	public UIZone(Zone zone, UIMain main) {
                 this.constraints.insets = new Insets(15,15,15,15);
 		this.zone = zone;
@@ -48,25 +49,21 @@ public class UIZone extends JPanel {
 	}
 
 	private void createTittle() {
-		JPanel tittle = new JPanel(new GridLayout(0,1));
 		JLabel lblNameZone = new JLabel("Zone "+ this.zone.getName());
 		lblNameZone.setFont(new Font("Tahoma",Font.PLAIN,35));
-		tittle.add(lblNameZone);
 		this.constraints.gridwidth = 2;
-                this.addGB(tittle,0,0);
+                this.addGB(lblNameZone,0,0);
 	}
 
 	private void createImage() {
-                JPanel image = new JPanel(new GridLayout(0,1));
-		ImageIcon zoneImage= new ImageIcon(zone.getMainImage());
-		JLabel labelImage = new JLabel(zoneImage);
-		image.add(labelImage);
-                this.constraints.gridwidth = 1;
+		JLabel image = new JLabel(new ImageIcon(zone.getMainImage()));
+		this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 1;
                 this.addGB(image,1,1);
 	}
+	
 	private void createDescription() {
-                DecimalFormat df = new DecimalFormat("#.##");
+		DecimalFormat df = new DecimalFormat("#.##");
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Max Difficulty: " + zone.getMaxDifficulty());
