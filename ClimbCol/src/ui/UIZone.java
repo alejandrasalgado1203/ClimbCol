@@ -60,8 +60,8 @@ public class UIZone extends JPanel {
                 this.constraints.gridheight = 1;
                 this.addGB(image,1,1);
 	}
+	
 	private void createDescription() {
-                DecimalFormat df = new DecimalFormat("#.##");
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Max Difficulty: " + zone.getMaxDifficulty());
