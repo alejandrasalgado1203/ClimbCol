@@ -62,6 +62,7 @@ public class UIZone extends JPanel {
 	}
 	
 	private void createDescription() {
+		DecimalFormat df = new DecimalFormat("#.##");
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
 
 		JLabel lbl = new JLabel("Max Difficulty: " + zone.getMaxDifficulty());
