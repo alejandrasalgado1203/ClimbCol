@@ -206,7 +206,7 @@ public class UIPark extends JPanel{
 	private void showFrameFotos() {
 		JFrame frameFotos = new JFrame("FOTOS");
 		frameFotos.add(setupPanelFotos());
-		frameFotos.setSize(950, 550);
+		frameFotos.setSize(950, 630);
 		frameFotos.setVisible(true);
 	}
 
@@ -230,11 +230,8 @@ public class UIPark extends JPanel{
 			public void actionPerformed(ActionEvent e){  
 				if (imageIndex != 0) {
 					imageIndex--;
-					label.setIcon(images.get(imageIndex));
-                                        ImageIcon icon = images.get(imageIndex);
-                                        if (icon.getIconWidth() > 130 || icon.getIconHeight() > 90) {
-                                            icon = new ImageIcon(icon.getImage().getScaledInstance(130, 90, Image.SCALE_AREA_AVERAGING));
-                                        }
+					label.setIcon(sizeImageIcon(images.get(imageIndex)));
+                                        
 				}
 			}  
 		});  
@@ -245,7 +242,7 @@ public class UIPark extends JPanel{
 			public void actionPerformed(ActionEvent e){  
 				if (imageIndex != images.size()-1) {
 					imageIndex++;
-					label.setIcon(images.get(imageIndex));
+					label.setIcon(sizeImageIcon(images.get(imageIndex)));
 				}
 			}  
 		});  
@@ -266,5 +263,13 @@ public class UIPark extends JPanel{
 		this.constraints.gridy = y;
 		this.add(comp, this.constraints);
 	}
+        
+        private ImageIcon sizeImageIcon(ImageIcon icon){
+            ImageIcon iconChange = new ImageIcon();
+            if (icon.getIconWidth() > 130 || icon.getIconHeight() > 90) {
+                iconChange = new ImageIcon(icon.getImage().getScaledInstance(500, 500, Image.SCALE_AREA_AVERAGING));
+            }
+            return iconChange;
+        }
 
 }
