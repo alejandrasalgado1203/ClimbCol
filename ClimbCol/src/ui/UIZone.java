@@ -97,7 +97,7 @@ public class UIZone extends JPanel {
 		JList <Route> listRoutes = new JList <Route> (model);
 		listRoutes.setCellRenderer(new Renderer());
 		JScrollPane scrollPaneRoutes = new JScrollPane(listRoutes);
-                scrollPaneRoutes.setMinimumSize(new Dimension(300,400));
+                scrollPaneRoutes.setPreferredSize(new Dimension(300,400));
 
                 this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 2;

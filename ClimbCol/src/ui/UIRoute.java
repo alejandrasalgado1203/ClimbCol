@@ -52,16 +52,14 @@ public class UIRoute extends JPanel {
     }
 
     private void createImage() {
-        JPanel image = new JPanel(new GridLayout(0, 1));
         ImageIcon routeImage = new ImageIcon(route.getImagePath());
         if (routeImage.getIconWidth() > 200 || routeImage.getIconHeight() > 300) {
             routeImage = new ImageIcon(routeImage.getImage().getScaledInstance(215, 320, Image.SCALE_AREA_AVERAGING));
         }
         JLabel labelImage = new JLabel(routeImage);
-        image.add(labelImage);
         this.constraints.gridwidth = 1;
         this.constraints.gridheight = 1;
-        this.addGB(image, 0, 2);
+        this.addGB(labelImage, 0, 2);
     }
 
     private void createDescription() {
@@ -118,8 +116,7 @@ public class UIRoute extends JPanel {
     }
 
     private void createToolBar() {
-        JToolBar toolBar = new JToolBar();
-
+        
         JButton buttonGoals = new JButton("Add to Goals Routes");
         buttonGoals.setActionCommand("Goals");
         JButton buttonFavorites = new JButton("Add to Favorites Routes");
@@ -169,7 +166,7 @@ public class UIRoute extends JPanel {
             }
         });
 
-        toolBar = new JToolBar("ToolBar", JToolBar.HORIZONTAL);
+         JToolBar toolBar = new JToolBar("ToolBar", JToolBar.HORIZONTAL);
         toolBar.setFloatable(false);
         toolBar.add(buttonGoals);
         toolBar.addSeparator();

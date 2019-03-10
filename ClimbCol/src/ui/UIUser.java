@@ -47,6 +47,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import business.UsersManager;
 import data.User;
 import data.Route;
+import java.awt.Image;
 import java.awt.MediaTracker;
 import javax.swing.ListSelectionModel;
 import javax.swing.Box;
@@ -57,7 +58,7 @@ public class UIUser extends JFrame {
     private UIMain uiMain;
     private JPanel userPanel;
     private JPanel editPanel;
-    private GridBagConstraints constraints = new GridBagConstraints();
+    private GridBagConstraints constraints;
     private String[] editValues;
 
     public UIUser(UIMain main) {
@@ -85,6 +86,7 @@ public class UIUser extends JFrame {
         menuBar.add(editInfo);
         editInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                UIUser.this.setResizable(false);
                 showEditInfoPanel();
             }
         });
@@ -93,6 +95,7 @@ public class UIUser extends JFrame {
         menuBar.add(editFavorites);
         editFavorites.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                UIUser.this.setResizable(false);
                 showEditRoutesPanel(climber.getFavorites(), "favorites");
             }
         });
@@ -101,6 +104,7 @@ public class UIUser extends JFrame {
         menuBar.add(editGoals);
         editGoals.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                UIUser.this.setResizable(false);
                 showEditRoutesPanel(climber.getGoals(), "goals");
             }
         });
@@ -110,12 +114,14 @@ public class UIUser extends JFrame {
 
     private void showUserPanel() {
         this.userPanel = new JPanel(new GridBagLayout());
+       this.constraints = new GridBagConstraints();
         this.constraints.insets = new Insets(10, 10, 10, 10);
         createTittle();
         createImage();
         createInfo();
         createRoutesInfo();
-        this.setContentPane(userPanel);
+        this.setResizable(true);
+        this.setContentPane(new JScrollPane(userPanel));
         this.pack();
     }
 
@@ -129,13 +135,23 @@ public class UIUser extends JFrame {
 
     private void createImage() {
         ImageIcon user = new ImageIcon(this.climber.getImagePath());
-        if(user.getImageLoadStatus()!=MediaTracker.COMPLETE)
+        if (user.getImageLoadStatus() != MediaTracker.COMPLETE) {
             user = new ImageIcon(FileNameConstants.DEFAULT_USER_IMAGE);
+        }
+        user = sizeImageIcon(user);
         JLabel labelImage = new JLabel(user);
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.addGB(userPanel, labelImage, 0, 1);
+    }
+
+    private ImageIcon sizeImageIcon(ImageIcon icon) {
+        ImageIcon iconChange = icon;
+        if (icon.getIconWidth() > 430 || icon.getIconHeight() > 430) {
+            iconChange = new ImageIcon(icon.getImage().getScaledInstance(430, 430, Image.SCALE_AREA_AVERAGING));
+        }
+        return iconChange;
     }
 
     private void createInfo() {
@@ -167,7 +183,7 @@ public class UIUser extends JFrame {
         box.add(btnsPanel);
         box.add(Box.createVerticalStrut(8));
         box.add(setupScrollPaneRutes(climber.getFavorites()));
-        
+
         JRadioButton buttonGoals = new JRadioButton("See goals");
         buttonGoals.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -177,7 +193,7 @@ public class UIUser extends JFrame {
             }
         });
 
-        JRadioButton buttonFavorites = new JRadioButton("See favorites",true);
+        JRadioButton buttonFavorites = new JRadioButton("See favorites", true);
         buttonFavorites.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 box.remove(2);
@@ -232,17 +248,23 @@ public class UIUser extends JFrame {
     private void showEditInfoPanel() {
         this.editPanel = new JPanel(new GridBagLayout());
         this.editValues = new String[]{"", "", ""};
-        createEditImage();
+        createEditImage(this.climber.getImagePath());
         creatEditInfo();
         createEditButtons();
-        this.setContentPane(editPanel);
+        this.setContentPane(new JScrollPane(editPanel));
         this.pack();
     }
 
-    private void createEditImage() {
-        ImageIcon user = new ImageIcon(this.climber.getImagePath());
-        if(user.getImageLoadStatus()!=MediaTracker.COMPLETE)
+    private void createEditImage(String s) {
+        for (Component component : editPanel.getComponents()) {
+            if(component.getClass().getSimpleName().equals("JLabel"))
+                editPanel.remove(component);
+        }
+        ImageIcon user = new ImageIcon(s);
+        if (user.getImageLoadStatus() != MediaTracker.COMPLETE) {
             user = new ImageIcon(FileNameConstants.DEFAULT_USER_IMAGE);
+        }
+        user = sizeImageIcon(user);
         JLabel labelImage = new JLabel(user);
         constraints.gridheight = 2;
         constraints.gridwidth = 1;
@@ -308,7 +330,7 @@ public class UIUser extends JFrame {
         constraints.gridwidth = 1;
         this.addGB(editPanel, btnEditImage, 0, 2);
 
-        JButton btnSave = new JButton("edit");
+        JButton btnSave = new JButton("save");
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String report = UsersManager.editUser(editValues);
@@ -335,6 +357,8 @@ public class UIUser extends JFrame {
         int returnVal = imageChooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             editValues[2] = imageChooser.getSelectedFile().getPath();
+            createEditImage(editValues[2]);
+            UIUser.this.pack();
         }
     }
 
@@ -364,8 +388,7 @@ public class UIUser extends JFrame {
         JButton btnCancel = new JButton("Cancel");
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UIUser.this.setContentPane(userPanel);
-                UIUser.this.pack();
+                UIUser.this.showUserPanel();
             }
         });
 

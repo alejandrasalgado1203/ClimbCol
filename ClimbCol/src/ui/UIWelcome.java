@@ -70,7 +70,7 @@ public class UIWelcome extends JPanel {
         cBoxRutes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JComboBox<Route> cb = (JComboBox<Route>) e.getSource();
-                uiMain.showPanel(UIRoute.createUIRute((Route) cb.getSelectedItem(), uiMain));
+                uiMain.showPanel(UIRoute.createUIRute((Route) cb.getSelectedItem(), uiMain),730,680);
             }
         });
         panelWelcome.add(cBoxRutes);
@@ -88,7 +88,7 @@ public class UIWelcome extends JPanel {
         JList<Park> listParks = new JList<Park>(model);
         listParks.setCellRenderer(new Renderer());
         JScrollPane scrollPaneParks = new JScrollPane(listParks);
-        scrollPaneParks.setMinimumSize(new Dimension(300, 400));
+        scrollPaneParks.setPreferredSize(new Dimension(300, 400));
 
         listParks.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {

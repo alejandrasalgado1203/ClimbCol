@@ -156,7 +156,7 @@ public class UIPark extends JPanel{
                 JList <Zone> listZones = new JList <Zone> (model);
                 listZones.setCellRenderer(new Renderer());
                 JScrollPane scrollPaneZones = new JScrollPane(listZones);
-                scrollPaneZones.setMinimumSize(new Dimension(300,400));
+                scrollPaneZones.setPreferredSize(new Dimension(300,400));
 
                 this.constraints.gridwidth = 1;
                 this.constraints.gridheight = 2;
@@ -200,6 +200,8 @@ public class UIPark extends JPanel{
                 JFrame frameFotos = new JFrame("FOTOS");
                 frameFotos.add(setupPanelFotos());
                 frameFotos.setSize(950, 630);
+                frameFotos.setResizable(false);
+                frameFotos.setLocation(100, 100);
                 frameFotos.setVisible(true);
         }
 
@@ -258,7 +260,7 @@ public class UIPark extends JPanel{
         }
 
         private ImageIcon sizeImageIcon(ImageIcon icon){
-            ImageIcon iconChange = new ImageIcon();
+            ImageIcon iconChange = icon;
             if (icon.getIconWidth() > 130 || icon.getIconHeight() > 90) {
                 iconChange = new ImageIcon(icon.getImage().getScaledInstance(500, 500, Image.SCALE_AREA_AVERAGING));
             }
